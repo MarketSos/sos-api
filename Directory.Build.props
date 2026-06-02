@@ -5,10 +5,19 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!--
+      CS1591 - Missing XML comment for publicly visible type or member
+              (GenerateDocumentationFile enabled but docs not written yet)
+      CS1998 - Async method lacks 'await' operators
+      CS8618 - Non-nullable field must contain a non-null value
+              (EF Core private constructors use = default!)
+    -->
+    <NoWarn>$(NoWarn);1591;1998;8618</NoWarn>
+
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
 </Project>

@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/SolutionItems/">
     <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
     <File Path="docker-compose.yml" />
     <File Path="README.md" />
     <File Path="sos-api.slnx.startup.json" />

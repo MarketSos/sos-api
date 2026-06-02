@@ -1,6 +1,6 @@
 using Serilog;
 
-Console.Title = "Sos.Inventory.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.Inventory.API";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration

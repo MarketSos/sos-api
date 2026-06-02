@@ -1,6 +1,6 @@
 using Serilog;
 
-Console.Title = "Sos.Pricing.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.Pricing.API";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration

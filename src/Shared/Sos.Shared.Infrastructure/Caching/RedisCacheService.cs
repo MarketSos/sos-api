@@ -16,16 +16,16 @@ public class RedisCacheService(IConnectionMultiplexer redis) : ICacheService
 
     public async Task<T?> GetAsync<T>(string key, CancellationToken ct = default)
     {
-        var value = await _db.StringGetAsync(key);
-        return value.IsNullOrEmpty ? default : JsonSerializer.Deserialize<T>(value!);
+        var value = await _db.StringGetAsync(key).WaitAsync(ct);
+        return value.IsNullOrEmpty ? default : JsonSerializer.Deserialize<T>((string)value!);
     }
 
     public async Task SetAsync<T>(string key, T value, TimeSpan? expiry = null, CancellationToken ct = default)
     {
         var json = JsonSerializer.Serialize(value);
-        await _db.StringSetAsync(key, json, expiry ?? TimeSpan.FromMinutes(30));
+        await _db.StringSetAsync(key, json, expiry ?? TimeSpan.FromMinutes(30)).WaitAsync(ct);
     }
 
     public async Task RemoveAsync(string key, CancellationToken ct = default)
-        => await _db.KeyDeleteAsync(key);
+        => await _db.KeyDeleteAsync(key).WaitAsync(ct);
 }

@@ -1,6 +1,6 @@
 using Serilog;
 
-Console.Title = "Sos.POS.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.POS.API";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration

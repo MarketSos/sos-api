@@ -1,6 +1,6 @@
 using Serilog;
 
-Console.Title = "Sos.Identity.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.Identity.API";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration

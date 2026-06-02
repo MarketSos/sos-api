@@ -1,6 +1,6 @@
 using Serilog;
 
-Console.Title = "Sos.Catalog.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.Catalog.API";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration

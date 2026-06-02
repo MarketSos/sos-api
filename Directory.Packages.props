@@ -5,43 +5,37 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
-  <ItemGroup Label="ASP.NET Core">
+  <ItemGroup>
+    <!-- ASP.NET Core -->
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.15" />
     <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.15" />
-  </ItemGroup>
 
-  <ItemGroup Label="Entity Framework Core">
+    <!-- Entity Framework Core -->
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.15" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.15" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
-  </ItemGroup>
 
-  <ItemGroup Label="MediatR & Validation">
+    <!-- MediatR & Validation -->
     <PackageVersion Include="MediatR" Version="12.4.1" />
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
-  </ItemGroup>
 
-  <ItemGroup Label="Logging">
+    <!-- Logging -->
     <PackageVersion Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageVersion Include="Serilog.Settings.Configuration" Version="8.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
-  </ItemGroup>
 
-  <ItemGroup Label="Caching">
+    <!-- Caching -->
     <PackageVersion Include="StackExchange.Redis" Version="2.8.41" />
-  </ItemGroup>
 
-  <ItemGroup Label="JWT">
+    <!-- JWT -->
     <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="7.6.3" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.6.3" />
-  </ItemGroup>
 
-  <ItemGroup Label="API Gateway">
+    <!-- API Gateway -->
     <PackageVersion Include="Yarp.ReverseProxy" Version="2.2.0" />
-  </ItemGroup>
 
-  <ItemGroup Label="Swagger">
+    <!-- Swagger -->
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.9.0" />
   </ItemGroup>
 

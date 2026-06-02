@@ -1,6 +1,6 @@
 using Serilog;
 
-Console.Title = "Sos.Analytics.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.Analytics.API";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration

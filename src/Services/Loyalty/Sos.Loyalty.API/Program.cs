@@ -1,6 +1,6 @@
 using Serilog;
 
-Console.Title = "Sos.Loyalty.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.Loyalty.API";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration

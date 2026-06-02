@@ -1,6 +1,6 @@
 using Serilog;
 
-Console.Title = "Sos.CRM.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.CRM.API";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
