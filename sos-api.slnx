@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path=".gitignore" />
+    <File Path="docker-compose.yml" />
+    <File Path="README.md" />
+    <File Path="sos-api.slnx.startup.json" />
+  </Folder>
   <Folder Name="/src/" />
   <Folder Name="/src/ApiGateway/">
     <Project Path="src/ApiGateway/Sos.ApiGateway.csproj" />

@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup><TargetFramework>net8.0</TargetFramework><Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.4.1" />
-    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="FluentValidation" />
     <ProjectReference Include="..\Sos.Catalog.Domain\Sos.Catalog.Domain.csproj" />
     <ProjectReference Include="..\..\..\Shared\Sos.Shared.Kernel\Sos.Shared.Kernel.csproj" />
   </ItemGroup>

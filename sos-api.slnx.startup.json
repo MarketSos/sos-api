@@ -1,0 +1,78 @@
+/*
+    This is a configuration file for the SwitchStartupProject Visual Studio Extension
+    See https://heptapod.host/thirteen/switchstartupproject/blob/branch/current/Configuration.md
+*/
+{
+  /*  Configuration File Version  */
+  "Version": 3,
+
+  /*  Create an item in the dropdown list for each project in the solution?  */
+  "ListAllProjects": false,
+
+  "MultiProjectConfigurations": {
+    "All Services (Debug)": {
+      "Projects": {
+        "Sos.ApiGateway": {
+          "ProfileName": "Sos.ApiGateway"
+        },
+        "Sos.Identity.API": {
+          "ProfileName": "Sos.Identity.API"
+        },
+        "Sos.Catalog.API": {
+          "ProfileName": "Sos.Catalog.API"
+        },
+        "Sos.Inventory.API": {
+          "ProfileName": "Sos.Inventory.API"
+        },
+        "Sos.POS.API": {
+          "ProfileName": "Sos.POS.API"
+        },
+        "Sos.Pricing.API": {
+          "ProfileName": "Sos.Pricing.API"
+        },
+        "Sos.CRM.API": {
+          "ProfileName": "Sos.CRM.API"
+        },
+        "Sos.Loyalty.API": {
+          "ProfileName": "Sos.Loyalty.API"
+        },
+        "Sos.Analytics.API": {
+          "ProfileName": "Sos.Analytics.API"
+        }
+      },
+      "SolutionConfiguration": "Debug"
+    },
+    "Develop": {
+      "Projects": {
+        "Sos.ApiGateway": {
+          "ProfileName": "Sos.ApiGateway"
+        },
+        "Sos.Identity.API": {
+          "ProfileName": "Sos.Identity.API"
+        },
+        "Sos.Catalog.API": {
+          "ProfileName": "Sos.Catalog.API"
+        },
+        "Sos.Inventory.API": {
+          "ProfileName": "Sos.Inventory.API"
+        },
+        "Sos.POS.API": {
+          "ProfileName": "Sos.POS.API"
+        },
+        "Sos.Pricing.API": {
+          "ProfileName": "Sos.Pricing.API"
+        },
+        "Sos.CRM.API": {
+          "ProfileName": "Sos.CRM.API"
+        },
+        "Sos.Loyalty.API": {
+          "ProfileName": "Sos.Loyalty.API"
+        },
+        "Sos.Analytics.API": {
+          "ProfileName": "Sos.Analytics.API"
+        }
+      },
+      "SolutionConfiguration": "Debug"
+    }
+  }
+}
