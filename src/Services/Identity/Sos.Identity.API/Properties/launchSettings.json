@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Sos.Identity.API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61943;http://localhost:61944"
+    }
+  }
+}

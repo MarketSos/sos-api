@@ -1,2 +1,60 @@
 <Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/ApiGateway/">
+    <Project Path="src/ApiGateway/Sos.ApiGateway.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/Analytics/">
+    <Project Path="src/Services/Analytics/Sos.Analytics.API/Sos.Analytics.API.csproj" />
+    <Project Path="src/Services/Analytics/Sos.Analytics.Application/Sos.Analytics.Application.csproj" />
+    <Project Path="src/Services/Analytics/Sos.Analytics.Domain/Sos.Analytics.Domain.csproj" />
+    <Project Path="src/Services/Analytics/Sos.Analytics.Infrastructure/Sos.Analytics.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Catalog/">
+    <Project Path="src/Services/Catalog/Sos.Catalog.API/Sos.Catalog.API.csproj" />
+    <Project Path="src/Services/Catalog/Sos.Catalog.Application/Sos.Catalog.Application.csproj" />
+    <Project Path="src/Services/Catalog/Sos.Catalog.Domain/Sos.Catalog.Domain.csproj" />
+    <Project Path="src/Services/Catalog/Sos.Catalog.Infrastructure/Sos.Catalog.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/CRM/">
+    <Project Path="src/Services/CRM/Sos.CRM.API/Sos.CRM.API.csproj" />
+    <Project Path="src/Services/CRM/Sos.CRM.Application/Sos.CRM.Application.csproj" />
+    <Project Path="src/Services/CRM/Sos.CRM.Domain/Sos.CRM.Domain.csproj" />
+    <Project Path="src/Services/CRM/Sos.CRM.Infrastructure/Sos.CRM.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Identity/">
+    <Project Path="src/Services/Identity/Sos.Identity.API/Sos.Identity.API.csproj" />
+    <Project Path="src/Services/Identity/Sos.Identity.Application/Sos.Identity.Application.csproj" />
+    <Project Path="src/Services/Identity/Sos.Identity.Domain/Sos.Identity.Domain.csproj" />
+    <Project Path="src/Services/Identity/Sos.Identity.Infrastructure/Sos.Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Inventory/">
+    <Project Path="src/Services/Inventory/Sos.Inventory.API/Sos.Inventory.API.csproj" />
+    <Project Path="src/Services/Inventory/Sos.Inventory.Application/Sos.Inventory.Application.csproj" />
+    <Project Path="src/Services/Inventory/Sos.Inventory.Domain/Sos.Inventory.Domain.csproj" />
+    <Project Path="src/Services/Inventory/Sos.Inventory.Infrastructure/Sos.Inventory.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Loyalty/">
+    <Project Path="src/Services/Loyalty/Sos.Loyalty.API/Sos.Loyalty.API.csproj" />
+    <Project Path="src/Services/Loyalty/Sos.Loyalty.Application/Sos.Loyalty.Application.csproj" />
+    <Project Path="src/Services/Loyalty/Sos.Loyalty.Domain/Sos.Loyalty.Domain.csproj" />
+    <Project Path="src/Services/Loyalty/Sos.Loyalty.Infrastructure/Sos.Loyalty.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/POS/">
+    <Project Path="src/Services/POS/Sos.POS.API/Sos.POS.API.csproj" />
+    <Project Path="src/Services/POS/Sos.POS.Application/Sos.POS.Application.csproj" />
+    <Project Path="src/Services/POS/Sos.POS.Domain/Sos.POS.Domain.csproj" />
+    <Project Path="src/Services/POS/Sos.POS.Infrastructure/Sos.POS.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Pricing/">
+    <Project Path="src/Services/Pricing/Sos.Pricing.API/Sos.Pricing.API.csproj" />
+    <Project Path="src/Services/Pricing/Sos.Pricing.Application/Sos.Pricing.Application.csproj" />
+    <Project Path="src/Services/Pricing/Sos.Pricing.Domain/Sos.Pricing.Domain.csproj" />
+    <Project Path="src/Services/Pricing/Sos.Pricing.Infrastructure/Sos.Pricing.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/Sos.Shared.Contracts/Sos.Shared.Contracts.csproj" />
+    <Project Path="src/Shared/Sos.Shared.Infrastructure/Sos.Shared.Infrastructure.csproj" />
+    <Project Path="src/Shared/Sos.Shared.Kernel/Sos.Shared.Kernel.csproj" />
+  </Folder>
 </Solution>

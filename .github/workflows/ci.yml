@@ -18,10 +18,10 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore
-        run: dotnet restore StoreOS.sln
+        run: dotnet restore Sos.sln
 
       - name: Build
-        run: dotnet build StoreOS.sln --no-restore -c Release
+        run: dotnet build Sos.sln --no-restore -c Release
 
       - name: Test
-        run: dotnet test StoreOS.sln --no-build -c Release --verbosity normal
+        run: dotnet test Sos.sln --no-build -c Release --verbosity normal

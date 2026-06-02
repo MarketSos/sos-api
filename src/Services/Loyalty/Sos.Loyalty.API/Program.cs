@@ -1,14 +1,41 @@
 using Serilog;
+
+Console.Title = "Sos.Loyalty.API";
 var builder = WebApplication.CreateBuilder(args);
-Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
-builder.Host.UseSerilog();
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+builder.Host.UseSerilog((ctx, config) =>
+    config.ReadFrom.Configuration(ctx.Configuration));
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSwaggerGen();
+}
+
 builder.Services.AddHealthChecks();
+
 var app = builder.Build();
-app.UseSwagger(); app.UseSwaggerUI();
-app.UseAuthentication(); app.UseAuthorization();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseSerilogRequestLogging();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
+
+app.Logger.LogInformation("✅ Sos.Loyalty.API started in {Environment} mode", app.Environment.EnvironmentName);
+
 app.Run();
