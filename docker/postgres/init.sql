@@ -1,0 +1,9 @@
+-- StoreOS databases
+CREATE DATABASE storeos_identity;
+CREATE DATABASE storeos_catalog;
+CREATE DATABASE storeos_inventory;
+CREATE DATABASE storeos_pos;
+CREATE DATABASE storeos_pricing;
+CREATE DATABASE storeos_crm;
+CREATE DATABASE storeos_loyalty;
+CREATE DATABASE storeos_analytics;

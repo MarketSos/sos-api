@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <ProjectReference Include="..\Sos.Identity.Domain\Sos.Identity.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Sos.Shared.Kernel\Sos.Shared.Kernel.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Sos.Shared.Contracts\Sos.Shared.Contracts.csproj" />
+  </ItemGroup>
+</Project>

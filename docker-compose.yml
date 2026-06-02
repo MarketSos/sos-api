@@ -1,0 +1,189 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: storeos-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: storeos
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: storeos-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: src/ApiGateway/Dockerfile
+    container_name: storeos-gateway
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - identity-service
+    networks:
+      - storeos-network
+
+  identity-service:
+    build:
+      context: .
+      dockerfile: src/Services/Identity/StoreOS.Identity.API/Dockerfile
+    container_name: storeos-identity
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=storeos_identity;Username=postgres;Password=postgres
+      - ConnectionStrings__Redis=redis:6379
+      - Jwt__Secret=your-super-secret-key-change-in-production-min-32-chars
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - storeos-network
+
+  catalog-service:
+    build:
+      context: .
+      dockerfile: src/Services/Catalog/StoreOS.Catalog.API/Dockerfile
+    container_name: storeos-catalog
+    ports:
+      - "5002:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=storeos_catalog;Username=postgres;Password=postgres
+      - ConnectionStrings__Redis=redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - storeos-network
+
+  inventory-service:
+    build:
+      context: .
+      dockerfile: src/Services/Inventory/StoreOS.Inventory.API/Dockerfile
+    container_name: storeos-inventory
+    ports:
+      - "5003:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=storeos_inventory;Username=postgres;Password=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - storeos-network
+
+  pos-service:
+    build:
+      context: .
+      dockerfile: src/Services/POS/StoreOS.POS.API/Dockerfile
+    container_name: storeos-pos
+    ports:
+      - "5004:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=storeos_pos;Username=postgres;Password=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - storeos-network
+
+  pricing-service:
+    build:
+      context: .
+      dockerfile: src/Services/Pricing/StoreOS.Pricing.API/Dockerfile
+    container_name: storeos-pricing
+    ports:
+      - "5005:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=storeos_pricing;Username=postgres;Password=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - storeos-network
+
+  crm-service:
+    build:
+      context: .
+      dockerfile: src/Services/CRM/StoreOS.CRM.API/Dockerfile
+    container_name: storeos-crm
+    ports:
+      - "5006:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=storeos_crm;Username=postgres;Password=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - storeos-network
+
+  loyalty-service:
+    build:
+      context: .
+      dockerfile: src/Services/Loyalty/StoreOS.Loyalty.API/Dockerfile
+    container_name: storeos-loyalty
+    ports:
+      - "5007:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=storeos_loyalty;Username=postgres;Password=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - storeos-network
+
+  analytics-service:
+    build:
+      context: .
+      dockerfile: src/Services/Analytics/StoreOS.Analytics.API/Dockerfile
+    container_name: storeos-analytics
+    ports:
+      - "5008:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=storeos_analytics;Username=postgres;Password=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - storeos-network
+
+networks:
+  storeos-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
