@@ -1,17 +1,19 @@
 namespace Sos.Shared.Kernel.Domain;
 
 /// <summary>
-/// Интерфейс аудита — кто и когда создал/изменил запись.
+/// Аудит записи — кто и когда создал/изменил.
 /// </summary>
 public interface IAuditable
 {
-    /// <summary>
-    /// ID пользователя, создавшего запись
-    /// </summary>
-    public Guid? CreatedBy { get; }
+    /// <summary>Дата создания (UTC)</summary>
+    DateTimeOffset CreatedAt { get; }
 
-    /// <summary>
-    /// ID пользователя, последним изменившего запись
-    /// </summary>
-    public Guid? UpdatedBy { get; }
+    /// <summary>Дата последнего изменения (UTC)</summary>
+    DateTimeOffset? UpdatedAt { get; }
+
+    /// <summary>ID пользователя, создавшего запись</summary>
+    Guid? CreatedBy { get; }
+
+    /// <summary>ID пользователя, последним изменившего запись</summary>
+    Guid? UpdatedBy { get; }
 }

@@ -1,13 +1,15 @@
 using MediatR;
 using Sos.Shared.Kernel.Results;
+using Sos.Shared.Kernel.Domain;
 using Sos.Catalog.Domain.Entities;
 
 namespace Sos.Catalog.Application.Commands;
 
 public record CreateProductCommand(
-    string Name, string Barcode, Guid CategoryId,
+    string NameUz, string NameRu, string? NameEn, string? NameUzKiril,
+    string Barcode, Guid CategoryId,
     decimal BasePrice, string? SKU, string? Unit
-) : IRequest<Result<Guid>>;
+) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result<Guid>>;
 
 public class CreateProductHandler(
     Interfaces.IProductRepository repo) : IRequestHandler<CreateProductCommand, Result<Guid>>
@@ -19,8 +21,16 @@ public class CreateProductHandler(
             return Result.Failure<Guid>($"Barcode '{cmd.Barcode}' already exists.");
 
         var product = Product.Create(
-            Guid.NewGuid(), cmd.Name, cmd.Barcode,
-            cmd.CategoryId, cmd.BasePrice, cmd.SKU, cmd.Unit);
+            Guid.NewGuid(), 
+            cmd.NameUz, 
+            cmd.NameRu, 
+            cmd.Barcode, 
+            cmd.CategoryId, 
+            cmd.BasePrice, 
+            cmd.NameEn, 
+            cmd.NameUzKiril,
+            cmd.SKU, 
+            cmd.Unit);
 
         await repo.AddAsync(product, ct);
         return Result.Success(product.Id);

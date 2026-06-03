@@ -5,7 +5,7 @@ namespace Sos.Shared.Kernel.Domain;
 /// NameUz и NameRu — обязательные поля.
 /// NameEn и NameUzKiril — необязательные.
 /// </summary>
-public abstract class NamedEntity<TId> : AggregateRoot<TId>
+public abstract class LocalizableEntity<TId> : AggregateRoot<TId>
 {
     /// <summary>
     /// Название на узбекском (латиница) — обязательное
@@ -40,7 +40,7 @@ public abstract class NamedEntity<TId> : AggregateRoot<TId>
     };
 
     /// <summary>
-    /// Обновить названия
+    /// Установить или обновить названия
     /// </summary>
     protected void SetNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
     {
@@ -48,6 +48,6 @@ public abstract class NamedEntity<TId> : AggregateRoot<TId>
         NameRu      = nameRu;
         NameEn      = nameEn;
         NameUzKiril = nameUzKiril;
-        UpdatedAt   = DateTime.UtcNow;
+        UpdatedAt   = DateTimeOffset.UtcNow;
     }
 }

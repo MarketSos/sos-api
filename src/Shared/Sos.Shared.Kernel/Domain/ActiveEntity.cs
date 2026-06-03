@@ -3,7 +3,7 @@ namespace Sos.Shared.Kernel.Domain;
 /// <summary>
 /// Базовый класс для сущностей с многоязычным названием и флагом активности.
 /// </summary>
-public abstract class ActiveEntity<TId> : NamedEntity<TId>
+public abstract class ActiveEntity<TId> : LocalizableEntity<TId>
 {
     /// <summary>
     /// Активна ли сущность
@@ -13,10 +13,10 @@ public abstract class ActiveEntity<TId> : NamedEntity<TId>
     /// <summary>
     /// Деактивировать сущность
     /// </summary>
-    public virtual void Deactivate() { IsActive = false; UpdatedAt = DateTime.UtcNow; }
+    public virtual void Deactivate() { IsActive = false; UpdatedAt = DateTimeOffset.UtcNow; }
 
     /// <summary>
     /// Активировать сущность
     /// </summary>
-    public virtual void Activate() { IsActive = true; UpdatedAt = DateTime.UtcNow; }
+    public virtual void Activate() { IsActive = true; UpdatedAt = DateTimeOffset.UtcNow; }
 }

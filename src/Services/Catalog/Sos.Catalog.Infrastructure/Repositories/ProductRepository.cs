@@ -18,7 +18,7 @@ public class ProductRepository(CatalogDbContext db) : IProductRepository
 
     public async Task<IEnumerable<Product>> SearchAsync(string query, CancellationToken ct = default)
         => await db.Products.Where(p => p.IsActive &&
-            (p.Name.Contains(query) || p.Barcode.Contains(query))).ToListAsync(ct);
+            (p.NameUz.Contains(query) || p.Barcode.Contains(query))).ToListAsync(ct);
 
     public async Task AddAsync(Product product, CancellationToken ct = default)
     {
@@ -29,4 +29,6 @@ public class ProductRepository(CatalogDbContext db) : IProductRepository
     public async Task UpdateAsync(Product product, CancellationToken ct = default)
     {
         db.Products.Attach(product).State = EntityState.Modified;
-        await db
+        await db.SaveChangesAsync(ct);
+    }
+}
