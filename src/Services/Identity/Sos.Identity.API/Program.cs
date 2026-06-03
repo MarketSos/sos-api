@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Sos.Identity.Application.Commands;
 using Sos.Identity.Infrastructure.Extensions;
+using Sos.Identity.Infrastructure.Persistence;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.Identity.API";
 
@@ -71,7 +72,7 @@ app.Logger.LogInformation("Sos.Identity.API started in {Environment} mode", app.
 // Auto-migrate on startup
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<Sos.Identity.Infrastructure.Persistence.IdentityDbContext>();
+    var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
     await db.Database.MigrateAsync();
 }
 

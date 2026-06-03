@@ -18,12 +18,6 @@ public class InventoryDbContext(
     {
         base.OnModelCreating(builder);
         builder.HasDefaultSchema("inventory");
-
-        builder.Entity<StockItem>(e =>
-        {
-            e.HasKey(s => s.Id);
-            e.HasIndex(s => new { s.ProductId, s.StoreId }).IsUnique();
-            e.Property(s => s.Location).HasMaxLength(100);
-        });
+        builder.ApplyConfigurationsFromAssembly(typeof(InventoryDbContext).Assembly);
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Sos.Catalog.Application.Commands;
 using Sos.Catalog.Infrastructure.Extensions;
+using Sos.Catalog.Infrastructure.Persistence;
 using System.Text;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.Catalog.API";
@@ -96,7 +97,7 @@ app.Logger.LogInformation("Sos.Catalog.API started in {Environment} mode", app.E
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<Sos.Catalog.Infrastructure.Persistence.CatalogDbContext>();
+    var db = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
     await db.Database.MigrateAsync();
 }
 

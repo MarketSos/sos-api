@@ -22,7 +22,7 @@ public abstract class BaseDbContext(
         base.OnConfiguring(optionsBuilder);
         // Глобальный NoTracking — все read-запросы без отслеживания.
         // Для update/delete используйте Attach().State = EntityState.Modified явно.
-        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

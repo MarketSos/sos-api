@@ -3,46 +3,34 @@ using Sos.Shared.Kernel.Domain;
 namespace Sos.Catalog.Domain.Entities;
 
 /// <summary>
-/// Категория товаров. Поддерживает иерархическую структуру (дерево категорий).
+/// Категория товаров. Поддерживает иерархическую структуру (дерево).
 /// </summary>
 public class Category : CatalogEntity<Guid>
 {
     /// <summary>
-    /// ID родительской категории (null — корневая категория)
+    /// Идентификатор родительской категории (null — корневая)
     /// </summary>
     public Guid? ParentId { get; private set; }
 
-    /// <summary>
-    /// Родительская категория
-    /// </summary>
-    public Category? Parent { get; private set; }
-
-    /// <summary>
-    /// Дочерние категории
-    /// </summary>
+    public Category?            Parent   { get; private set; }
     public ICollection<Category> Children { get; private set; } = [];
-
-    /// <summary>
-    /// Товары в данной категории
-    /// </summary>
-    public ICollection<Product> Products { get; private set; } = [];
+    public ICollection<Product>  Products { get; private set; } = [];
 
     private Category() { }
 
-    /// <summary>
-    /// Создать новую категорию
-    /// </summary>
-    public static Category Create(Guid id, string nameUz, string nameRu,
-        string? nameEn = null, string? nameUzKiril = null, Guid? parentId = null)
+    public static Category Create(
+        Guid id,
+        string nameUz,
+        string nameRu,
+        string? nameEn      = null,
+        string? nameUzKiril = null,
+        Guid? parentId      = null)
     {
         var category = new Category { Id = id, ParentId = parentId };
         category.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
         return category;
     }
 
-    /// <summary>
-    /// Обновить названия категории
-    /// </summary>
     public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
         => SetNames(nameUz, nameRu, nameEn, nameUzKiril);
 }

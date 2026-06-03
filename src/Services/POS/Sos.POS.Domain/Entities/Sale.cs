@@ -4,27 +4,26 @@ namespace Sos.POS.Domain.Entities;
 
 /// <summary>
 /// Продажа (чек) — главный агрегат POS-системы.
-/// Содержит позиции, способ оплаты и итоговые суммы.
 /// </summary>
 public class Sale : AggregateRoot<Guid>
 {
     /// <summary>
-    /// ID магазина, где совершена продажа
+    /// Идентификатор магазина
     /// </summary>
     public Guid StoreId { get; private set; }
 
     /// <summary>
-    /// ID кассира
+    /// Идентификатор кассира
     /// </summary>
     public Guid CashierId { get; private set; }
 
     /// <summary>
-    /// ID покупателя (если идентифицирован — для бонусов)
+    /// Идентификатор покупателя (необязательно, для бонусной программы)
     /// </summary>
     public Guid? CustomerId { get; private set; }
 
     /// <summary>
-    /// Статус продажи
+    /// Статус чека
     /// </summary>
     public SaleStatus Status { get; private set; }
 
@@ -68,29 +67,21 @@ public class Sale : AggregateRoot<Guid>
     /// </summary>
     public string? ReceiptNumber { get; private set; }
 
-    private readonly List<SaleItem> _items = [];
-
-    /// <summary>
-    /// Позиции в чеке
-    /// </summary>
-    public IReadOnlyList<SaleItem> Items => _items.AsReadOnly();
+    public ICollection<SaleItem> Items { get; private set; } = new List<SaleItem>();
 
     private Sale() { }
 
-    /// <summary>
-    /// Открыть новый чек на кассе
-    /// </summary>
     public static Sale Create(Guid storeId, Guid cashierId, Guid? customerId = null)
         => new() { Id = Guid.NewGuid(), StoreId = storeId, CashierId = cashierId, CustomerId = customerId, Status = SaleStatus.Draft };
 
     /// <summary>
-    /// Добавить товар в чек (или увеличить количество если уже есть)
+    /// Добавить товар в чек (или увеличить количество, если уже есть)
     /// </summary>
     public void AddItem(Guid productId, string productName, int qty, decimal unitPrice, decimal discount = 0)
     {
-        var existing = _items.FirstOrDefault(i => i.ProductId == productId);
+        var existing = Items.FirstOrDefault(i => i.ProductId == productId);
         if (existing is not null) { existing.IncreaseQuantity(qty); }
-        else { _items.Add(SaleItem.Create(Id, productId, productName, qty, unitPrice, discount)); }
+        else { Items.Add(SaleItem.Create(Id, productId, productName, qty, unitPrice, discount)); }
         RecalculateTotals();
     }
 
@@ -99,8 +90,8 @@ public class Sale : AggregateRoot<Guid>
     /// </summary>
     public void RemoveItem(Guid productId)
     {
-        var item = _items.FirstOrDefault(i => i.ProductId == productId);
-        if (item is not null) { _items.Remove(item); RecalculateTotals(); }
+        var item = Items.FirstOrDefault(i => i.ProductId == productId);
+        if (item is not null) { Items.Remove(item); RecalculateTotals(); }
     }
 
     /// <summary>
@@ -108,26 +99,26 @@ public class Sale : AggregateRoot<Guid>
     /// </summary>
     public void Complete(PaymentMethod method, decimal paidAmount)
     {
-        Status = SaleStatus.Completed;
+        Status        = SaleStatus.Completed;
         PaymentMethod = method;
-        PaidAmount = paidAmount;
-        ChangeAmount = paidAmount - TotalAmount;
+        PaidAmount    = paidAmount;
+        ChangeAmount  = paidAmount - TotalAmount;
         ReceiptNumber = $"RCP-{DateTime.UtcNow:yyyyMMdd}-{Id.ToString()[..8].ToUpper()}";
-        UpdatedAt = DateTime.UtcNow;
+        UpdatedAt     = DateTimeOffset.UtcNow;
         AddDomainEvent(new SaleCompletedDomainEvent(this));
     }
 
     /// <summary>
     /// Отменить продажу
     /// </summary>
-    public void Cancel() { Status = SaleStatus.Cancelled; UpdatedAt = DateTime.UtcNow; }
+    public void Cancel() { Status = SaleStatus.Cancelled; UpdatedAt = DateTimeOffset.UtcNow; }
 
     private void RecalculateTotals()
     {
-        SubTotal = _items.Sum(i => i.TotalPrice);
-        DiscountAmount = _items.Sum(i => i.DiscountAmount);
-        TaxAmount = SubTotal * 0.12m;
-        TotalAmount = SubTotal + TaxAmount - DiscountAmount;
+        SubTotal       = Items.Sum(i => i.TotalPrice);
+        DiscountAmount = Items.Sum(i => i.DiscountAmount);
+        TaxAmount      = SubTotal * 0.12m;
+        TotalAmount    = SubTotal + TaxAmount - DiscountAmount;
     }
 }
 
@@ -152,7 +143,7 @@ public enum SaleStatus
     Cancelled = 3,
 
     /// <summary>
-    /// Возврат оформлен
+    /// Оформлен возврат
     /// </summary>
     Refunded = 4
 }

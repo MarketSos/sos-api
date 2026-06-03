@@ -20,6 +20,8 @@ public static class ServiceCollectionExtensions
             opts.UseNpgsql(config.GetConnectionString("Default")));
 
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ISkuRepository, SkuRepository>();
+        services.AddScoped<IMeasurementUnitRepository, MeasurementUnitRepository>();
 
         return services;
     }

@@ -3,13 +3,12 @@ using Sos.Shared.Kernel.Domain;
 namespace Sos.Identity.Domain.Entities;
 
 /// <summary>
-/// Токен обновления для бессрочной авторизации без повторного входа.
-/// Хранится в базе; при использовании — заменяется новым (rotation).
+/// Refresh-токен — при использовании заменяется новым (rotation).
 /// </summary>
 public class RefreshToken : Entity<Guid>
 {
     /// <summary>
-    /// ID пользователя-владельца токена
+    /// Идентификатор пользователя
     /// </summary>
     public Guid UserId { get; private set; }
 
@@ -19,12 +18,12 @@ public class RefreshToken : Entity<Guid>
     public string Token { get; private set; } = default!;
 
     /// <summary>
-    /// Дата истечения срока действия
+    /// Дата истечения
     /// </summary>
     public DateTime ExpiresAt { get; private set; }
 
     /// <summary>
-    /// Отозван ли токен вручную
+    /// Отозван ли вручную
     /// </summary>
     public bool IsRevoked { get; private set; }
 
@@ -34,26 +33,23 @@ public class RefreshToken : Entity<Guid>
     public bool IsExpired => DateTime.UtcNow >= ExpiresAt;
 
     /// <summary>
-    /// Действителен ли токен (не отозван и не истёк)
+    /// Действителен ли токен
     /// </summary>
     public bool IsActive => !IsRevoked && !IsExpired;
 
     private RefreshToken() { }
 
-    /// <summary>
-    /// Создать новый refresh-токен
-    /// </summary>
     public static RefreshToken Create(Guid userId, string token, int expiryDays = 30)
         => new()
         {
-            Id = Guid.NewGuid(),
-            UserId = userId,
-            Token = token,
+            Id        = Guid.NewGuid(),
+            UserId    = userId,
+            Token     = token,
             ExpiresAt = DateTime.UtcNow.AddDays(expiryDays)
         };
 
     /// <summary>
-    /// Отозвать токен (logout или ротация)
+    /// Отозвать токен (выход или ротация)
     /// </summary>
     public void Revoke() => IsRevoked = true;
 }

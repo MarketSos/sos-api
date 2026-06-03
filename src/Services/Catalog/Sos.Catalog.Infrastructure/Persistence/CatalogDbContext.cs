@@ -12,28 +12,17 @@ public class CatalogDbContext(
     ICurrentUserService currentUser)
     : BaseDbContext(options, mediator, currentUser)
 {
-    public DbSet<Product> Products => Set<Product>();
-    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Product>         Products         => Set<Product>();
+    public DbSet<Sku>             Skus             => Set<Sku>();
+    public DbSet<Category>        Categories       => Set<Category>();
+    public DbSet<MeasurementUnit> MeasurementUnits => Set<MeasurementUnit>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.HasDefaultSchema("catalog");
 
-        builder.Entity<Product>(e =>
-        {
-            e.HasKey(p => p.Id);
-            e.HasIndex(p => p.Barcode).IsUnique();
-            e.Property(p => p.NameUz).HasMaxLength(300).IsRequired();
-            e.Property(p => p.BasePrice).HasColumnType("decimal(18,2)");
-            e.Property(p => p.CostPrice).HasColumnType("decimal(18,2)");
-        });
-
-        builder.Entity<Category>(e =>
-        {
-            e.HasKey(c => c.Id);
-            e.HasMany(c => c.Children).WithOne(c => c.Parent).HasForeignKey(c => c.ParentId);
-            e.HasMany(c => c.Products).WithOne().HasForeignKey(p => p.CategoryId);
-        });
+        // Configurations/ papkasidagi barcha IEntityTypeConfiguration<T> larni avtomatik yuklaydi
+        builder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
     }
 }

@@ -13,8 +13,12 @@ public class UserRepository(IdentityDbContext db) : IUserRepository
     public Task<User?> GetByEmailAsync(string email, CancellationToken ct = default)
         => db.Users.FirstOrDefaultAsync(u => u.Email == email.ToLowerInvariant(), ct);
 
-    public Task<bool> ExistsAsync(string email, CancellationToken ct = default)
-        => db.Users.AnyAsync(u => u.Email == email.ToLowerInvariant(), ct);
+    public async Task<bool> ExistsAsync(string email, CancellationToken ct = default)
+    { 
+        var result = await db.Users.AnyAsync(u => u.Email == email.ToLowerInvariant(), ct);
+
+        return result;
+    }
 
     public async Task AddAsync(User user, CancellationToken ct = default)
     {

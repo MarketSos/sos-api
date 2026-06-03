@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Sos.Inventory.Application.Commands;
 using Sos.Inventory.Infrastructure.Extensions;
+using Sos.Inventory.Infrastructure.Persistence;
 using System.Text;
 
 internal class Program
@@ -100,7 +101,7 @@ internal class Program
 
         using (var scope = app.Services.CreateScope())
         {
-            var db = scope.ServiceProvider.GetRequiredService<Sos.Inventory.Infrastructure.Persistence.InventoryDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
             await db.Database.MigrateAsync();
         }
 

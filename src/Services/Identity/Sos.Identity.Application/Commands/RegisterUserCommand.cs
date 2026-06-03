@@ -22,7 +22,9 @@ public class RegisterUserHandler(
 {
     public async Task<Result<Guid>> Handle(RegisterUserCommand cmd, CancellationToken ct)
     {
-        if (await userRepo.ExistsAsync(cmd.Email, ct))
+        var isExistEmail = await userRepo.ExistsAsync(cmd.Email, ct);
+
+        if (isExistEmail)
             return Result.Failure<Guid>($"'{cmd.Email}' email allaqachon ro'yxatdan o'tgan.");
 
         var tempUser = User.Create(Guid.NewGuid(), cmd.Email, "", cmd.FirstName, cmd.LastName, cmd.Role, cmd.StoreId);

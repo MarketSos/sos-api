@@ -4,6 +4,10 @@
     <PackageReference Include="Serilog.Settings.Configuration" />
     <PackageReference Include="Serilog.AspNetCore" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <ProjectReference Include="..\Sos.POS.Application\Sos.POS.Application.csproj" />
     <ProjectReference Include="..\Sos.POS.Infrastructure\Sos.POS.Infrastructure.csproj" />
   </ItemGroup>
