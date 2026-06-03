@@ -62,26 +62,27 @@ public abstract class BaseDbContext(
 
     /// <summary>
     /// Автозаполнение: CreatedAt, UpdatedAt, CreatedBy, UpdatedBy
+    /// Применяется только к AggregateRoot — у Entity<Guid> этих полей нет.
     /// </summary>
     private void ApplyAuditInfo()
     {
-        var now    = DateTime.UtcNow;
+        var now    = DateTimeOffset.UtcNow;
         var userId = currentUser.UserId;
 
-        foreach (var entry in ChangeTracker.Entries<Entity<Guid>>())
+        foreach (var entry in ChangeTracker.Entries<AggregateRoot<Guid>>())
         {
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Property(nameof(Entity<Guid>.CreatedAt)).CurrentValue = now;
+                    entry.Entity.CreatedAt = now;
                     if (userId.HasValue)
-                        entry.Property(nameof(Entity<Guid>.CreatedBy)).CurrentValue = userId;
+                        entry.Entity.CreatedBy = userId;
                     break;
 
                 case EntityState.Modified:
-                    entry.Property(nameof(Entity<Guid>.UpdatedAt)).CurrentValue = now;
+                    entry.Entity.UpdatedAt = now;
                     if (userId.HasValue)
-                        entry.Property(nameof(Entity<Guid>.UpdatedBy)).CurrentValue = userId;
+                        entry.Entity.UpdatedBy = userId;
                     break;
             }
         }

@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Sos.Identity.Application.Commands;
@@ -66,5 +67,12 @@ app.MapControllers();
 app.MapHealthChecks("/health");
 
 app.Logger.LogInformation("Sos.Identity.API started in {Environment} mode", app.Environment.EnvironmentName);
+
+// Auto-migrate on startup
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<Sos.Identity.Infrastructure.Persistence.IdentityDbContext>();
+    await db.Database.MigrateAsync();
+}
 
 app.Run();

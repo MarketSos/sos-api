@@ -2,11 +2,15 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sos.Catalog.Domain.Entities;
 using Sos.Shared.Infrastructure.Persistence;
+using Sos.Shared.Infrastructure.Services;
 
 namespace Sos.Catalog.Infrastructure.Persistence;
 
-public class CatalogDbContext(DbContextOptions<CatalogDbContext> options, IMediator mediator)
-    : BaseDbContext(options, mediator)
+public class CatalogDbContext(
+    DbContextOptions<CatalogDbContext> options,
+    IMediator mediator,
+    ICurrentUserService currentUser)
+    : BaseDbContext(options, mediator, currentUser)
 {
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
@@ -20,7 +24,7 @@ public class CatalogDbContext(DbContextOptions<CatalogDbContext> options, IMedia
         {
             e.HasKey(p => p.Id);
             e.HasIndex(p => p.Barcode).IsUnique();
-            e.Property(p => p.Name).HasMaxLength(300).IsRequired();
+            e.Property(p => p.NameUz).HasMaxLength(300).IsRequired();
             e.Property(p => p.BasePrice).HasColumnType("decimal(18,2)");
             e.Property(p => p.CostPrice).HasColumnType("decimal(18,2)");
         });

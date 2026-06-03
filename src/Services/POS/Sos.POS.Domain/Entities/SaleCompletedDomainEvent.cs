@@ -5,5 +5,5 @@ namespace Sos.POS.Domain.Entities;
 public record SaleCompletedDomainEvent(Sale Sale) : IDomainEvent
 {
     public Guid EventId { get; } = Guid.NewGuid();
-    public DateTime OccurredOn { get; } = DateTime.UtcNow;
+    public DateTimeOffset OccurredOn { get; } = DateTimeOffset.UtcNow;
 }

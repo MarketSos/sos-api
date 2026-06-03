@@ -9,10 +9,10 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IAuditable, ISoftDeletab
     public int Version { get; protected set; }
 
     // --- IAuditable ---
-    public DateTimeOffset CreatedAt { get; protected set; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset? UpdatedAt { get; protected set; }
-    public Guid? CreatedBy { get; protected set; }
-    public Guid? UpdatedBy { get; protected set; }
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset? UpdatedAt { get; set; }
+    public Guid? CreatedBy { get; set; }
+    public Guid? UpdatedBy { get; set; }
 
     // --- ISoftDeletable ---
     public bool IsDeleted { get; protected set; }

@@ -49,4 +49,15 @@ public class SalesController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(cmd with { SaleId = saleId }, ct);
         return result.IsSuccess ? Ok(result.Value) : BadRequest(new { error = result.Error });
     }
+
+    /// <summary>
+    /// Отменить открытый чек.
+    /// </summary>
+    [HttpPost("{saleId}/cancel")]
+    [Authorize(Roles = "SuperAdmin,StoreAdmin,Cashier")]
+    public async Task<IActionResult> Cancel(Guid saleId, CancellationToken ct)
+    {
+        var result = await mediator.Send(new CancelSaleCommand(saleId), ct);
+        return result.IsSuccess ? Ok() : BadRequest(new { error = result.Error });
+    }
 }
