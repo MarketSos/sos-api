@@ -29,7 +29,4 @@ public class CatalogDbContext(DbContextOptions<CatalogDbContext> options, IMedia
         {
             e.HasKey(c => c.Id);
             e.HasMany(c => c.Children).WithOne(c => c.Parent).HasForeignKey(c => c.ParentId);
-            e.HasMany(c => c.Products).WithOne().HasForeignKey(p => p.CategoryId);
-        });
-    }
-}
+            e.HasMany(c => c.Products).WithOne().HasForeignKey(p => p.Ca

@@ -1,6 +1,11 @@
+using MediatR;
+using Microsoft.OpenApi.Models;
 using Serilog;
+using Sos.Identity.Application.Commands;
+using Sos.Identity.Infrastructure.Extensions;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.Identity.API";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
@@ -15,9 +20,33 @@ builder.Host.UseSerilog((ctx, config) =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(LoginCommand).Assembly));
+
+builder.Services.AddIdentityInfrastructure(builder.Configuration);
+
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sos Identity API", Version = "v1" });
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "JWT token kiriting: Bearer {token}"
+        });
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" } },
+                Array.Empty<string>()
+            }
+        });
+    });
 }
 
 builder.Services.AddHealthChecks();
@@ -36,6 +65,6 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-app.Logger.LogInformation("✅ Sos.Identity.API started in {Environment} mode", app.Environment.EnvironmentName);
+app.Logger.LogInformation("Sos.Identity.API started in {Environment} mode", app.Environment.EnvironmentName);
 
 app.Run();

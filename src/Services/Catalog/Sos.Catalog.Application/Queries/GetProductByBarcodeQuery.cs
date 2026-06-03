@@ -15,6 +15,4 @@ public class GetProductByBarcodeHandler(IProductRepository repo)
         var product = await repo.GetByBarcodeAsync(q.Barcode, ct);
         return product is null
             ? Result.Failure<Product>($"Product with barcode '{q.Barcode}' not found.")
-            : Result.Success(product);
-    }
-}
+            : Result.Success(p

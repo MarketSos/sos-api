@@ -36,6 +36,4 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-app.Logger.LogInformation("✅ Sos.Analytics.API started in {Environment} mode", app.Environment.EnvironmentName);
-
-app.Run();
+app.Logger.LogInformation("✅ Sos.Analytics.API started in {Environment} mode", app.Envi

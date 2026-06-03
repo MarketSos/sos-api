@@ -2,24 +2,81 @@ using Sos.Shared.Kernel.Domain;
 
 namespace Sos.Catalog.Domain.Entities;
 
+/// <summary>
+/// Товар в каталоге магазина. Содержит всю коммерческую информацию о продукте.
+/// </summary>
 public class Product : AggregateRoot<Guid>
 {
+    /// <summary>
+    /// Наименование товара
+    /// </summary>
     public string Name { get; private set; } = default!;
+
+    /// <summary>
+    /// Описание товара
+    /// </summary>
     public string? Description { get; private set; }
+
+    /// <summary>
+    /// Штрих-код (EAN-13, QR и др.)
+    /// </summary>
     public string Barcode { get; private set; } = default!;
+
+    /// <summary>
+    /// Артикул (Stock Keeping Unit)
+    /// </summary>
     public string? SKU { get; private set; }
+
+    /// <summary>
+    /// ID категории товара
+    /// </summary>
     public Guid CategoryId { get; private set; }
+
+    /// <summary>
+    /// ID бренда (необязательно)
+    /// </summary>
     public Guid? BrandId { get; private set; }
+
+    /// <summary>
+    /// Базовая цена продажи
+    /// </summary>
     public decimal BasePrice { get; private set; }
+
+    /// <summary>
+    /// Закупочная цена (себестоимость)
+    /// </summary>
     public decimal? CostPrice { get; private set; }
+
+    /// <summary>
+    /// URL изображения товара
+    /// </summary>
     public string? ImageUrl { get; private set; }
+
+    /// <summary>
+    /// Вес товара (в кг)
+    /// </summary>
     public decimal? Weight { get; private set; }
+
+    /// <summary>
+    /// Единица измерения (шт, кг, л и т.д.)
+    /// </summary>
     public string? Unit { get; private set; }
+
+    /// <summary>
+    /// Активен ли товар в каталоге
+    /// </summary>
     public bool IsActive { get; private set; } = true;
+
+    /// <summary>
+    /// Продаётся ли товар на вес
+    /// </summary>
     public bool IsWeighed { get; private set; }
 
     private Product() { }
 
+    /// <summary>
+    /// Создать новый товар в каталоге
+    /// </summary>
     public static Product Create(Guid id, string name, string barcode, Guid categoryId,
         decimal basePrice, string? sku = null, string? unit = "dona")
     {
@@ -37,11 +94,17 @@ public class Product : AggregateRoot<Guid>
         return product;
     }
 
+    /// <summary>
+    /// Изменить цену товара
+    /// </summary>
     public void UpdatePrice(decimal newPrice)
     {
         BasePrice = newPrice;
         UpdatedAt = DateTime.UtcNow;
     }
 
+    /// <summary>
+    /// Снять товар с продажи
+    /// </summary>
     public void Deactivate() { IsActive = false; UpdatedAt = DateTime.UtcNow; }
 }

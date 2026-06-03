@@ -1,5 +1,7 @@
 using Serilog;
 
+if (OperatingSystem.IsWindows()) Console.Title = "Sos.ApiGateway";
+
 var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
@@ -23,9 +25,4 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapReverseProxy();
-app.MapHealthChecks("/health");
-
-app.Run();
+app.UseAuthentication

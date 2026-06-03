@@ -24,6 +24,4 @@ public abstract class BaseDbContext(DbContextOptions options, IMediator mediator
         aggregates.ForEach(a => a.ClearDomainEvents());
 
         foreach (var domainEvent in events)
-            await mediator.Publish(domainEvent, cancellationToken);
-    }
-}
+            await mediator.Publish(domainEvent, ca

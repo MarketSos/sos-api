@@ -9,6 +9,7 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> options, IMed
     : BaseDbContext(options, mediator)
 {
     public DbSet<User> Users => Set<User>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -22,6 +23,15 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> options, IMed
             e.Property(u => u.Email).HasMaxLength(256).IsRequired();
             e.Property(u => u.FirstName).HasMaxLength(100).IsRequired();
             e.Property(u => u.LastName).HasMaxLength(100).IsRequired();
+            e.Property(u => u.Role).HasConversion<string>();
+        });
+
+        builder.Entity<RefreshToken>(e =>
+        {
+            e.HasKey(t => t.Id);
+            e.HasIndex(t => t.Token).IsUnique();
+            e.Property(t => t.Token).HasMaxLength(500).IsRequired();
+            e.HasOne<User>().WithMany().HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

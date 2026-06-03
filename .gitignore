@@ -46,3 +46,4 @@ coverage/
 *.coverage
 *.coveragexml
 TestResults/
+src/ApiGateway/se

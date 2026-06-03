@@ -22,6 +22,4 @@ public class CreateProductHandler(
             cmd.CategoryId, cmd.BasePrice, cmd.SKU, cmd.Unit);
 
         await repo.AddAsync(product, ct);
-        return Result.Success(product.Id);
-    }
-}
+        return Result.Succe

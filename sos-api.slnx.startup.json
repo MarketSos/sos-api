@@ -49,27 +49,6 @@
         },
         "Sos.Identity.API": {
           "ProfileName": "Sos.Identity.API"
-        },
-        "Sos.Catalog.API": {
-          "ProfileName": "Sos.Catalog.API"
-        },
-        "Sos.Inventory.API": {
-          "ProfileName": "Sos.Inventory.API"
-        },
-        "Sos.POS.API": {
-          "ProfileName": "Sos.POS.API"
-        },
-        "Sos.Pricing.API": {
-          "ProfileName": "Sos.Pricing.API"
-        },
-        "Sos.CRM.API": {
-          "ProfileName": "Sos.CRM.API"
-        },
-        "Sos.Loyalty.API": {
-          "ProfileName": "Sos.Loyalty.API"
-        },
-        "Sos.Analytics.API": {
-          "ProfileName": "Sos.Analytics.API"
         }
       },
       "SolutionConfiguration": "Debug"
