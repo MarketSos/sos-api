@@ -5,32 +5,12 @@ namespace Sos.Catalog.Domain.Entities;
 /// <summary>
 /// Категория товаров. Поддерживает иерархическую структуру (дерево категорий).
 /// </summary>
-public class Category : AggregateRoot<Guid>
+public class Category : CatalogEntity<Guid>
 {
-    /// <summary>
-    /// Название категории
-    /// </summary>
-    public string Name { get; private set; } = default!;
-
-    /// <summary>
-    /// Описание категории
-    /// </summary>
-    public string? Description { get; private set; }
-
     /// <summary>
     /// ID родительской категории (null — корневая категория)
     /// </summary>
     public Guid? ParentId { get; private set; }
-
-    /// <summary>
-    /// Порядок сортировки в списке
-    /// </summary>
-    public int SortOrder { get; private set; }
-
-    /// <summary>
-    /// Активна ли категория
-    /// </summary>
-    public bool IsActive { get; private set; } = true;
 
     /// <summary>
     /// Родительская категория
@@ -52,6 +32,17 @@ public class Category : AggregateRoot<Guid>
     /// <summary>
     /// Создать новую категорию
     /// </summary>
-    public static Category Create(Guid id, string name, Guid? parentId = null)
-        => new() { Id = id, Name = name, ParentId = parentId };
+    public static Category Create(Guid id, string nameUz, string nameRu,
+        string? nameEn = null, string? nameUzKiril = null, Guid? parentId = null)
+    {
+        var category = new Category { Id = id, ParentId = parentId };
+        category.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        return category;
+    }
+
+    /// <summary>
+    /// Обновить названия категории
+    /// </summary>
+    public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
+        => SetNames(nameUz, nameRu, nameEn, nameUzKiril);
 }

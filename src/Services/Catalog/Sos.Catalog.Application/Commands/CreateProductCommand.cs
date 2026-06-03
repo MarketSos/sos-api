@@ -1,5 +1,6 @@
 using MediatR;
 using Sos.Shared.Kernel.Results;
+using Sos.Catalog.Domain.Entities;
 
 namespace Sos.Catalog.Application.Commands;
 
@@ -17,7 +18,7 @@ public class CreateProductHandler(
         if (existing is not null)
             return Result.Failure<Guid>($"Barcode '{cmd.Barcode}' already exists.");
 
-        var product = Domain.Entities.Product.Create(
+        var product = Product.Create(
             Guid.NewGuid(), cmd.Name, cmd.Barcode,
             cmd.CategoryId, cmd.BasePrice, cmd.SKU, cmd.Unit);
 

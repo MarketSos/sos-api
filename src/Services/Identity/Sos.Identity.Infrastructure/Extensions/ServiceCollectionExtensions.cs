@@ -9,6 +9,7 @@ using Sos.Identity.Domain.Entities;
 using Sos.Identity.Infrastructure.Persistence;
 using Sos.Identity.Infrastructure.Repositories;
 using Sos.Identity.Infrastructure.Services;
+using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
 namespace Sos.Identity.Infrastructure.Extensions;
@@ -19,6 +20,9 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration config)
     {
+        // Shared: ICurrentUserService, IHttpContextAccessor
+        services.AddSharedInfrastructure();
+
         // Database
         services.AddDbContext<IdentityDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));

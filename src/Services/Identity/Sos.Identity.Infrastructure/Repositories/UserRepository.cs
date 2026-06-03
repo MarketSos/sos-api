@@ -24,7 +24,7 @@ public class UserRepository(IdentityDbContext db) : IUserRepository
 
     public async Task UpdateAsync(User user, CancellationToken ct = default)
     {
-        db.Users.Update(user);
+        db.Users.Attach(user).State = EntityState.Modified;
         await db.SaveChangesAsync(ct);
     }
 }

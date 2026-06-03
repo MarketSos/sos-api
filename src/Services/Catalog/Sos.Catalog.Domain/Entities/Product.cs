@@ -5,18 +5,8 @@ namespace Sos.Catalog.Domain.Entities;
 /// <summary>
 /// Товар в каталоге магазина. Содержит всю коммерческую информацию о продукте.
 /// </summary>
-public class Product : AggregateRoot<Guid>
+public class Product : DescribedEntity<Guid>
 {
-    /// <summary>
-    /// Наименование товара
-    /// </summary>
-    public string Name { get; private set; } = default!;
-
-    /// <summary>
-    /// Описание товара
-    /// </summary>
-    public string? Description { get; private set; }
-
     /// <summary>
     /// Штрих-код (EAN-13, QR и др.)
     /// </summary>
@@ -77,19 +67,20 @@ public class Product : AggregateRoot<Guid>
     /// <summary>
     /// Создать новый товар в каталоге
     /// </summary>
-    public static Product Create(Guid id, string name, string barcode, Guid categoryId,
-        decimal basePrice, string? sku = null, string? unit = "dona")
+    public static Product Create(Guid id, string nameUz, string nameRu, string barcode,
+        Guid categoryId, decimal basePrice, string? nameEn = null,
+        string? nameUzKiril = null, string? sku = null, string? unit = "dona")
     {
         var product = new Product
         {
-            Id = id,
-            Name = name,
-            Barcode = barcode,
+            Id         = id,
+            Barcode    = barcode,
             CategoryId = categoryId,
-            BasePrice = basePrice,
-            SKU = sku,
-            Unit = unit
+            BasePrice  = basePrice,
+            SKU        = sku,
+            Unit       = unit
         };
+        product.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
         product.AddDomainEvent(new ProductCreatedDomainEvent(product));
         return product;
     }
@@ -97,11 +88,13 @@ public class Product : AggregateRoot<Guid>
     /// <summary>
     /// Изменить цену товара
     /// </summary>
-    public void UpdatePrice(decimal newPrice)
-    {
-        BasePrice = newPrice;
-        UpdatedAt = DateTime.UtcNow;
-    }
+    public void UpdatePrice(decimal newPrice) { BasePrice = newPrice; UpdatedAt = DateTime.UtcNow; }
+
+    /// <summary>
+    /// Обновить названия товара
+    /// </summary>
+    public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
+        => SetNames(nameUz, nameRu, nameEn, nameUzKiril);
 
     /// <summary>
     /// Снять товар с продажи
