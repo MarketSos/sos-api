@@ -2,4 +2,4 @@
     <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Sos.Shared.Kernel\Sos.Shared.Kernel.csproj" />
   </ItemGroup>
-</Proje
+</Project>

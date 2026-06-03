@@ -46,4 +46,6 @@ coverage/
 *.coverage
 *.coveragexml
 TestResults/
-src/ApiGateway/se
+src/ApiGateway/sedeLSUe5
+src/ApiGateway/sedeeGmNa
+.solution.json

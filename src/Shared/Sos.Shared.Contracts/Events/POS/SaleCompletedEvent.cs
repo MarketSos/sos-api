@@ -6,4 +6,4 @@ public record SaleCompletedEvent(
     decimal TotalAmount, List<SaleItemDto> Items
 ) : IntegrationEvent(Id, OccurredOn);
 
-public record SaleItemDto(Guid ProductId, int Quantity, decimal Unit
+public record SaleItemDto(Guid ProductId, int Quantity, decimal UnitPrice);

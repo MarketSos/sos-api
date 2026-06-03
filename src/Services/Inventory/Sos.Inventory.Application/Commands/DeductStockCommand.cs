@@ -17,4 +17,6 @@ public class DeductStockHandler(IStockRepository repo) : IRequestHandler<DeductS
         if (!r.IsSuccess) return Result.Failure(r.Error!);
 
         await repo.UpdateAsync(stock, ct);
-        return Result.
+        return Result.Success();
+    }
+}

@@ -36,4 +36,7 @@
     <PackageVersion Include="Yarp.ReverseProxy" Version="2.2.0" />
 
     <!-- Swagger -->
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version=
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+  </ItemGroup>
+
+</Project>

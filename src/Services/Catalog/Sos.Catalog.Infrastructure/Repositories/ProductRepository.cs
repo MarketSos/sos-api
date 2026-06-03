@@ -29,4 +29,6 @@ public class ProductRepository(CatalogDbContext db) : IProductRepository
     public async Task UpdateAsync(Product product, CancellationToken ct = default)
     {
         db.Products.Update(product);
-        await db
+        await db.SaveChangesAsync(ct);
+    }
+}

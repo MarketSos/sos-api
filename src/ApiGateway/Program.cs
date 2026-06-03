@@ -25,4 +25,9 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-app.UseAuthentication
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapReverseProxy();
+app.MapHealthChecks("/health");
+
+app.Run();

@@ -27,4 +27,5 @@ public class RedisCacheService(IConnectionMultiplexer redis) : ICacheService
     }
 
     public async Task RemoveAsync(string key, CancellationToken ct = default)
-        => await _db.KeyDeleteAsync(key).WaitAsync
+        => await _db.KeyDeleteAsync(key).WaitAsync(ct);
+}
