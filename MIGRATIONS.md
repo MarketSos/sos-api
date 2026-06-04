@@ -46,6 +46,42 @@ dotnet ef migrations add InitialCreate \
   --output-dir Migrations
 ```
 
+### Pricing
+
+```bash
+dotnet ef migrations add InitialCreate \
+  --project src/Services/Pricing/Sos.Pricing.Infrastructure \
+  --startup-project src/Services/Pricing/Sos.Pricing.API \
+  --output-dir Migrations
+```
+
+### CRM
+
+```bash
+dotnet ef migrations add InitialCreate \
+  --project src/Services/CRM/Sos.CRM.Infrastructure \
+  --startup-project src/Services/CRM/Sos.CRM.API \
+  --output-dir Migrations
+```
+
+### Loyalty
+
+```bash
+dotnet ef migrations add InitialCreate \
+  --project src/Services/Loyalty/Sos.Loyalty.Infrastructure \
+  --startup-project src/Services/Loyalty/Sos.Loyalty.API \
+  --output-dir Migrations
+```
+
+### Analytics
+
+```bash
+dotnet ef migrations add InitialCreate \
+  --project src/Services/Analytics/Sos.Analytics.Infrastructure \
+  --startup-project src/Services/Analytics/Sos.Analytics.API \
+  --output-dir Migrations
+```
+
 ---
 
 ## Database yaratish va migrate qilish
@@ -68,20 +104,35 @@ dotnet ef database update \
 dotnet ef database update \
   --project src/Services/Inventory/Sos.Inventory.Infrastructure \
   --startup-project src/Services/Inventory/Sos.Inventory.API
+
+dotnet ef database update \
+  --project src/Services/Pricing/Sos.Pricing.Infrastructure \
+  --startup-project src/Services/Pricing/Sos.Pricing.API
+
+dotnet ef database update \
+  --project src/Services/CRM/Sos.CRM.Infrastructure \
+  --startup-project src/Services/CRM/Sos.CRM.API
+
+dotnet ef database update \
+  --project src/Services/Loyalty/Sos.Loyalty.Infrastructure \
+  --startup-project src/Services/Loyalty/Sos.Loyalty.API
+
+dotnet ef database update \
+  --project src/Services/Analytics/Sos.Analytics.Infrastructure \
+  --startup-project src/Services/Analytics/Sos.Analytics.API
 ```
 
 ---
 
 ## Auto-migrate (startup'da)
 
-Har bir servisning `Program.cs` ga `app.Run()` dan oldin quyidagini qo'shish mumkin:
+Pricing, CRM, Loyalty, Analytics servislarida Development rejimida avtomatik migrate yoqilgan.
+Qolgan servislar uchun `Program.cs` ga `app.Run()` dan oldin qo'shish mumkin:
 
 ```csharp
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>(); // yoki boshqa DbContext
-    await db.Database.MigrateAsync();
-}
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<YourDbContext>();
+await db.Database.MigrateAsync();
 ```
 
 ---
@@ -100,6 +151,10 @@ dotnet run --project src/Services/Identity/Sos.Identity.API
 dotnet run --project src/Services/Catalog/Sos.Catalog.API
 dotnet run --project src/Services/Inventory/Sos.Inventory.API
 dotnet run --project src/Services/POS/Sos.POS.API
+dotnet run --project src/Services/Pricing/Sos.Pricing.API
+dotnet run --project src/Services/CRM/Sos.CRM.API
+dotnet run --project src/Services/Loyalty/Sos.Loyalty.API
+dotnet run --project src/Services/Analytics/Sos.Analytics.API
 dotnet run --project src/ApiGateway
 ```
 

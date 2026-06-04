@@ -89,8 +89,6 @@ public class MeasurementUnitRepository(CatalogDbContext db) : IMeasurementUnitRe
 
     public async Task<IEnumerable<MeasurementUnit>> GetAllAsync(CancellationToken ct = default)
         => await db.MeasurementUnits
-                   .Where(u => u.IsActive)
-                   .OrderBy(u => u.SortOrder)
                    .ToListAsync(ct);
 
     public async Task AddAsync(MeasurementUnit unit, CancellationToken ct = default)
