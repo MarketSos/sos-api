@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sos.Shared.Infrastructure.Services;
 using Sos.Shared.Kernel.Domain;
+using System.Reflection;
 
 namespace Sos.Shared.Infrastructure.Persistence;
 
@@ -50,7 +51,7 @@ public abstract class BaseDbContext(
 
             var method = typeof(BaseDbContext)
                 .GetMethod(nameof(SetSoftDeleteFilter),
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!
+                    BindingFlags.NonPublic | BindingFlags.Static)!
                 .MakeGenericMethod(entityType.ClrType);
 
             method.Invoke(null, [modelBuilder]);
