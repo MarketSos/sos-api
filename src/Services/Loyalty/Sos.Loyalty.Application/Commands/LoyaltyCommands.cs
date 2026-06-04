@@ -13,6 +13,7 @@ public class CreateLoyaltyAccountHandler(ILoyaltyRepository repo)
 {
     public async Task<Result<Guid>> Handle(CreateLoyaltyAccountCommand cmd, CancellationToken ct)
     {
+        // Biznes qoida: bir mijozda faqat bitta hisob bo'ladi → Result.Failure
         var existing = await repo.GetByCustomerIdAsync(cmd.CustomerId, ct);
         if (existing is not null)
             return Result.Failure<Guid>("Bu mijozning loyallik hisobi allaqachon mavjud.");
@@ -36,6 +37,7 @@ public class EarnPointsHandler(ILoyaltyRepository repo)
         var account = await repo.GetByCustomerIdAsync(cmd.CustomerId, ct);
         if (account is null) return Result.Failure("Loyallik hisobi topilmadi.");
 
+        // DomainException tashlashi mumkin (points <= 0) — middleware ushlab oladi → 422
         account.Earn(cmd.Points, cmd.Description, cmd.SaleId);
         await repo.SaveChangesAsync(ct);
         return Result.Success();
@@ -54,15 +56,9 @@ public class SpendPointsHandler(ILoyaltyRepository repo)
         var account = await repo.GetByCustomerIdAsync(cmd.CustomerId, ct);
         if (account is null) return Result.Failure("Loyallik hisobi topilmadi.");
 
-        try
-        {
-            account.Spend(cmd.Points, cmd.Description, cmd.SaleId);
-            await repo.SaveChangesAsync(ct);
-            return Result.Success();
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Result.Failure(ex.Message);
-        }
+        // DomainException tashlashi mumkin (yetarli balans yo'q) — middleware ushlab oladi → 422
+        account.Spend(cmd.Points, cmd.Description, cmd.SaleId);
+        await repo.SaveChangesAsync(ct);
+        return Result.Success();
     }
 }

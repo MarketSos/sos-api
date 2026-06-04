@@ -1,13 +1,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Sos.Pricing.Application.Commands;
 using Sos.Pricing.Infrastructure.Extensions;
 using Sos.Pricing.Infrastructure.Persistence;
+using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.Pricing.API";
@@ -76,7 +76,7 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddHealthChecks()
-    .AddCheck("self", () => HealthCheckResult.Healthy());
+    .AddDbContextCheck<PricingDbContext>();
 
 var app = builder.Build();
 
@@ -90,12 +90,13 @@ if (app.Environment.IsDevelopment())
     await db.Database.MigrateAsync();
 }
 
+app.UseSosExceptionHandling();
 app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-app.Logger.LogInformation("✅ Sos.Pricing.API started in {Environment} mode", app.Environment.EnvironmentName);
+app.Logger.LogInformation("Sos.Pricing.API started in {Environment} mode", app.Environment.EnvironmentName);
 
 app.Run();

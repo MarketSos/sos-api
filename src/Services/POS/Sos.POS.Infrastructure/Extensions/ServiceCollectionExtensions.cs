@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sos.POS.Application.Commands;
 using Sos.POS.Application.Interfaces;
 using Sos.POS.Infrastructure.Persistence;
 using Sos.POS.Infrastructure.Repositories;
@@ -15,6 +17,7 @@ public static class ServiceCollectionExtensions
         IConfiguration config)
     {
         services.AddSharedInfrastructure();
+        services.AddValidatorsFromAssembly(typeof(CreateSaleCommand).Assembly);
 
         services.AddDbContext<PosDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));

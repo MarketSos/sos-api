@@ -6,7 +6,6 @@ using Serilog;
 using Sos.Catalog.Application.Commands;
 using Sos.Catalog.Infrastructure.Extensions;
 using Sos.Catalog.Infrastructure.Persistence;
-using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.Catalog.API";

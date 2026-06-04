@@ -6,7 +6,11 @@ using Sos.Shared.Kernel.Results;
 
 namespace Sos.Identity.Application.Commands;
 
-public record LoginCommand(string Email, string Password) : IRequest<Result<LoginResponse>>;
+public record LoginCommand : IRequest<Result<LoginResponse>>
+{
+    public string Email { get; init; } = string.Empty;
+    public string Password { get; init; } = string.Empty;
+}
 public record LoginResponse(string AccessToken, string RefreshToken, DateTime ExpiresAt, string Role);
 
 public class LoginHandler(

@@ -5,8 +5,9 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Sos.POS.Application.Commands;
 using Sos.POS.Infrastructure.Extensions;
-using System.Text;
 using Sos.POS.Infrastructure.Persistence;
+using Sos.Shared.Infrastructure.Extensions;
+using System.Text;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.POS.API";
 
@@ -87,6 +88,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSosExceptionHandling();
 app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseAuthorization();

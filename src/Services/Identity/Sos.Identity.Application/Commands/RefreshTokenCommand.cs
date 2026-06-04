@@ -4,7 +4,10 @@ using Sos.Shared.Kernel.Results;
 
 namespace Sos.Identity.Application.Commands;
 
-public record RefreshTokenCommand(string RefreshToken) : IRequest<Result<LoginResponse>>;
+public record RefreshTokenCommand : IRequest<Result<LoginResponse>>
+{
+    public string RefreshToken { get; init; } = string.Empty;
+}
 
 public class RefreshTokenHandler(
     IUserRepository userRepo,

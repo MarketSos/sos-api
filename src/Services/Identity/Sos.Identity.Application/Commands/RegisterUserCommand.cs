@@ -6,14 +6,15 @@ using Sos.Shared.Kernel.Results;
 
 namespace Sos.Identity.Application.Commands;
 
-public record RegisterUserCommand(
-    string Email,
-    string Password,
-    string FirstName,
-    string LastName,
-    UserRole Role,
-    Guid? StoreId = null
-) : IRequest<Result<Guid>>;
+public record RegisterUserCommand : IRequest<Result<Guid>>
+{
+    public string Email { get; init; } = string.Empty;
+    public string Password { get; init; } = string.Empty;
+    public string FirstName { get; init; } = string.Empty;
+    public string LastName { get; init; } = string.Empty;
+    public UserRole Role { get; init; }
+    public Guid? StoreId { get; init; }
+}
 
 public class RegisterUserHandler(
     IUserRepository userRepo,

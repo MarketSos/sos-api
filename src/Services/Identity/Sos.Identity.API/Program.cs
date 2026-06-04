@@ -5,6 +5,7 @@ using Serilog;
 using Sos.Identity.Application.Commands;
 using Sos.Identity.Infrastructure.Extensions;
 using Sos.Identity.Infrastructure.Persistence;
+using Sos.Shared.Infrastructure.Extensions;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.Identity.API";
 
@@ -61,6 +62,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSosExceptionHandling();
 app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseAuthorization();

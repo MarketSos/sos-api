@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sos.Analytics.Application.Commands;
 using Sos.Analytics.Application.Interfaces;
 using Sos.Analytics.Infrastructure.Persistence;
 using Sos.Analytics.Infrastructure.Repositories;
@@ -15,6 +17,7 @@ public static class ServiceCollectionExtensions
         IConfiguration config)
     {
         services.AddSharedInfrastructure();
+        services.AddValidatorsFromAssembly(typeof(RecordSaleCommand).Assembly);
 
         services.AddDbContext<AnalyticsDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));

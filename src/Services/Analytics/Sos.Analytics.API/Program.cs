@@ -7,6 +7,7 @@ using Serilog;
 using Sos.Analytics.Application.Commands;
 using Sos.Analytics.Infrastructure.Extensions;
 using Sos.Analytics.Infrastructure.Persistence;
+using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.Analytics.API";
@@ -74,7 +75,8 @@ if (builder.Environment.IsDevelopment())
     });
 }
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<AnalyticsDbContext>();
 
 var app = builder.Build();
 
@@ -88,12 +90,13 @@ if (app.Environment.IsDevelopment())
     await db.Database.MigrateAsync();
 }
 
+app.UseSosExceptionHandling();
 app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-app.Logger.LogInformation("✅ Sos.Analytics.API started in {Environment} mode", app.Environment.EnvironmentName);
+app.Logger.LogInformation("Sos.Analytics.API started in {Environment} mode", app.Environment.EnvironmentName);
 
 app.Run();

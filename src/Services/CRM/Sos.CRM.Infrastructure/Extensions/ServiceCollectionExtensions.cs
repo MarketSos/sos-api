@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sos.CRM.Application.Commands;
 using Sos.CRM.Application.Interfaces;
 using Sos.CRM.Infrastructure.Persistence;
 using Sos.CRM.Infrastructure.Repositories;
@@ -15,6 +17,7 @@ public static class ServiceCollectionExtensions
         IConfiguration config)
     {
         services.AddSharedInfrastructure();
+        services.AddValidatorsFromAssembly(typeof(CreateCustomerCommand).Assembly);
 
         services.AddDbContext<CrmDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));

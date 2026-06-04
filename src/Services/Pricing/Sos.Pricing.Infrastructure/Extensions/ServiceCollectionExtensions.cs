@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sos.Pricing.Application.Commands;
 using Sos.Pricing.Application.Interfaces;
 using Sos.Pricing.Infrastructure.Persistence;
 using Sos.Pricing.Infrastructure.Repositories;
@@ -15,6 +17,7 @@ public static class ServiceCollectionExtensions
         IConfiguration config)
     {
         services.AddSharedInfrastructure();
+        services.AddValidatorsFromAssembly(typeof(CreatePriceRuleCommand).Assembly);
 
         services.AddDbContext<PricingDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));

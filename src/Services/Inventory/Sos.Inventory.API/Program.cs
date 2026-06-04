@@ -6,6 +6,7 @@ using Serilog;
 using Sos.Inventory.Application.Commands;
 using Sos.Inventory.Infrastructure.Extensions;
 using Sos.Inventory.Infrastructure.Persistence;
+using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
 internal class Program
@@ -91,6 +92,7 @@ internal class Program
             app.UseSwaggerUI();
         }
 
+        app.UseSosExceptionHandling();
         app.UseSerilogRequestLogging();
         app.UseAuthentication();
         app.UseAuthorization();

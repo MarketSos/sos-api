@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sos.Inventory.Application.Commands;
 using Sos.Inventory.Application.Interfaces;
 using Sos.Inventory.Infrastructure.Persistence;
 using Sos.Inventory.Infrastructure.Repositories;
@@ -15,6 +17,7 @@ public static class ServiceCollectionExtensions
         IConfiguration config)
     {
         services.AddSharedInfrastructure();
+        services.AddValidatorsFromAssembly(typeof(AddStockCommand).Assembly);
 
         services.AddDbContext<InventoryDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));

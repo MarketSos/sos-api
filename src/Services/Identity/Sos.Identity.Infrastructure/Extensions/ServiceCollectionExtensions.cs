@@ -1,9 +1,11 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Sos.Identity.Application.Commands;
 using Sos.Identity.Application.Interfaces;
 using Sos.Identity.Domain.Entities;
 using Sos.Identity.Infrastructure.Persistence;
@@ -20,8 +22,11 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration config)
     {
-        // Shared: ICurrentUserService, IHttpContextAccessor
+        // Shared: ICurrentUserService, IHttpContextAccessor, ValidationBehavior
         services.AddSharedInfrastructure();
+
+        // FluentValidation — Application assembly-dan barcha validatorlarni ro'yxatdan o'tkazish
+        services.AddValidatorsFromAssembly(typeof(LoginCommand).Assembly);
 
         // Database
         services.AddDbContext<IdentityDbContext>(opts =>

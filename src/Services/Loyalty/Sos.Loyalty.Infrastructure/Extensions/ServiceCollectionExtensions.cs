@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sos.Loyalty.Application.Commands;
 using Sos.Loyalty.Application.Interfaces;
 using Sos.Loyalty.Infrastructure.Persistence;
 using Sos.Loyalty.Infrastructure.Repositories;
@@ -15,6 +17,7 @@ public static class ServiceCollectionExtensions
         IConfiguration config)
     {
         services.AddSharedInfrastructure();
+        services.AddValidatorsFromAssembly(typeof(CreateLoyaltyAccountCommand).Assembly);
 
         services.AddDbContext<LoyaltyDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));

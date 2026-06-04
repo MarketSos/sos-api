@@ -7,6 +7,7 @@ using Serilog;
 using Sos.Loyalty.Application.Commands;
 using Sos.Loyalty.Infrastructure.Extensions;
 using Sos.Loyalty.Infrastructure.Persistence;
+using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
 if (OperatingSystem.IsWindows()) Console.Title = "Sos.Loyalty.API";
@@ -74,7 +75,8 @@ if (builder.Environment.IsDevelopment())
     });
 }
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<LoyaltyDbContext>();
 
 var app = builder.Build();
 
@@ -88,12 +90,13 @@ if (app.Environment.IsDevelopment())
     await db.Database.MigrateAsync();
 }
 
+app.UseSosExceptionHandling();
 app.UseSerilogRequestLogging();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-app.Logger.LogInformation("✅ Sos.Loyalty.API started in {Environment} mode", app.Environment.EnvironmentName);
+app.Logger.LogInformation("Sos.Loyalty.API started in {Environment} mode", app.Environment.EnvironmentName);
 
 app.Run();
