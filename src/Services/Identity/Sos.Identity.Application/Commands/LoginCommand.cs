@@ -11,7 +11,7 @@ public record LoginCommand : IRequest<Result<LoginResponse>>
     public string Email { get; init; } = string.Empty;
     public string Password { get; init; } = string.Empty;
 }
-public record UserInfo(Guid Id, string Email, string Role);
+public record UserInfo(Guid Id, string Email, string Role, string Username);
 public record LoginResponse(string AccessToken, string RefreshToken, DateTime ExpiresAt, string Role, UserInfo User);
 
 public class LoginHandler(
@@ -42,7 +42,7 @@ public class LoginHandler(
             refreshTokenValue,
             refreshToken.ExpiresAt,
             user.Role.ToString(),
-            new UserInfo(user.Id, user.Email, user.Role.ToString())
+            new UserInfo(user.Id, user.Email, user.Role.ToString(), user.FirstName)
         ));
     }
 }

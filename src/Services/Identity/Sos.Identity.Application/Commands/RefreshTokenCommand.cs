@@ -33,7 +33,6 @@ public class RefreshTokenHandler(
         await refreshTokenRepo.AddAsync(newRefresh, ct);
 
         return Result.Success(new LoginResponse(
-            newAccess, newRefreshValue, newRefresh.ExpiresAt, user.Role.ToString()
-        ));
+            newAccess, newRefreshValue, newRefresh.ExpiresAt, user.Role.ToString(), new UserInfo(user.Id, user.Email,user.Role.ToString(), user.FirstName)));
     }
 }

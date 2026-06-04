@@ -26,7 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
-        policy.WithOrigins("http://localhost:4200", "http://localhost:61454")
+        policy.WithOrigins("http://localhost:4200", "http://localhost:57859", "http://localhost:61454")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());
