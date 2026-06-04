@@ -15,15 +15,21 @@ public class AuthController(IMediator mediator) : ControllerBase
 {
     /// <summary>
     /// Регистрация нового пользователя.
-    /// Возвращает ID созданного пользователя.
+    /// После создания автоматически выполняет вход и возвращает токены.
     /// </summary>
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserCommand command, CancellationToken ct)
     {
-        var result = await mediator.Send(command, ct);
-        return result.IsSuccess
-            ? CreatedAtAction(nameof(Register), new { id = result.Value }, new { userId = result.Value })
-            : BadRequest(new { error = result.Error });
+        var registerResult = await mediator.Send(command, ct);
+        if (!registerResult.IsSuccess)
+            return BadRequest(new { error = registerResult.Error });
+
+        var loginResult = await mediator.Send(
+            new LoginCommand { Email = command.Email, Password = command.Password }, ct);
+
+        return loginResult.IsSuccess
+            ? Ok(loginResult.Value)
+            : BadRequest(new { error = loginResult.Error });
     }
 
     /// <summary>

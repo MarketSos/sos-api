@@ -12,7 +12,8 @@ public record RegisterUserCommand : IRequest<Result<Guid>>
     public string Password { get; init; } = string.Empty;
     public string FirstName { get; init; } = string.Empty;
     public string LastName { get; init; } = string.Empty;
-    public UserRole Role { get; init; }
+    public string Username { get; init; } = string.Empty;
+    public UserRole Role { get; init; } = UserRole.StoreAdmin;
     public Guid? StoreId { get; init; }
 }
 
