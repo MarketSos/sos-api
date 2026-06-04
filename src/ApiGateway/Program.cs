@@ -13,6 +13,8 @@ builder.Host.UseSerilog();
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -24,6 +26,19 @@ builder.Services.AddAuthorization();
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/identity/v1/swagger.json",   "Identity API");
+    c.SwaggerEndpoint("/swagger/catalog/v1/swagger.json",    "Catalog API");
+    c.SwaggerEndpoint("/swagger/inventory/v1/swagger.json",  "Inventory API");
+    c.SwaggerEndpoint("/swagger/pos/v1/swagger.json",        "POS API");
+    c.SwaggerEndpoint("/swagger/pricing/v1/swagger.json",    "Pricing API");
+    c.SwaggerEndpoint("/swagger/crm/v1/swagger.json",        "CRM API");
+    c.SwaggerEndpoint("/swagger/loyalty/v1/swagger.json",    "Loyalty API");
+    c.SwaggerEndpoint("/swagger/analytics/v1/swagger.json",  "Analytics API");
+    c.RoutePrefix = "swagger";
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

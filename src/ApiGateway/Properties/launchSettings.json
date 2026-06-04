@@ -3,10 +3,11 @@
     "Sos.ApiGateway": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:61453;http://localhost:61454"
+      "applicationUrl": "http://localhost:61454"
     }
   }
 }
