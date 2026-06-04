@@ -51,11 +51,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.WithOrigins("http://localhost:61454")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sos Loyalty API", Version = "v1" });
+        c.AddServer(new OpenApiServer { Url = "http://localhost:62111" });
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             Name = "Authorization", Type = SecuritySchemeType.Http,
@@ -92,6 +101,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseSosExceptionHandling();
 app.UseSerilogRequestLogging();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

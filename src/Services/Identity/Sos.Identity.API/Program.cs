@@ -23,6 +23,14 @@ builder.Host.UseSerilog((ctx, config) =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.WithOrigins("http://localhost:61454")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(LoginCommand).Assembly));
 
@@ -33,6 +41,7 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sos Identity API", Version = "v1" });
+        c.AddServer(new OpenApiServer { Url = "http://localhost:61944" });
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             Name = "Authorization",
@@ -64,6 +73,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseSosExceptionHandling();
 app.UseSerilogRequestLogging();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

@@ -55,11 +55,20 @@ internal class Program
 
         builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.WithOrigins("http://localhost:61454")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
         if (builder.Environment.IsDevelopment())
         {
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sos Inventory API", Version = "v1" });
+                c.AddServer(new OpenApiServer { Url = "http://localhost:61991" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -94,7 +103,8 @@ internal class Program
 
         app.UseSosExceptionHandling();
         app.UseSerilogRequestLogging();
-        app.UseAuthentication();
+        app.UseCors();
+app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
         app.MapHealthChecks("/health");
