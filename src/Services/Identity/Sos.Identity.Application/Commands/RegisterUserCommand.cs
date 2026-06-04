@@ -29,9 +29,10 @@ public class RegisterUserHandler(
         if (isExistEmail)
             return Result.Failure<Guid>($"'{cmd.Email}' email allaqachon ro'yxatdan o'tgan.");
 
-        var tempUser = User.Create(Guid.NewGuid(), cmd.Email, "", cmd.FirstName, cmd.LastName, cmd.Role, cmd.StoreId);
+        var firstName = !string.IsNullOrWhiteSpace(cmd.FirstName) ? cmd.FirstName : cmd.Username;
+        var tempUser = User.Create(Guid.NewGuid(), cmd.Email, "", firstName, cmd.LastName, cmd.Role, cmd.StoreId);
         var hash = passwordHasher.HashPassword(tempUser, cmd.Password);
-        var user = User.Create(tempUser.Id, cmd.Email, hash, cmd.FirstName, cmd.LastName, cmd.Role, cmd.StoreId);
+        var user = User.Create(tempUser.Id, cmd.Email, hash, firstName, cmd.LastName, cmd.Role, cmd.StoreId);
 
         await userRepo.AddAsync(user, ct);
         return Result.Success(user.Id);

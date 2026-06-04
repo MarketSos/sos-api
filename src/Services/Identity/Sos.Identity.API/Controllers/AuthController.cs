@@ -59,6 +59,16 @@ public class AuthController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
+    /// Выход из системы. Аннулирует refresh-токен на сервере.
+    /// </summary>
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromBody] LogoutCommand command, CancellationToken ct)
+    {
+        await mediator.Send(command, ct);
+        return NoContent();
+    }
+
+    /// <summary>
     /// Текущий авторизованный пользователь.
     /// Возвращает данные из JWT-токена.
     /// </summary>
