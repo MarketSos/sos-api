@@ -1,4 +1,4 @@
-version: '3.9'
+﻿version: '3.9'
 
 services:
   postgres:
@@ -56,7 +56,7 @@ services:
       - "5001:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=IdentityDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosIdentityDb;Username=postgres;Password=postgres
       - ConnectionStrings__Redis=redis:6379
       - Jwt__Secret=your-super-secret-key-change-in-production-min-32-chars
     depends_on:
@@ -76,7 +76,7 @@ services:
       - "5002:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=CatalogDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosCatalogDb;Username=postgres;Password=postgres
       - ConnectionStrings__Redis=redis:6379
     depends_on:
       postgres:
@@ -93,7 +93,7 @@ services:
       - "5003:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=InventoryDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosInventoryDb;Username=postgres;Password=postgres
     depends_on:
       postgres:
         condition: service_healthy
@@ -109,7 +109,7 @@ services:
       - "5004:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=PosDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosPosDb;Username=postgres;Password=postgres
     depends_on:
       postgres:
         condition: service_healthy
@@ -125,7 +125,7 @@ services:
       - "5005:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=PricingDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosPricingDb;Username=postgres;Password=postgres
     depends_on:
       postgres:
         condition: service_healthy
@@ -141,7 +141,7 @@ services:
       - "5006:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=CrmDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosCrmDb;Username=postgres;Password=postgres
     depends_on:
       postgres:
         condition: service_healthy
@@ -157,7 +157,7 @@ services:
       - "5007:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=LoyaltyDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosLoyaltyDb;Username=postgres;Password=postgres
     depends_on:
       postgres:
         condition: service_healthy
@@ -173,7 +173,7 @@ services:
       - "5008:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=AnalyticsDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosAnalyticsDb;Username=postgres;Password=postgres
     depends_on:
       postgres:
         condition: service_healthy

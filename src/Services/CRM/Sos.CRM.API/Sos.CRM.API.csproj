@@ -5,6 +5,10 @@
     <PackageReference Include="Serilog.Settings.Configuration" />
     <PackageReference Include="Serilog.AspNetCore" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <ProjectReference Include="..\Sos.CRM.Application\Sos.CRM.Application.csproj" />
     <ProjectReference Include="..\Sos.CRM.Infrastructure\Sos.CRM.Infrastructure.csproj" />
   </ItemGroup>
