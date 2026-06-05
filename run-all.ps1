@@ -20,7 +20,7 @@ foreach ($project in $projects) {
     Write-Host "Starting: $projectPath"
 
     $command = "Set-Location '$scriptDir'; dotnet run --project '$project'"
-    Start-Process powershell.exe -ArgumentList '-NoExit', '-Command', $command
+    Start-Process powershell.exe -ArgumentList '-Command', $command
 }
 
 Write-Host "All services started. Use .\stop-all.ps1 to stop them."
