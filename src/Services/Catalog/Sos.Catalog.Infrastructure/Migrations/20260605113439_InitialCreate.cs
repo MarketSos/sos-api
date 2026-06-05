@@ -13,12 +13,8 @@ namespace Sos.Catalog.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "catalog");
-
             migrationBuilder.CreateTable(
                 name: "Categories",
-                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -45,7 +41,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Categories_Categories_ParentId",
                         column: x => x.ParentId,
-                        principalSchema: "catalog",
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -53,7 +48,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "MeasurementUnits",
-                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -79,7 +73,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Products",
-                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -108,7 +101,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalSchema: "catalog",
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -116,7 +108,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Skus",
-                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -146,77 +137,67 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Skus_MeasurementUnits_MeasurementUnitId",
                         column: x => x.MeasurementUnitId,
-                        principalSchema: "catalog",
                         principalTable: "MeasurementUnits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Skus_Products_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "catalog",
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
-                schema: "catalog",
                 table: "MeasurementUnits",
                 columns: new[] { "Id", "Code", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Description", "IsDeleted", "NameEn", "NameRu", "NameUz", "NameUzKiril", "UpdatedAt", "UpdatedBy", "Version" },
                 values: new object[,]
                 {
-                    { new Guid("00000000-0000-0000-0001-000000000001"), "dona", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6041), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "Piece", "Штука", "Dona", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6058), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000002"), "kg", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6061), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "kg", "Кг", "Kilogramm", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6062), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000003"), "g", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6085), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "g", "Грамм", "Gramm", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6093), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000004"), "l", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6094), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "l", "Литр", "Litr", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6096), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000005"), "ml", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6096), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "ml", "Мл", "Millilitr", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6097), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000006"), "m", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6098), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "m", "Метр", "Metr", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6099), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000007"), "m2", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6100), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "m²", "Кв.м", "Kv. metr", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6101), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000008"), "box", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6101), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "box", "Коробка", "Quti", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6103), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000009"), "pack", new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6104), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "pack", "Пачка", "Paket", null, new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6105), new TimeSpan(0, 0, 0, 0, 0)), null, 0 }
+                    { new Guid("00000000-0000-0000-0001-000000000001"), "dona", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7504), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "Piece", "Штука", "Dona", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7517), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
+                    { new Guid("00000000-0000-0000-0001-000000000002"), "kg", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7521), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "kg", "Кг", "Kilogramm", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7522), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
+                    { new Guid("00000000-0000-0000-0001-000000000003"), "g", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7523), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "g", "Грамм", "Gramm", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7524), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
+                    { new Guid("00000000-0000-0000-0001-000000000004"), "l", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7525), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "l", "Литр", "Litr", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7526), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
+                    { new Guid("00000000-0000-0000-0001-000000000005"), "ml", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7527), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "ml", "Мл", "Millilitr", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7528), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
+                    { new Guid("00000000-0000-0000-0001-000000000006"), "m", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7528), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "m", "Метр", "Metr", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7529), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
+                    { new Guid("00000000-0000-0000-0001-000000000007"), "m2", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7530), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "m²", "Кв.м", "Kv. metr", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7530), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
+                    { new Guid("00000000-0000-0000-0001-000000000008"), "box", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7531), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "box", "Коробка", "Quti", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7532), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
+                    { new Guid("00000000-0000-0000-0001-000000000009"), "pack", new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7533), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "pack", "Пачка", "Paket", null, new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7534), new TimeSpan(0, 0, 0, 0, 0)), null, 0 }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_ParentId",
-                schema: "catalog",
                 table: "Categories",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MeasurementUnits_Code",
-                schema: "catalog",
                 table: "MeasurementUnits",
                 column: "Code",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_Barcode",
-                schema: "catalog",
                 table: "Products",
                 column: "Barcode",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
-                schema: "catalog",
                 table: "Products",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Skus_MeasurementUnitId",
-                schema: "catalog",
                 table: "Skus",
                 column: "MeasurementUnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Skus_ProductId",
-                schema: "catalog",
                 table: "Skus",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Skus_SerialNumber",
-                schema: "catalog",
                 table: "Skus",
                 column: "SerialNumber",
                 unique: true);
@@ -226,20 +207,16 @@ namespace Sos.Catalog.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Skus",
-                schema: "catalog");
+                name: "Skus");
 
             migrationBuilder.DropTable(
-                name: "MeasurementUnits",
-                schema: "catalog");
+                name: "MeasurementUnits");
 
             migrationBuilder.DropTable(
-                name: "Products",
-                schema: "catalog");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Categories",
-                schema: "catalog");
+                name: "Categories");
         }
     }
 }

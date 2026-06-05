@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sos.Analytics.Domain.Entities;
 using Sos.Shared.Infrastructure.Persistence;
@@ -17,7 +17,6 @@ public class AnalyticsDbContext(
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("analytics");
         builder.ApplyConfigurationsFromAssembly(typeof(AnalyticsDbContext).Assembly);
     }
 }

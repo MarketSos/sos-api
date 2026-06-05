@@ -11,12 +11,8 @@ namespace Sos.Analytics.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "analytics");
-
             migrationBuilder.CreateTable(
                 name: "SaleSnapshots",
-                schema: "analytics",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -35,14 +31,12 @@ namespace Sos.Analytics.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaleSnapshots_SaleId",
-                schema: "analytics",
                 table: "SaleSnapshots",
                 column: "SaleId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaleSnapshots_StoreId_CompletedAt",
-                schema: "analytics",
                 table: "SaleSnapshots",
                 columns: new[] { "StoreId", "CompletedAt" });
         }
@@ -51,8 +45,7 @@ namespace Sos.Analytics.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SaleSnapshots",
-                schema: "analytics");
+                name: "SaleSnapshots");
         }
     }
 }

@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sos.Pricing.Domain.Entities;
 using Sos.Shared.Infrastructure.Persistence;
@@ -17,7 +17,6 @@ public class PricingDbContext(
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("pricing");
         builder.ApplyConfigurationsFromAssembly(typeof(PricingDbContext).Assembly);
     }
 }

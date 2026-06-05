@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sos.Catalog.Domain.Entities;
 using Sos.Shared.Infrastructure.Persistence;
@@ -20,7 +20,6 @@ public class CatalogDbContext(
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("catalog");
 
         // Configurations/ papkasidagi barcha IEntityTypeConfiguration<T> larni avtomatik yuklaydi
         builder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);

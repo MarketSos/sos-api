@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sos.POS.Domain.Entities;
 using Sos.Shared.Infrastructure.Persistence;
@@ -18,7 +18,6 @@ public class PosDbContext(
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("pos");
         builder.ApplyConfigurationsFromAssembly(typeof(PosDbContext).Assembly);
     }
 }

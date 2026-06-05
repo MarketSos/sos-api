@@ -122,7 +122,25 @@ dotnet ef database update \
 
 ### 3. Servislarni ishga tushirish
 
-**Terminal orqali:**
+**Yangi yordamchi skriptlar:**
+
+Sos-api papkasiga o‘ting va quyidagilarni yozing:
+
+```powershell
+cd d:\Projects\МоиПроекты\sos\sos-api
+run-all
+```
+
+Bu komandalar barcha servislarni alohida PowerShell oynasida ishga tushiradi.
+
+Barcha servislarni to‘xtatish uchun:
+
+```powershell
+cd d:\Projects\МоиПроекты\sos\sos-api
+stop-all
+```
+
+**Terminal orqali individual run:**
 
 ```bash
 dotnet run --project src/Services/Identity/Sos.Identity.API

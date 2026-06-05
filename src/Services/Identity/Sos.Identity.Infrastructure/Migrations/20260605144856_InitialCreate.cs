@@ -6,17 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sos.Identity.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "identity");
-
             migrationBuilder.CreateTable(
                 name: "Users",
-                schema: "identity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -43,7 +39,6 @@ namespace Sos.Identity.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "RefreshTokens",
-                schema: "identity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -58,7 +53,6 @@ namespace Sos.Identity.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_RefreshTokens_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "identity",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -66,20 +60,17 @@ namespace Sos.Identity.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_Token",
-                schema: "identity",
                 table: "RefreshTokens",
                 column: "Token",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_UserId",
-                schema: "identity",
                 table: "RefreshTokens",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
-                schema: "identity",
                 table: "Users",
                 column: "Email",
                 unique: true);
@@ -89,12 +80,10 @@ namespace Sos.Identity.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RefreshTokens",
-                schema: "identity");
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
-                name: "Users",
-                schema: "identity");
+                name: "Users");
         }
     }
 }

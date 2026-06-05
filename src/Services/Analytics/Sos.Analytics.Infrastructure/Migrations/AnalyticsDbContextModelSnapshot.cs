@@ -17,7 +17,6 @@ namespace Sos.Analytics.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("analytics")
                 .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -58,7 +57,7 @@ namespace Sos.Analytics.Infrastructure.Migrations
 
                     b.HasIndex("StoreId", "CompletedAt");
 
-                    b.ToTable("SaleSnapshots", "analytics");
+                    b.ToTable("SaleSnapshots");
                 });
 #pragma warning restore 612, 618
         }

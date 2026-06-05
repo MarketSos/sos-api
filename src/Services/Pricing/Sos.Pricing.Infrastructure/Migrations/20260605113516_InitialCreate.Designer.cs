@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Sos.Inventory.Infrastructure.Persistence;
+using Sos.Pricing.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace Sos.Inventory.Infrastructure.Migrations
+namespace Sos.Pricing.Infrastructure.Migrations
 {
-    [DbContext(typeof(InventoryDbContext))]
-    [Migration("20260605072504_InitialCreate")]
+    [DbContext(typeof(PricingDbContext))]
+    [Migration("20260605113516_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,13 +20,12 @@ namespace Sos.Inventory.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("inventory")
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Sos.Inventory.Domain.Entities.StockItem", b =>
+            modelBuilder.Entity("Sos.Pricing.Domain.Entities.PriceRule", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,26 +43,30 @@ namespace Sos.Inventory.Infrastructure.Migrations
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<decimal>("DiscountPct")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<DateTimeOffset?>("EndsAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("FixedPrice")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Location")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<int?>("MaxQuantity")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MinQuantity")
-                        .HasColumnType("integer");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                    b.Property<DateTimeOffset>("StartsAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("StoreId")
+                    b.Property<Guid?>("StoreId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
@@ -77,10 +80,9 @@ namespace Sos.Inventory.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId", "StoreId")
-                        .IsUnique();
+                    b.HasIndex("ProductId", "StoreId", "IsActive");
 
-                    b.ToTable("StockItems", "inventory");
+                    b.ToTable("PriceRules");
                 });
 #pragma warning restore 612, 618
         }

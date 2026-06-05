@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sos.Loyalty.Domain.Entities;
 using Sos.Shared.Infrastructure.Persistence;
@@ -18,7 +18,6 @@ public class LoyaltyDbContext(
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("loyalty");
         builder.ApplyConfigurationsFromAssembly(typeof(LoyaltyDbContext).Assembly);
     }
 }

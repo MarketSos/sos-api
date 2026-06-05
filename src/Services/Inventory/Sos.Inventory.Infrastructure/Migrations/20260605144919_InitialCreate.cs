@@ -11,12 +11,8 @@ namespace Sos.Inventory.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "inventory");
-
             migrationBuilder.CreateTable(
                 name: "StockItems",
-                schema: "inventory",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -42,7 +38,6 @@ namespace Sos.Inventory.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockItems_ProductId_StoreId",
-                schema: "inventory",
                 table: "StockItems",
                 columns: new[] { "ProductId", "StoreId" },
                 unique: true);
@@ -52,8 +47,7 @@ namespace Sos.Inventory.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "StockItems",
-                schema: "inventory");
+                name: "StockItems");
         }
     }
 }

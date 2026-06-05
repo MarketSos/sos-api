@@ -11,12 +11,8 @@ namespace Sos.Loyalty.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "loyalty");
-
             migrationBuilder.CreateTable(
                 name: "Accounts",
-                schema: "loyalty",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -40,7 +36,6 @@ namespace Sos.Loyalty.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Transactions",
-                schema: "loyalty",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -57,7 +52,6 @@ namespace Sos.Loyalty.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Transactions_Accounts_AccountId",
                         column: x => x.AccountId,
-                        principalSchema: "loyalty",
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -65,14 +59,12 @@ namespace Sos.Loyalty.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_CustomerId",
-                schema: "loyalty",
                 table: "Accounts",
                 column: "CustomerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_AccountId",
-                schema: "loyalty",
                 table: "Transactions",
                 column: "AccountId");
         }
@@ -81,12 +73,10 @@ namespace Sos.Loyalty.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Transactions",
-                schema: "loyalty");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "Accounts",
-                schema: "loyalty");
+                name: "Accounts");
         }
     }
 }

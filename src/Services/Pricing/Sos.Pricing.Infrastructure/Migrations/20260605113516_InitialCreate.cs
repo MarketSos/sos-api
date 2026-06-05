@@ -11,12 +11,8 @@ namespace Sos.Pricing.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "pricing");
-
             migrationBuilder.CreateTable(
                 name: "PriceRules",
-                schema: "pricing",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -43,7 +39,6 @@ namespace Sos.Pricing.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_PriceRules_ProductId_StoreId_IsActive",
-                schema: "pricing",
                 table: "PriceRules",
                 columns: new[] { "ProductId", "StoreId", "IsActive" });
         }
@@ -52,8 +47,7 @@ namespace Sos.Pricing.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PriceRules",
-                schema: "pricing");
+                name: "PriceRules");
         }
     }
 }

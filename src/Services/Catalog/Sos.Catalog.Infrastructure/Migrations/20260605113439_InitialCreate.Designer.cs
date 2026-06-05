@@ -12,7 +12,7 @@ using Sos.Catalog.Infrastructure.Persistence;
 namespace Sos.Catalog.Infrastructure.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20260605072347_InitialCreate")]
+    [Migration("20260605113439_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("catalog")
                 .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -90,7 +89,7 @@ namespace Sos.Catalog.Infrastructure.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories", "catalog");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Sos.Catalog.Domain.Entities.MeasurementUnit", b =>
@@ -154,115 +153,115 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("MeasurementUnits", "catalog");
+                    b.ToTable("MeasurementUnits");
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000001"),
                             Code = "dona",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6041), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7504), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "Piece",
                             NameRu = "Штука",
                             NameUz = "Dona",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6058), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7517), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000002"),
                             Code = "kg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6061), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7521), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "kg",
                             NameRu = "Кг",
                             NameUz = "Kilogramm",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6062), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7522), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000003"),
                             Code = "g",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6085), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7523), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "g",
                             NameRu = "Грамм",
                             NameUz = "Gramm",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6093), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7524), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000004"),
                             Code = "l",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6094), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7525), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "l",
                             NameRu = "Литр",
                             NameUz = "Litr",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6096), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7526), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000005"),
                             Code = "ml",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6096), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7527), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "ml",
                             NameRu = "Мл",
                             NameUz = "Millilitr",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6097), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7528), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000006"),
                             Code = "m",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6098), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7528), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "m",
                             NameRu = "Метр",
                             NameUz = "Metr",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6099), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7529), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000007"),
                             Code = "m2",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6100), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7530), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "m²",
                             NameRu = "Кв.м",
                             NameUz = "Kv. metr",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6101), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7530), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000008"),
                             Code = "box",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6101), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7531), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "box",
                             NameRu = "Коробка",
                             NameUz = "Quti",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6103), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7532), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000009"),
                             Code = "pack",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6104), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7533), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "pack",
                             NameRu = "Пачка",
                             NameUz = "Paket",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 7, 23, 46, 94, DateTimeKind.Unspecified).AddTicks(6105), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 5, 11, 34, 39, 632, DateTimeKind.Unspecified).AddTicks(7534), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0
                         });
                 });
@@ -343,7 +342,7 @@ namespace Sos.Catalog.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", "catalog");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Sos.Catalog.Domain.Entities.Sku", b =>
@@ -422,7 +421,7 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     b.HasIndex("SerialNumber")
                         .IsUnique();
 
-                    b.ToTable("Skus", "catalog");
+                    b.ToTable("Skus");
                 });
 
             modelBuilder.Entity("Sos.Catalog.Domain.Entities.Category", b =>

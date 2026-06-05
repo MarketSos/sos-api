@@ -17,7 +17,6 @@ namespace Sos.POS.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("pos")
                 .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -96,7 +95,7 @@ namespace Sos.POS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sales", "pos");
+                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("Sos.POS.Domain.Entities.SaleItem", b =>
@@ -129,7 +128,7 @@ namespace Sos.POS.Infrastructure.Migrations
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("SaleItems", "pos");
+                    b.ToTable("SaleItems");
                 });
 
             modelBuilder.Entity("Sos.POS.Domain.Entities.SaleItem", b =>

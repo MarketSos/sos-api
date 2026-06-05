@@ -17,7 +17,6 @@ namespace Sos.CRM.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("crm")
                 .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -86,7 +85,7 @@ namespace Sos.CRM.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("\"PhoneNumber\" IS NOT NULL");
 
-                    b.ToTable("Customers", "crm");
+                    b.ToTable("Customers");
                 });
 #pragma warning restore 612, 618
         }

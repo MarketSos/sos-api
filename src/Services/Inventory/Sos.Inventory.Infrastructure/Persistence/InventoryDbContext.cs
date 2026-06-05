@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Sos.Inventory.Domain.Entities;
 using Sos.Shared.Infrastructure.Persistence;
@@ -17,7 +17,6 @@ public class InventoryDbContext(
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("inventory");
         builder.ApplyConfigurationsFromAssembly(typeof(InventoryDbContext).Assembly);
     }
 }

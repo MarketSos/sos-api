@@ -11,12 +11,8 @@ namespace Sos.POS.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "pos");
-
             migrationBuilder.CreateTable(
                 name: "Sales",
-                schema: "pos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -48,7 +44,6 @@ namespace Sos.POS.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "SaleItems",
-                schema: "pos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -65,7 +60,6 @@ namespace Sos.POS.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_SaleItems_Sales_SaleId",
                         column: x => x.SaleId,
-                        principalSchema: "pos",
                         principalTable: "Sales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -73,7 +67,6 @@ namespace Sos.POS.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaleItems_SaleId",
-                schema: "pos",
                 table: "SaleItems",
                 column: "SaleId");
         }
@@ -82,12 +75,10 @@ namespace Sos.POS.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SaleItems",
-                schema: "pos");
+                name: "SaleItems");
 
             migrationBuilder.DropTable(
-                name: "Sales",
-                schema: "pos");
+                name: "Sales");
         }
     }
 }

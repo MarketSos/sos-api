@@ -30,4 +30,5 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddAnalyticsInfrastructure(builder.Configuration);
 
-var jwtSecret = builder.Confi
+var jwtSecret = builder.Configuration["Jwt:Secret"]
+    ?? throw new InvalidOperationException("Jwt:Secret not configured");

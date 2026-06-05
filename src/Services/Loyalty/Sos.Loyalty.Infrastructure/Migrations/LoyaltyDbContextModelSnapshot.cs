@@ -17,7 +17,6 @@ namespace Sos.Loyalty.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("loyalty")
                 .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -73,7 +72,7 @@ namespace Sos.Loyalty.Infrastructure.Migrations
                     b.HasIndex("CustomerId")
                         .IsUnique();
 
-                    b.ToTable("Accounts", "loyalty");
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("Sos.Loyalty.Domain.Entities.LoyaltyTransaction", b =>
@@ -107,7 +106,7 @@ namespace Sos.Loyalty.Infrastructure.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Transactions", "loyalty");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Sos.Loyalty.Domain.Entities.LoyaltyTransaction", b =>

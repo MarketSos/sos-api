@@ -12,7 +12,7 @@ using Sos.Analytics.Infrastructure.Persistence;
 namespace Sos.Analytics.Infrastructure.Migrations
 {
     [DbContext(typeof(AnalyticsDbContext))]
-    [Migration("20260605073000_InitialCreate")]
+    [Migration("20260605144834_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,6 @@ namespace Sos.Analytics.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("analytics")
                 .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -61,7 +60,7 @@ namespace Sos.Analytics.Infrastructure.Migrations
 
                     b.HasIndex("StoreId", "CompletedAt");
 
-                    b.ToTable("SaleSnapshots", "analytics");
+                    b.ToTable("SaleSnapshots");
                 });
 #pragma warning restore 612, 618
         }

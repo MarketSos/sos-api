@@ -11,12 +11,8 @@ namespace Sos.CRM.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "crm");
-
             migrationBuilder.CreateTable(
                 name: "Customers",
-                schema: "crm",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -42,14 +38,12 @@ namespace Sos.CRM.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_Email",
-                schema: "crm",
                 table: "Customers",
                 column: "Email",
                 filter: "\"Email\" IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_PhoneNumber",
-                schema: "crm",
                 table: "Customers",
                 column: "PhoneNumber",
                 unique: true,
@@ -60,8 +54,7 @@ namespace Sos.CRM.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Customers",
-                schema: "crm");
+                name: "Customers");
         }
     }
 }

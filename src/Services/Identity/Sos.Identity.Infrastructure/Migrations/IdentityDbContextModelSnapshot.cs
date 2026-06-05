@@ -17,8 +17,7 @@ namespace Sos.Identity.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("identity")
-                .HasAnnotation("ProductVersion", "8.0.15")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -50,7 +49,7 @@ namespace Sos.Identity.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens", "identity");
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Sos.Identity.Domain.Entities.User", b =>
@@ -118,7 +117,7 @@ namespace Sos.Identity.Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users", "identity");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Sos.Identity.Domain.Entities.RefreshToken", b =>
