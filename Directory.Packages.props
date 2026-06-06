@@ -19,6 +19,7 @@
     <PackageVersion Include="MediatR" Version="12.4.1" />
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
     <!-- Logging -->
+    <PackageVersion Include="QueryForge" Version="1.0.6" />
     <PackageVersion Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageVersion Include="Serilog.Settings.Configuration" Version="8.0.4" />

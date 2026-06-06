@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using Serilog;
 using Sos.Identity.Application.Commands;
 using Sos.Identity.Infrastructure.Extensions;
@@ -39,27 +38,7 @@ builder.Services.AddIdentityInfrastructure(builder.Configuration);
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddSwaggerGen(c =>
-    {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sos Identity API", Version = "v1" });
-        c.AddServer(new OpenApiServer { Url = "http://localhost:61944" });
-        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            Scheme = "Bearer",
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Description = "JWT token kiriting: Bearer {token}"
-        });
-        c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" } },
-                Array.Empty<string>()
-            }
-        });
-    });
+    builder.Services.AddSosSwaggerGen("Sos Identity API", "http://localhost:61944", typeof(Program).Assembly);
 }
 
 builder.Services.AddHealthChecks();

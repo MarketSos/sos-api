@@ -6,6 +6,7 @@
     <PackageReference Include="StackExchange.Redis" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="FluentValidation" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
     <ProjectReference Include="..\Sos.Shared.Kernel\Sos.Shared.Kernel.csproj" />
   </ItemGroup>
 </Project>

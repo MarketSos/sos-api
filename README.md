@@ -16,12 +16,12 @@ Client / Frontend
   │              Microservices              │
   ├─────────────┬───────────┬───────────────┤
   │  Identity   │  Catalog  │   Inventory   │
-  │   :5001     │   :5002   │    :5003      │
+  │  61944      │  61916    │   61991       │
   ├─────────────┼───────────┼───────────────┤
   │     POS     │  Pricing  │     CRM       │
-  │   :5004     │   :5005   │    :5006      │
+  │  62119      │  62146    │   61938       │
   ├─────────────┴───────────┴───────────────┤
-  │       Loyalty :5007 | Analytics :5008   │
+  │       Loyalty :62111 | Analytics :61489  │
   └─────────────────────────────────────────┘
        │                   │
   PostgreSQL :5432      Redis :6379
@@ -42,17 +42,17 @@ Client / Frontend
 
 ## Servislar
 
-| Servis      | Port | DB            | Maqsad |
-|-------------|------|---------------|--------|
-| ApiGateway  | 5000 | —             | YARP reverse proxy, barcha so'rovlarni yo'naltiradi |
-| Identity    | 5001 | IdentityDb    | JWT auth, register/login/refresh, foydalanuvchi rollari |
-| Catalog     | 5002 | CatalogDb     | Mahsulotlar, kategoriyalar, SKU (kirim partiyalari), o'lchov birliklari |
-| Inventory   | 5003 | InventoryDb   | Ombor qoldiqlari, kirim/chiqim, minimum zaxira ogohlantirish |
-| POS         | 5004 | PosDb         | Kassa operatsiyalari — chek ochish, tovar qo'shish, to'lov |
-| Pricing     | 5005 | PricingDb     | Narx qoidalari, chegirmalar, vaqtinchalik aksiyalar |
-| CRM         | 5006 | CrmDb         | Mijozlar bazasi, aloqa ma'lumotlari |
-| Loyalty     | 5007 | LoyaltyDb     | Bonus ball tizimi — yig'ish va sarflash |
-| Analytics   | 5008 | AnalyticsDb   | Sotuv hisobotlari, daromad statistikasi, top mahsulotlar |
+| Servis      | Port   | DB            | Maqsad |
+|-------------|--------|---------------|--------|
+| ApiGateway  | 61454  | —             | YARP reverse proxy, barcha so'rovlarni yo'naltiradi |
+| Identity    | 61944  | IdentityDb    | JWT auth, register/login/refresh, foydalanuvchi rollari |
+| Catalog     | 61916  | CatalogDb     | Mahsulotlar, kategoriyalar, SKU (kirim partiyalari), o'lchov birliklari |
+| Inventory   | 61991  | InventoryDb   | Ombor qoldiqlari, kirim/chiqim, minimum zaxira ogohlantirish |
+| POS         | 62119  | PosDb         | Kassa operatsiyalari — chek ochish, tovar qo'shish, to'lov |
+| Pricing     | 62146  | PricingDb     | Narx qoidalari, chegirmalar, vaqtinchalik aksiyalar |
+| CRM         | 61938  | CrmDb         | Mijozlar bazasi, aloqa ma'lumotlari |
+| Loyalty     | 62111  | LoyaltyDb     | Bonus ball tizimi — yig'ish va sarflash |
+| Analytics   | 61489  | AnalyticsDb   | Sotuv hisobotlari, daromad statistikasi, top mahsulotlar |
 
 ### Foydalanuvchi rollari
 
@@ -202,16 +202,16 @@ Gateway orqali `http://localhost:5000` ga kelgan so'rovlar:
 
 ### Swagger UI (Development)
 
-| Servis    | URL                              |
-|-----------|----------------------------------|
-| Identity  | http://localhost:5001/swagger    |
-| Catalog   | http://localhost:5002/swagger    |
-| Inventory | http://localhost:5003/swagger    |
-| POS       | http://localhost:5004/swagger    |
-| Pricing   | http://localhost:5005/swagger    |
-| CRM       | http://localhost:5006/swagger    |
-| Loyalty   | http://localhost:5007/swagger    |
-| Analytics | http://localhost:5008/swagger    |
+| Servis    | URL                                |
+|-----------|------------------------------------|
+| Identity  | http://localhost:61944/swagger     |
+| Catalog   | http://localhost:61916/swagger     |
+| Inventory | http://localhost:61991/swagger     |
+| POS       | http://localhost:62119/swagger     |
+| Pricing   | http://localhost:62146/swagger     |
+| CRM       | http://localhost:61938/swagger     |
+| Loyalty   | http://localhost:62111/swagger     |
+| Analytics | http://localhost:61489/swagger     |
 
 ### Autentifikatsiya
 
@@ -267,12 +267,12 @@ sos-api/
 ## Health checks
 
 ```bash
-curl http://localhost:5001/health   # Identity
-curl http://localhost:5002/health   # Catalog
-curl http://localhost:5003/health   # Inventory
-curl http://localhost:5004/health   # POS
-curl http://localhost:5005/health   # Pricing
-curl http://localhost:5006/health   # CRM
-curl http://localhost:5007/health   # Loyalty
-curl http://localhost:5008/health   # Analytics
+curl http://localhost:61944/health   # Identity
+curl http://localhost:61916/health   # Catalog
+curl http://localhost:61991/health   # Inventory
+curl http://localhost:62119/health   # POS
+curl http://localhost:62146/health   # Pricing
+curl http://localhost:61938/health   # CRM
+curl http://localhost:62111/health   # Loyalty
+curl http://localhost:61489/health   # Analytics
 ```

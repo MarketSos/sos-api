@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Serilog;
 using Sos.Catalog.Application.Commands;
 using Sos.Catalog.Infrastructure.Extensions;
@@ -61,30 +60,7 @@ builder.Services.AddCors(options =>
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddSwaggerGen(c =>
-    {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sos Catalog API", Version = "v1" });
-        c.AddServer(new OpenApiServer { Url = "http://localhost:61916" });
-        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            Name         = "Authorization",
-            Type         = SecuritySchemeType.Http,
-            Scheme       = "Bearer",
-            BearerFormat = "JWT",
-            In           = ParameterLocation.Header,
-            Description  = "JWT token: Bearer {token}"
-        });
-        c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                },
-                Array.Empty<string>()
-            }
-        });
-    });
+    builder.Services.AddSosSwaggerGen("Sos Catalog API", "http://localhost:61916", typeof(Program).Assembly);
 }
 
 builder.Services.AddHealthChecks();
