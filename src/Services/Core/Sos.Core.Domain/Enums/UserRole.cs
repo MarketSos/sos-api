@@ -1,7 +1,10 @@
 namespace Sos.Core.Domain.Enums;
 
-/// <summary>Foydalanuvchi rollari. / Роли пользователей.</summary>
-public enum UserRole
+/// <summary>
+/// Foydalanuvchi rollari.
+/// Роли пользователей.
+/// </summary>
+public enum UserRoles
 {
     SuperAdmin   = 1,  // To'liq kirish / Полный доступ
     StoreAdmin   = 2,  // Do'kon boshqaruvi / Управление магазином

@@ -41,7 +41,7 @@ public class DeductStockHandler(IStockRepository repo) : IRequestHandler<DeductS
     public async Task<Result> Handle(DeductStockCommand cmd, CancellationToken ct)
     {
         var stock = await repo.GetAsync(cmd.ProductId, cmd.StoreId, ct);
-        if (stock is null) return Result.Failure("Stock topilmadi.");
+        if (stock is null) return Result.NotFound<StockItem>($"{cmd.ProductId}/{cmd.StoreId}");
 
         var result = stock.Deduct(cmd.Amount);
         if (!result.IsSuccess) return Result.Failure(result.Error!);

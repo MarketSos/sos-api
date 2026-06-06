@@ -24,7 +24,7 @@ public class CreateCustomerHandler(ICustomerRepository repo)
         {
             var existing = await repo.GetByPhoneAsync(cmd.PhoneNumber, ct);
             if (existing is not null)
-                return Result.Failure<Guid>($"'{cmd.PhoneNumber}' raqamli mijoz allaqachon mavjud.");
+                return Result.Conflict<Guid, Customer>(cmd.PhoneNumber);
         }
 
         var customer = Customer.Create(
@@ -54,7 +54,7 @@ public class UpdateCustomerHandler(ICustomerRepository repo)
     public async Task<Result> Handle(UpdateCustomerCommand cmd, CancellationToken ct)
     {
         var customer = await repo.GetByIdAsync(cmd.CustomerId, ct);
-        if (customer is null) return Result.Failure("Mijoz topilmadi.");
+        if (customer is null) return Result.NotFound<Customer>(cmd.CustomerId);
 
         customer.Update(cmd.FirstName, cmd.LastName, cmd.PhoneNumber, cmd.Email, cmd.BirthDate);
         await repo.SaveChangesAsync(ct);

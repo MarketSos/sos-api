@@ -12,8 +12,8 @@ using Sos.Analytics.Infrastructure.Persistence;
 namespace Sos.Analytics.Infrastructure.Migrations
 {
     [DbContext(typeof(AnalyticsDbContext))]
-    [Migration("20260605144834_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260606144820_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

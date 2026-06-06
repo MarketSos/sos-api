@@ -2,19 +2,35 @@ using Sos.Shared.Kernel.Domain;
 
 namespace Sos.Catalog.Domain.Entities;
 
-/// <summary>Mahsulot narx qoidasi (aksiya, chegirma). / Правило цены (акция, скидка).</summary>
-public class PriceRule : AggregateRoot<Guid>
+/// <summary>
+/// Mahsulot narx qoidasi (aksiya, chegirma).
+/// Правило цены для товара (акция, скидка).
+/// </summary>
+public class PriceRule : AggregateRoot<Guid>, IHasOrganization
 {
-    /// <summary>Mahsulot ID. / ID товара.</summary>
-    public Guid ProductId { get; private set; }
+    /// <summary>
+    /// Mahsulot ID.
+    /// ID товара.
+    /// </summary>
+    public Guid OrganizationId { get; set; }
+    public Guid ProductId      { get; private set; }
 
-    /// <summary>Do'kon ID (null = barcha do'konlar). / ID магазина (null = все).</summary>
+    /// <summary>
+    /// Do'kon ID (null = barcha do'konlar).
+    /// ID магазина (null = все магазины).
+    /// </summary>
     public Guid? StoreId { get; private set; }
 
-    /// <summary>Qat'iy narx (0 bo'lsa chegirma ishlatiladi). / Фиксированная цена.</summary>
+    /// <summary>
+    /// Qat'iy narx (0 bo'lsa chegirma ishlatiladi).
+    /// Фиксированная цена (0 — используется скидка).
+    /// </summary>
     public decimal FixedPrice { get; private set; }
 
-    /// <summary>Chegirma foizi (0–100). / Процент скидки.</summary>
+    /// <summary>
+    /// Chegirma foizi (0–100).
+    /// Процент скидки (0–100).
+    /// </summary>
     public decimal DiscountPct { get; private set; }
 
     public DateTimeOffset  StartsAt { get; private set; }

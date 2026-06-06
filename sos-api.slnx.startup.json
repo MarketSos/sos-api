@@ -7,26 +7,14 @@
         "Sos.ApiGateway": {
           "ProfileName": "Sos.ApiGateway"
         },
-        "Sos.Identity.API": {
-          "ProfileName": "Sos.Identity.API"
+        "Sos.Core.API": {
+          "ProfileName": "Sos.Core.API"
         },
         "Sos.Catalog.API": {
           "ProfileName": "Sos.Catalog.API"
         },
-        "Sos.Inventory.API": {
-          "ProfileName": "Sos.Inventory.API"
-        },
-        "Sos.POS.API": {
-          "ProfileName": "Sos.POS.API"
-        },
-        "Sos.Pricing.API": {
-          "ProfileName": "Sos.Pricing.API"
-        },
-        "Sos.CRM.API": {
-          "ProfileName": "Sos.CRM.API"
-        },
-        "Sos.Loyalty.API": {
-          "ProfileName": "Sos.Loyalty.API"
+        "Sos.Commerce.API": {
+          "ProfileName": "Sos.Commerce.API"
         },
         "Sos.Analytics.API": {
           "ProfileName": "Sos.Analytics.API"
@@ -39,8 +27,8 @@
         "Sos.ApiGateway": {
           "ProfileName": "Sos.ApiGateway"
         },
-        "Sos.Identity.API": {
-          "ProfileName": "Sos.Identity.API"
+        "Sos.Core.API": {
+          "ProfileName": "Sos.Core.API"
         }
       },
       "SolutionConfiguration": "Debug"

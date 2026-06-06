@@ -8,7 +8,7 @@ using Sos.Catalog.Infrastructure.Extensions;
 using Sos.Catalog.Infrastructure.Persistence;
 using System.Text;
 
-if (OperatingSystem.IsWindows()) Console.Title = "Sos.Catalog.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Catalog.API";
 
 var builder = WebApplication.CreateBuilder(args);
 

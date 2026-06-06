@@ -9,7 +9,7 @@ using Sos.Analytics.Infrastructure.Persistence;
 using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
-if (OperatingSystem.IsWindows()) Console.Title = "Sos.Analytics.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Analytics.API";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,7 +60,7 @@ builder.Services.AddCors(options =>
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddSosSwaggerGen("Sos Analytics API", "http://localhost:61489", typeof(Program).Assembly);
+    builder.Services.AddSosSwaggerGen("Sos Analytics API", "http://localhost:5400", typeof(Program).Assembly);
 }
 
 builder.Services.AddHealthChecks()

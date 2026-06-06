@@ -6,7 +6,10 @@ using Sos.Shared.Infrastructure.Services;
 
 namespace Sos.Catalog.Infrastructure.Persistence;
 
-/// <summary>Catalog + Pricing + Inventory uchun birlashtirilgan DbContext.</summary>
+/// <summary>
+/// Catalog + Pricing + Inventory uchun birlashtirilgan DbContext.
+/// Объединённый DbContext для Catalog, Pricing и Inventory.
+/// </summary>
 public class CatalogDbContext(
     DbContextOptions<CatalogDbContext> options,
     IMediator       mediator,

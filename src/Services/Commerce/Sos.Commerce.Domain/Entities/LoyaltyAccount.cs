@@ -3,11 +3,15 @@ using Sos.Shared.Kernel.Exceptions;
 
 namespace Sos.Commerce.Domain.Entities;
 
-/// <summary>Mijoz loyallik hisobi. / Лицевой счёт лояльности.</summary>
-public class LoyaltyAccount : AggregateRoot<Guid>
+/// <summary>
+/// Mijoz loyallik hisobi.
+/// Лицевой счёт лояльности покупателя.
+/// </summary>
+public class LoyaltyAccount : AggregateRoot<Guid>, IHasOrganization
 {
-    public Guid    CustomerId  { get; private set; }
-    public decimal Balance     { get; private set; }
+    public Guid    CustomerId     { get; private set; }
+    public Guid    OrganizationId { get; set; }
+    public decimal Balance        { get; private set; }
     public decimal TotalEarned { get; private set; }
     public decimal TotalSpent  { get; private set; }
 

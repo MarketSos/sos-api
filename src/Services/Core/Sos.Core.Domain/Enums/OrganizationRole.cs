@@ -1,6 +1,9 @@
 namespace Sos.Core.Domain.Enums;
 
-/// <summary>Tashkilot ichidagi rol. / Роль внутри организации.</summary>
+/// <summary>
+/// Tashkilot ichidagi rol.
+/// Роль внутри организации.
+/// </summary>
 public enum OrganizationRole
 {
     Owner  = 0,

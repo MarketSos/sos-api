@@ -8,7 +8,7 @@ using Sos.Commerce.Infrastructure.Persistence;
 using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
-if (OperatingSystem.IsWindows()) Console.Title = "Sos.Commerce.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Commerce.API";
 
 var builder = WebApplication.CreateBuilder(args);
 

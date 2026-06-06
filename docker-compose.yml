@@ -1,6 +1,9 @@
 version: '3.9'
 
 services:
+
+  # ── Infrastructure ─────────────────────────────────────────────────────────
+
   postgres:
     image: postgres:16-alpine
     container_name: sos-postgres
@@ -33,6 +36,26 @@ services:
       timeout: 5s
       retries: 5
 
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: sos-rabbitmq
+    ports:
+      - "5672:5672"    # AMQP
+      - "15672:15672"  # Management UI  →  http://localhost:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_VHOST: /
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Services ───────────────────────────────────────────────────────────────
+
   core-service:
     build:
       context: .
@@ -47,8 +70,14 @@ services:
       - Jwt__Issuer=Sos
       - Jwt__Audience=Sos.Clients
       - Jwt__ExpiryMinutes=60
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__Username=guest
+      - RabbitMQ__Password=guest
+      - RabbitMQ__VirtualHost=/
     depends_on:
       postgres:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     networks:
       - sos-network
@@ -68,10 +97,16 @@ services:
       - Jwt__Issuer=Sos
       - Jwt__Audience=Sos.Clients
       - Jwt__ExpiryMinutes=60
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__Username=guest
+      - RabbitMQ__Password=guest
+      - RabbitMQ__VirtualHost=/
     depends_on:
       postgres:
         condition: service_healthy
       redis:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     networks:
       - sos-network
@@ -90,8 +125,14 @@ services:
       - Jwt__Issuer=Sos
       - Jwt__Audience=Sos.Clients
       - Jwt__ExpiryMinutes=60
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__Username=guest
+      - RabbitMQ__Password=guest
+      - RabbitMQ__VirtualHost=/
     depends_on:
       postgres:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     networks:
       - sos-network
@@ -110,8 +151,14 @@ services:
       - Jwt__Issuer=Sos
       - Jwt__Audience=Sos.Clients
       - Jwt__ExpiryMinutes=60
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__Username=guest
+      - RabbitMQ__Password=guest
+      - RabbitMQ__VirtualHost=/
     depends_on:
       postgres:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     networks:
       - sos-network
@@ -144,3 +191,4 @@ networks:
 volumes:
   postgres_data:
   redis_data:
+  rabbitmq_data:

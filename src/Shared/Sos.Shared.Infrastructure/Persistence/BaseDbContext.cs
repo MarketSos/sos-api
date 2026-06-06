@@ -6,23 +6,11 @@ using System.Reflection;
 
 namespace Sos.Shared.Infrastructure.Persistence;
 
-/// <summary>
-/// Barcha mikroservislar uchun asosiy DbContext. / Базовый DbContext для всех микросервисов.
-/// Qo'llab-quvvatlaydi / Поддерживает:
-///   — avtomatik domain event publish / автоматическая публикация доменных событий
-///   — global soft-delete filter (IsDeleted) / глобальный фильтр мягкого удаления
-///   — global tenant filter (OrganizationId) — override qilib o'chirish mumkin / можно отключить через override
-///   — audit maydonlarini avtomatik to'ldirish / автоматическое заполнение аудит-полей
-/// </summary>
 public abstract class BaseDbContext(
     DbContextOptions options,
     IMediator mediator,
     ICurrentContext context) : DbContext(options)
 {
-    /// <summary>
-    /// Tizimiy DbContextlarda (masalan Organization) false qaytaring. 
-    /// Верните false для системных DbContext (например Organization).
-    /// </summary>
     protected virtual bool EnableTenantFilter => true;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -49,16 +37,33 @@ public abstract class BaseDbContext(
     {
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            var clrType = entityType.ClrType;
+            var clrType   = entityType.ClrType;
+            var isAggRoot = typeof(AggregateRoot<Guid>).IsAssignableFrom(clrType);
+            var hasOrg    = typeof(IHasOrganization).IsAssignableFrom(clrType);
+            var isSoftDel = typeof(ISoftDeletable).IsAssignableFrom(clrType);
 
-            if (typeof(AggregateRoot<Guid>).IsAssignableFrom(clrType))
+            if (isAggRoot && hasOrg)
             {
                 typeof(BaseDbContext)
-                    .GetMethod(nameof(SetAggregateRootFilter), BindingFlags.NonPublic | BindingFlags.Instance)!
+                    .GetMethod(nameof(SetAggRootWithOrgFilter), BindingFlags.NonPublic | BindingFlags.Instance)!
                     .MakeGenericMethod(clrType)
                     .Invoke(this, [modelBuilder]);
             }
-            else if (typeof(ISoftDeletable).IsAssignableFrom(clrType))
+            else if (isAggRoot)
+            {
+                typeof(BaseDbContext)
+                    .GetMethod(nameof(SetSoftDeleteFilter), BindingFlags.NonPublic | BindingFlags.Static)!
+                    .MakeGenericMethod(clrType)
+                    .Invoke(null, [modelBuilder]);
+            }
+            else if (isSoftDel && hasOrg)
+            {
+                typeof(BaseDbContext)
+                    .GetMethod(nameof(SetSoftDeleteWithOrgFilter), BindingFlags.NonPublic | BindingFlags.Instance)!
+                    .MakeGenericMethod(clrType)
+                    .Invoke(this, [modelBuilder]);
+            }
+            else if (isSoftDel)
             {
                 typeof(BaseDbContext)
                     .GetMethod(nameof(SetSoftDeleteFilter), BindingFlags.NonPublic | BindingFlags.Static)!
@@ -68,7 +73,14 @@ public abstract class BaseDbContext(
         }
     }
 
-    private void SetAggregateRootFilter<T>(ModelBuilder modelBuilder) where T : AggregateRoot<Guid>
+    private void SetAggRootWithOrgFilter<T>(ModelBuilder modelBuilder)
+        where T : AggregateRoot<Guid>, IHasOrganization
+        => modelBuilder.Entity<T>().HasQueryFilter(e =>
+            !e.IsDeleted &&
+            (!EnableTenantFilter || context.OrganizationId == null || e.OrganizationId == context.OrganizationId));
+
+    private void SetSoftDeleteWithOrgFilter<T>(ModelBuilder modelBuilder)
+        where T : class, ISoftDeletable, IHasOrganization
         => modelBuilder.Entity<T>().HasQueryFilter(e =>
             !e.IsDeleted &&
             (!EnableTenantFilter || context.OrganizationId == null || e.OrganizationId == context.OrganizationId));
@@ -89,8 +101,8 @@ public abstract class BaseDbContext(
                 case EntityState.Added:
                     entry.Entity.CreatedAt = now;
                     if (userId.HasValue) entry.Entity.CreatedBy = userId;
-                    if (orgId.HasValue && entry.Entity.OrganizationId == Guid.Empty)
-                        entry.Entity.OrganizationId = orgId.Value;
+                    if (orgId.HasValue && entry.Entity is IHasOrganization aggOrg && aggOrg.OrganizationId == Guid.Empty)
+                        aggOrg.OrganizationId = orgId.Value;
                     break;
 
                 case EntityState.Modified:
@@ -99,11 +111,23 @@ public abstract class BaseDbContext(
                     break;
             }
         }
+
+        // IHasOrganization entities outside AggregateRoot (LocalizableEntity hierarchy)
+        if (orgId.HasValue)
+        {
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e => e.Entity is IHasOrganization && e.Entity is not AggregateRoot<Guid> && e.State == EntityState.Added))
+            {
+                var hasOrg = (IHasOrganization)entry.Entity;
+                if (hasOrg.OrganizationId == Guid.Empty)
+                    hasOrg.OrganizationId = orgId.Value;
+            }
+        }
     }
 
     private async Task PublishDomainEventsAsync(CancellationToken cancellationToken)
     {
-        var aggregates = ChangeTracker.Entries<AggregateRoot<Guid>>()
+        var aggregates = ChangeTracker.Entries<Entity<Guid>>()
             .Where(e => e.Entity.DomainEvents.Count != 0)
             .Select(e => e.Entity)
             .ToList();

@@ -15,7 +15,7 @@ public class CreateLoyaltyAccountHandler(ILoyaltyRepository repo)
     {
         var existing = await repo.GetByCustomerIdAsync(cmd.CustomerId, ct);
         if (existing is not null)
-            return Result.Failure<Guid>("Bu mijozning loyallik hisobi allaqachon mavjud.");
+            return Result.Conflict<Guid, LoyaltyAccount>(cmd.CustomerId);
 
         var account = LoyaltyAccount.Create(cmd.CustomerId);
         await repo.AddAsync(account, ct);
@@ -33,7 +33,7 @@ public class EarnPointsHandler(ILoyaltyRepository repo) : IRequestHandler<EarnPo
     public async Task<Result> Handle(EarnPointsCommand cmd, CancellationToken ct)
     {
         var account = await repo.GetByCustomerIdAsync(cmd.CustomerId, ct);
-        if (account is null) return Result.Failure("Loyallik hisobi topilmadi.");
+        if (account is null) return Result.NotFound<LoyaltyAccount>(cmd.CustomerId);
 
         account.Earn(cmd.Points, cmd.Description, cmd.SaleId);
         await repo.SaveChangesAsync(ct);
@@ -50,7 +50,7 @@ public class SpendPointsHandler(ILoyaltyRepository repo) : IRequestHandler<Spend
     public async Task<Result> Handle(SpendPointsCommand cmd, CancellationToken ct)
     {
         var account = await repo.GetByCustomerIdAsync(cmd.CustomerId, ct);
-        if (account is null) return Result.Failure("Loyallik hisobi topilmadi.");
+        if (account is null) return Result.NotFound<LoyaltyAccount>(cmd.CustomerId);
 
         account.Spend(cmd.Points, cmd.Description, cmd.SaleId);
         await repo.SaveChangesAsync(ct);

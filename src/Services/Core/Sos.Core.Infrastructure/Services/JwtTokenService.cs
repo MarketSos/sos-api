@@ -5,13 +5,15 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Sos.Core.Application.Interfaces;
-using Sos.Core.Domain.Entities;
+using Sos.Core.Domain.Entities.Identity;
+using Sos.Core.Domain.Enums;
+using Sos.Shared.Kernel.Authorization;
 
 namespace Sos.Core.Infrastructure.Services;
 
 public class JwtTokenService(IConfiguration config) : ITokenService
 {
-    public string GenerateAccessToken(User user)
+    public string GenerateAccessToken(User user, IList<string> roles)
     {
         var secret = config["Jwt:Secret"] ?? throw new InvalidOperationException("Jwt:Secret not configured");
         var key    = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
@@ -20,16 +22,27 @@ public class JwtTokenService(IConfiguration config) : ITokenService
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub,   user.Id.ToString()),
-            new(JwtRegisteredClaimNames.Email, user.Email),
+            new(JwtRegisteredClaimNames.Email, user.Email ?? ""),
             new(JwtRegisteredClaimNames.Jti,   Guid.NewGuid().ToString()),
-            new(ClaimTypes.Role,               user.Role.ToString()),
-            new("first_name",                  user.FirstName),
-            new("last_name",                   user.LastName),
             new("store_id",                    user.StoreId?.ToString() ?? ""),
         };
 
         if (user.OrganizationId != Guid.Empty)
             claims.Add(new Claim("org_id", user.OrganizationId.ToString()));
+
+        foreach (var role in roles)
+            claims.Add(new Claim(ClaimTypes.Role, role));
+
+        var permissions = roles.FirstOrDefault() switch
+        {
+            nameof(UserRoles.SuperAdmin) => RolePermissions.SuperAdmin,
+            nameof(UserRoles.StoreAdmin) => RolePermissions.StoreAdmin,
+            nameof(UserRoles.Cashier)    => RolePermissions.Cashier,
+            _                           => (IReadOnlyList<string>)Array.Empty<string>()
+        };
+
+        foreach (var p in permissions)
+            claims.Add(new Claim("permission", p));
 
         var token = new JwtSecurityToken(
             issuer:             config["Jwt:Issuer"],

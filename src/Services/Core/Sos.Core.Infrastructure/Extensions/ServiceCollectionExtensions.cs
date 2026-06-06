@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Sos.Core.Application.Commands;
 using Sos.Core.Application.Interfaces;
-using Sos.Core.Domain.Entities;
+using Sos.Core.Domain.Entities.Identity;
 using Sos.Core.Infrastructure.Persistence;
 using Sos.Core.Infrastructure.Repositories;
 using Sos.Core.Infrastructure.Services;
@@ -28,14 +28,30 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<CoreDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));
 
+        // ASP.NET Core Identity (cookie-free — JWT only)
+        services.AddIdentityCore<User>(opts =>
+        {
+            opts.Password.RequireDigit           = true;
+            opts.Password.RequireLowercase       = true;
+            opts.Password.RequireUppercase       = true;
+            opts.Password.RequireNonAlphanumeric = false;
+            opts.Password.RequiredLength         = 6;
+            opts.User.RequireUniqueEmail         = true;
+        })
+        .AddRoles<Role>()
+        .AddEntityFrameworkStores<CoreDbContext>()
+        .AddDefaultTokenProviders();
+
         // Repositories
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRepository,         UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<IEmployeeRepository,     EmployeeRepository>();
+        services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+        services.AddScoped<IEmployeeRankRepository, EmployeeRankRepository>();
 
         // Services
         services.AddScoped<ITokenService, JwtTokenService>();
-        services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
         // JWT Authentication
         var jwtSecret = config["Jwt:Secret"] ?? throw new InvalidOperationException("Jwt:Secret not configured");

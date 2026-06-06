@@ -19,15 +19,15 @@ public abstract class CatalogEntity<TId> : DescribedEntity<TId>
     /// <summary>
     /// Деактивировать запись
     /// </summary>
-    public virtual void Deactivate() { IsActive = false; UpdatedAt = DateTimeOffset.UtcNow; }
+    public virtual void Deactivate() => IsActive = false;
 
     /// <summary>
     /// Активировать запись
     /// </summary>
-    public virtual void Activate() { IsActive = true; UpdatedAt = DateTimeOffset.UtcNow; }
+    public virtual void Activate() => IsActive = true;
 
     /// <summary>
     /// Изменить порядок сортировки
     /// </summary>
-    public void SetSortOrder(int order) { SortOrder = order; UpdatedAt = DateTimeOffset.UtcNow; }
+    public void SetSortOrder(int order) => SortOrder = order;
 }

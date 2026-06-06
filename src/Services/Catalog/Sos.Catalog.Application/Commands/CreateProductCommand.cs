@@ -24,7 +24,7 @@ public class CreateProductHandler(IProductRepository repo)
     {
         var existing = await repo.GetByBarcodeAsync(cmd.Barcode, ct);
         if (existing is not null)
-            return Result.Failure<Guid>($"Barcode '{cmd.Barcode}' allaqachon mavjud.");
+            return Result.Conflict<Guid, Product>(cmd.Barcode);
 
         var product = Product.Create(
             id:           Guid.NewGuid(),
@@ -61,11 +61,11 @@ public class CreateSkuHandler(ISkuRepository skuRepo, IProductRepository product
     {
         var product = await productRepo.GetByIdAsync(cmd.ProductId, ct);
         if (product is null)
-            return Result.Failure<Guid>("Mahsulot topilmadi.");
+            return Result.NotFound<Guid, Product>(cmd.ProductId);
 
         var existing = await skuRepo.GetBySerialNumberAsync(cmd.SerialNumber, ct);
         if (existing is not null)
-            return Result.Failure<Guid>($"'{cmd.SerialNumber}' seriya raqami allaqachon mavjud.");
+            return Result.Conflict<Guid, Sku>(cmd.SerialNumber);
 
         if (cmd.Amount <= 0)
             return Result.Failure<Guid>("Miqdor 0 dan katta bo'lishi kerak.");
@@ -102,7 +102,7 @@ public class CreateMeasurementUnitHandler(IMeasurementUnitRepository repo)
     {
         var existing = await repo.GetByCodeAsync(cmd.Code, ct);
         if (existing is not null)
-            return Result.Failure<Guid>($"'{cmd.Code}' kodi allaqachon mavjud.");
+            return Result.Conflict<Guid, MeasurementUnit>(cmd.Code);
 
         var unit = MeasurementUnit.Create(Guid.NewGuid(), cmd.Code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.IsWeightBased);
         await repo.AddAsync(unit, ct);

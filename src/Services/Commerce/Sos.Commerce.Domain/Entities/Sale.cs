@@ -2,8 +2,11 @@ using Sos.Shared.Kernel.Domain;
 
 namespace Sos.Commerce.Domain.Entities;
 
-/// <summary>Sotuv (chek) — POS asosiy agregati. / Продажа (чек).</summary>
-public class Sale : AggregateRoot<Guid>
+/// <summary>
+/// Sotuv (chek) — POS asosiy agregati.
+/// Продажа (чек) — главный агрегат POS.
+/// </summary>
+public class Sale : AggregateRoot<Guid>, IHasOrganization
 {
     public Guid          StoreId       { get; private set; }
     public Guid          CashierId     { get; private set; }
@@ -17,6 +20,7 @@ public class Sale : AggregateRoot<Guid>
     public decimal       PaidAmount    { get; private set; }
     public decimal       ChangeAmount  { get; private set; }
     public string?       ReceiptNumber { get; private set; }
+    public Guid          OrganizationId { get; set; }
 
     public ICollection<SaleItem> Items { get; private set; } = new List<SaleItem>();
 

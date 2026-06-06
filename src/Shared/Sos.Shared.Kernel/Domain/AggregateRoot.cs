@@ -1,16 +1,7 @@
 namespace Sos.Shared.Kernel.Domain;
 
-/// <summary>
-/// Корень агрегата. Реализует аудит, мягкое удаление и оптимистичную блокировку.
-/// </summary>
 public abstract class AggregateRoot<TId> : Entity<TId>, IAuditable, ISoftDeletable
 {
-    /// <summary>Версия агрегата для оптимистичной блокировки</summary>
-    public int Version { get; protected set; }
-
-    // --- Tenant ---
-    public Guid OrganizationId { get; set; }
-
     // --- IAuditable ---
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? UpdatedAt { get; set; }

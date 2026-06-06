@@ -13,10 +13,10 @@ public abstract class ActiveEntity<TId> : LocalizableEntity<TId>
     /// <summary>
     /// Деактивировать сущность
     /// </summary>
-    public virtual void Deactivate() { IsActive = false; UpdatedAt = DateTimeOffset.UtcNow; }
+    public virtual void Deactivate() => IsActive = false;
 
     /// <summary>
     /// Активировать сущность
     /// </summary>
-    public virtual void Activate() { IsActive = true; UpdatedAt = DateTimeOffset.UtcNow; }
+    public virtual void Activate() => IsActive = true;
 }

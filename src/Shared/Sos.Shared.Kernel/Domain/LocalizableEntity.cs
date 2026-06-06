@@ -1,36 +1,20 @@
 namespace Sos.Shared.Kernel.Domain;
 
 /// <summary>
-/// Базовый класс для сущностей с многоязычным названием.
-/// NameUz и NameRu — обязательные поля.
-/// NameEn и NameUzKiril — необязательные.
+/// Ko'p tillli nomlarga ega reference/katalog entitylar uchun baza sinf.
+/// AggregateRoot emas — audit maydonlari yo'q, faqat tenant scope va soft-delete.
 /// </summary>
-public abstract class LocalizableEntity<TId> : AggregateRoot<TId>
+public abstract class LocalizableEntity<TId> : Entity<TId>, ISoftDeletable
 {
-    /// <summary>
-    /// Название на узбекском (латиница) — обязательное
-    /// </summary>
+    public bool IsDeleted { get; protected set; }
+    public DateTimeOffset? DeletedAt { get; protected set; }
+    public Guid? DeletedBy { get; protected set; }
+
     public string NameUz { get; protected set; } = default!;
-
-    /// <summary>
-    /// Название на русском — обязательное
-    /// </summary>
     public string NameRu { get; protected set; } = default!;
-
-    /// <summary>
-    /// Название на английском — необязательное
-    /// </summary>
     public string? NameEn { get; protected set; }
-
-    /// <summary>
-    /// Название на узбекском (кириллица) — необязательное
-    /// </summary>
     public string? NameUzKiril { get; protected set; }
 
-    /// <summary>
-    /// Возвращает название по коду языка.
-    /// Если перевод отсутствует — возвращает NameUz.
-    /// </summary>
     public string GetName(string lang = "uz") => lang switch
     {
         "ru"       => NameRu,
@@ -39,15 +23,25 @@ public abstract class LocalizableEntity<TId> : AggregateRoot<TId>
         _          => NameUz
     };
 
-    /// <summary>
-    /// Установить или обновить названия
-    /// </summary>
     protected void SetNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
     {
         NameUz      = nameUz;
         NameRu      = nameRu;
         NameEn      = nameEn;
         NameUzKiril = nameUzKiril;
-        UpdatedAt   = DateTimeOffset.UtcNow;
+    }
+
+    public void SoftDelete(Guid? deletedBy = null)
+    {
+        IsDeleted = true;
+        DeletedAt = DateTimeOffset.UtcNow;
+        DeletedBy = deletedBy;
+    }
+
+    public void Restore()
+    {
+        IsDeleted = false;
+        DeletedAt = null;
+        DeletedBy = null;
     }
 }

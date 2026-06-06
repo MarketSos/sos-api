@@ -58,21 +58,13 @@ public class Product : DescribedEntity<Guid>
         return product;
     }
 
-    public void UpdateBarcode(string barcode)
-    {
-        Barcode   = barcode.Trim();
-        UpdatedAt = DateTimeOffset.UtcNow;
-    }
+    public void UpdateBarcode(string barcode) => Barcode = barcode.Trim();
 
     public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
         => SetNames(nameUz, nameRu, nameEn, nameUzKiril);
 
-    public void SetImage(string url)
-    {
-        ImageUrl  = url;
-        UpdatedAt = DateTimeOffset.UtcNow;
-    }
+    public void SetImage(string url) => ImageUrl = url;
 
-    public void Deactivate() { IsActive = false; UpdatedAt = DateTimeOffset.UtcNow; }
-    public void Activate()   { IsActive = true;  UpdatedAt = DateTimeOffset.UtcNow; }
+    public void Deactivate() => IsActive = false;
+    public void Activate()   => IsActive = true;
 }

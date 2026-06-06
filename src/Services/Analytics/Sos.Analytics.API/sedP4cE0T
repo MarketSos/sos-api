@@ -9,7 +9,7 @@ using Sos.Analytics.Infrastructure.Extensions;
 using Sos.Analytics.Infrastructure.Persistence;
 using System.Text;
 
-if (OperatingSystem.IsWindows()) Console.Title = "Sos.Analytics.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Analytics.API";
 
 var builder = WebApplication.CreateBuilder(args);
 

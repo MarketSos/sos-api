@@ -4,9 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sos.Commerce.Application.Commands;
 using Sos.Commerce.Application.Interfaces;
+using Sos.Commerce.Infrastructure.Messaging;
 using Sos.Commerce.Infrastructure.Persistence;
 using Sos.Commerce.Infrastructure.Repositories;
 using Sos.Shared.Infrastructure.Extensions;
+using Sos.Shared.Infrastructure.Messaging;
 
 namespace Sos.Commerce.Infrastructure.Extensions;
 
@@ -30,6 +32,12 @@ public static class ServiceCollectionExtensions
 
         // CRM
         services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+        // Messaging — publish
+        services.AddScoped<ISaleEventPublisher, SaleEventPublisher>();
+
+        // MassTransit + RabbitMQ (Commerce faqat publish qiladi, consumer yo'q)
+        services.AddSosMassTransit(config);
 
         return services;
     }

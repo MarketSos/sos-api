@@ -1,61 +1,57 @@
 namespace Sos.Shared.Kernel.Results;
 
-/// <summary>
-/// Результат операции — успех или ошибка.
-/// Используется вместо исключений для предсказуемого потока управления.
-/// </summary>
 public class Result
 {
-    /// <summary>
-    /// Операция выполнена успешно
-    /// </summary>
-    public bool IsSuccess { get; }
-
-    /// <summary>
-    /// Сообщение об ошибке (null при успехе)
-    /// </summary>
-    public string? Error { get; }
-
-    /// <summary>
-    /// Операция завершилась ошибкой
-    /// </summary>
-    public bool IsFailure => !IsSuccess;
+    public bool    IsSuccess { get; }
+    public string? Error     { get; }
+    public bool    IsFailure => !IsSuccess;
 
     protected Result(bool isSuccess, string? error)
     {
         IsSuccess = isSuccess;
-        Error = error;
+        Error     = error;
     }
 
-    /// <summary>
-    /// Создать успешный результат
-    /// </summary>
-    public static Result Success() => new(true, null);
+    // ── Muvaffaqiyat ──────────────────────────────────────────────────────────
+    public static Result    Success()        => new(true, null);
+    public static Result<T> Success<T>(T v)  => new(v, true, null);
 
-    /// <summary>
-    /// Создать результат с ошибкой
-    /// </summary>
-    public static Result Failure(string error) => new(false, error);
+    // ── Umumiy xato ───────────────────────────────────────────────────────────
+    public static Result    Failure(string error)        => new(false, error);
+    public static Result<T> Failure<T>(string error)     => new(default!, false, error);
 
-    /// <summary>
-    /// Создать успешный результат с данными
-    /// </summary>
-    public static Result<T> Success<T>(T value) => new(value, true, null);
+    // ── Topilmadi — entity nomi va qidiruv qiymati avtomatik kiritiladi ────────
+    // "EntityName [key] topilmadi."
+    public static Result NotFound<TEntity>(object key)
+        => Failure($"{typeof(TEntity).Name} [{key}] topilmadi.");
 
-    /// <summary>
-    /// Создать результат с ошибкой (с типом данных)
-    /// </summary>
-    public static Result<T> Failure<T>(string error) => new(default!, false, error);
+    public static Result<T> NotFound<T, TEntity>(object key)
+        => Failure<T>($"{typeof(TEntity).Name} [{key}] topilmadi.");
+
+    // Generic bo'lmagan entitylar uchun (masalan IdentityRole<Guid>)
+    public static Result NotFound(string entityName, object key)
+        => Failure($"{entityName} [{key}] topilmadi.");
+
+    public static Result<T> NotFound<T>(string entityName, object key)
+        => Failure<T>($"{entityName} [{key}] topilmadi.");
+
+    // ── Allaqachon mavjud — entity nomi va kalit qiymati avtomatik kiritiladi ─
+    // "EntityName [key] allaqachon mavjud."
+    public static Result Conflict<TEntity>(object key)
+        => Failure($"{typeof(TEntity).Name} [{key}] allaqachon mavjud.");
+
+    public static Result<T> Conflict<T, TEntity>(object key)
+        => Failure<T>($"{typeof(TEntity).Name} [{key}] allaqachon mavjud.");
+
+    public static Result Conflict(string entityName, object key)
+        => Failure($"{entityName} [{key}] allaqachon mavjud.");
+
+    public static Result<T> Conflict<T>(string entityName, object key)
+        => Failure<T>($"{entityName} [{key}] allaqachon mavjud.");
 }
 
-/// <summary>
-/// Результат операции с возвращаемым значением.
-/// </summary>
 public class Result<T> : Result
 {
-    /// <summary>
-    /// Возвращаемое значение (только при IsSuccess = true)
-    /// </summary>
     public T Value { get; }
 
     internal Result(T value, bool isSuccess, string? error) : base(isSuccess, error)

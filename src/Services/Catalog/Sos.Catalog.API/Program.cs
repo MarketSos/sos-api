@@ -8,7 +8,7 @@ using Sos.Catalog.Infrastructure.Persistence;
 using Sos.Shared.Infrastructure.Extensions;
 using System.Text;
 
-if (OperatingSystem.IsWindows()) Console.Title = "Sos.Catalog.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Catalog.API";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,6 @@ builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configurati
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// MediatR — Catalog + Pricing + Inventory command/query handlers
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CreateProductCommand).Assembly));
 
@@ -80,8 +79,11 @@ app.Logger.LogInformation("Sos.Catalog.API started in {Environment} mode", app.E
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+    var db     = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
     await db.Database.MigrateAsync();
+    await CatalogDbContextSeed.SeedAsync(db, logger);
 }
 
 app.Run();

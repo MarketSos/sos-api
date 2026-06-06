@@ -6,7 +6,10 @@ using Sos.Shared.Infrastructure.Services;
 
 namespace Sos.Commerce.Infrastructure.Persistence;
 
-/// <summary>POS + Loyalty + CRM uchun birlashtirilgan DbContext.</summary>
+/// <summary>
+/// POS + Loyalty + CRM uchun birlashtirilgan DbContext.
+/// Объединённый DbContext для POS, Loyalty и CRM.
+/// </summary>
 public class CommerceDbContext(
     DbContextOptions<CommerceDbContext> options,
     IMediator       mediator,

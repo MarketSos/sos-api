@@ -14,7 +14,7 @@ public class GetLoyaltyAccountHandler(ILoyaltyRepository repo)
     {
         var account = await repo.GetByCustomerIdAsync(q.CustomerId, ct);
         return account is null
-            ? Result.Failure<LoyaltyAccount>("Loyallik hisobi topilmadi.")
+            ? Result.NotFound<LoyaltyAccount, LoyaltyAccount>(q.CustomerId)
             : Result.Success(account);
     }
 }

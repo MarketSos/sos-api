@@ -3,10 +3,14 @@ using Sos.Shared.Kernel.Domain;
 
 namespace Sos.Core.Domain.Entities;
 
-/// <summary>Tashkilot a'zosi. / Участник организации.</summary>
-public class OrganizationMember : Entity<Guid>
+/// <summary>
+/// Tashkilot a'zosi.
+/// Участник организации.
+/// </summary>
+public class OrganizationMember : Entity<Guid>, IHasOrganization
 {
-    public Guid             OrganizationId { get; private set; }
+    public Guid             OrganizationId { get; set; }
+    public virtual Organization? Organization { get; set; }
     public Guid             UserId         { get; private set; }
     public OrganizationRole Role           { get; private set; }
     public DateTimeOffset   JoinedAt       { get; private set; }

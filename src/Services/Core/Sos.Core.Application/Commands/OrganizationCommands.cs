@@ -30,10 +30,10 @@ public class CreateOrganizationHandler(IOrganizationRepository repo, ICurrentCon
             return Result.Failure<Guid>("Foydalanuvchi autentifikatsiyadan o'tmagan.");
 
         if (await repo.SlugExistsAsync(cmd.Slug, ct))
-            return Result.Failure<Guid>($"'{cmd.Slug}' slug allaqachon band.");
+            return Result.Conflict<Guid, Organization>(cmd.Slug);
 
         if (cmd.Code is not null && await repo.CodeExistsAsync(cmd.Code, ct))
-            return Result.Failure<Guid>($"'{cmd.Code}' kod allaqachon mavjud.");
+            return Result.Conflict<Guid, Organization>(cmd.Code);
 
         var org = Organization.Create(
             Guid.NewGuid(), cmd.NameUz, cmd.NameRu, cmd.Slug,
@@ -65,7 +65,7 @@ public class UpdateOrganizationNamesHandler(IOrganizationRepository repo, ICurre
     public async Task<Result> Handle(UpdateOrganizationNamesCommand cmd, CancellationToken ct)
     {
         var org = await repo.GetByIdAsync(cmd.OrganizationId, ct);
-        if (org is null) return Result.Failure("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi o'zgartirishi mumkin.");
 
         org.UpdateNames(cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
@@ -91,7 +91,7 @@ public class UpdateOrganizationHandler(IOrganizationRepository repo, ICurrentCon
     public async Task<Result> Handle(UpdateOrganizationCommand cmd, CancellationToken ct)
     {
         var org = await repo.GetByIdAsync(cmd.OrganizationId, ct);
-        if (org is null) return Result.Failure("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi o'zgartirishi mumkin.");
 
         org.Code    = cmd.Code;
@@ -115,13 +115,13 @@ public class SetOrganizationParentHandler(IOrganizationRepository repo, ICurrent
     public async Task<Result> Handle(SetOrganizationParentCommand cmd, CancellationToken ct)
     {
         var org = await repo.GetByIdAsync(cmd.OrganizationId, ct);
-        if (org is null) return Result.Failure("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi o'zgartirishi mumkin.");
 
         if (cmd.ParentId.HasValue)
         {
             var parent = await repo.GetByIdAsync(cmd.ParentId.Value, ct);
-            if (parent is null) return Result.Failure("Yuqori tashkilot topilmadi.");
+            if (parent is null) return Result.NotFound<Organization>(cmd.ParentId.Value);
             org.SetParent(cmd.ParentId.Value);
         }
         else { org.RemoveParent(); }
@@ -140,7 +140,7 @@ public class ToggleOrganizationStatusHandler(IOrganizationRepository repo, ICurr
     public async Task<Result> Handle(ToggleOrganizationStatusCommand cmd, CancellationToken ct)
     {
         var org = await repo.GetByIdAsync(cmd.OrganizationId, ct);
-        if (org is null) return Result.Failure("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi o'zgartirishi mumkin.");
 
         if (cmd.IsActive) org.Activate(); else org.Deactivate();
@@ -158,7 +158,7 @@ public class DeleteOrganizationHandler(IOrganizationRepository repo, ICurrentCon
     public async Task<Result> Handle(DeleteOrganizationCommand cmd, CancellationToken ct)
     {
         var org = await repo.GetByIdAsync(cmd.OrganizationId, ct);
-        if (org is null) return Result.Failure("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi o'chirishi mumkin.");
 
         org.SoftDelete(context.UserId);
@@ -177,7 +177,7 @@ public class AddMemberHandler(IOrganizationRepository repo, ICurrentContext cont
     public async Task<Result<Guid>> Handle(AddMemberCommand cmd, CancellationToken ct)
     {
         var org = await repo.GetByIdAsync(cmd.OrganizationId, ct);
-        if (org is null) return Result.Failure<Guid>("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<Guid, Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure<Guid>("Faqat egasi a'zo qo'sha oladi.");
 
         var member = org.AddMember(cmd.UserId, cmd.Role);
@@ -195,7 +195,7 @@ public class RemoveMemberHandler(IOrganizationRepository repo, ICurrentContext c
     public async Task<Result> Handle(RemoveMemberCommand cmd, CancellationToken ct)
     {
         var org = await repo.GetByIdAsync(cmd.OrganizationId, ct);
-        if (org is null) return Result.Failure("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi a'zoni olib tashlashi mumkin.");
 
         org.RemoveMember(cmd.UserId);

@@ -1,6 +1,6 @@
 using Serilog;
 
-if (OperatingSystem.IsWindows()) Console.Title = "Sos.ApiGateway";
+if (OperatingSystem.IsWindows()) Console.Title = "ApiGateway";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,14 +42,10 @@ app.UseCors();
 
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/identity/v1/swagger.json",   "Identity API");
-    c.SwaggerEndpoint("/swagger/catalog/v1/swagger.json",    "Catalog API");
-    c.SwaggerEndpoint("/swagger/inventory/v1/swagger.json",  "Inventory API");
-    c.SwaggerEndpoint("/swagger/pos/v1/swagger.json",        "POS API");
-    c.SwaggerEndpoint("/swagger/pricing/v1/swagger.json",    "Pricing API");
-    c.SwaggerEndpoint("/swagger/crm/v1/swagger.json",        "CRM API");
-    c.SwaggerEndpoint("/swagger/loyalty/v1/swagger.json",    "Loyalty API");
-    c.SwaggerEndpoint("/swagger/analytics/v1/swagger.json",  "Analytics API");
+    c.SwaggerEndpoint("/swagger/core/v1/swagger.json",      "Core API");
+    c.SwaggerEndpoint("/swagger/catalog/v1/swagger.json",   "Catalog API");
+    c.SwaggerEndpoint("/swagger/commerce/v1/swagger.json",  "Commerce API");
+    c.SwaggerEndpoint("/swagger/analytics/v1/swagger.json", "Analytics API");
     c.RoutePrefix = "swagger";
 });
 

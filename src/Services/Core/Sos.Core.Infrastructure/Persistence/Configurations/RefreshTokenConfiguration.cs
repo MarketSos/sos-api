@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sos.Core.Domain.Entities;
+using Sos.Core.Domain.Entities.Identity;
 
 namespace Sos.Core.Infrastructure.Persistence.Configurations;
 

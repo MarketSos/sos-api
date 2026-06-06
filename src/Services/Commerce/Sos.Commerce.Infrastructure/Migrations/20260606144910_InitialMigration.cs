@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sos.Commerce.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,14 +16,13 @@ namespace Sos.Commerce.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     Email = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: true),
                     StoreId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -43,11 +42,10 @@ namespace Sos.Commerce.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     Balance = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
                     TotalEarned = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
                     TotalSpent = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -78,7 +76,6 @@ namespace Sos.Commerce.Infrastructure.Migrations
                     PaidAmount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     ChangeAmount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     ReceiptNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Version = table.Column<int>(type: "integer", nullable: false),
                     OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),

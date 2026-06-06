@@ -12,15 +12,15 @@ using Sos.Commerce.Infrastructure.Persistence;
 namespace Sos.Commerce.Infrastructure.Migrations
 {
     [DbContext(typeof(CommerceDbContext))]
-    [Migration("20260606083642_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260606144910_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -79,9 +79,6 @@ namespace Sos.Commerce.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
@@ -138,9 +135,6 @@ namespace Sos.Commerce.Infrastructure.Migrations
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -254,9 +248,6 @@ namespace Sos.Commerce.Infrastructure.Migrations
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

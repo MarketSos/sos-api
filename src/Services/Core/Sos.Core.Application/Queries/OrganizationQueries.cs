@@ -1,5 +1,6 @@
 using MediatR;
 using Sos.Core.Application.Interfaces;
+using Sos.Core.Domain.Entities;
 using Sos.Core.Domain.Enums;
 using Sos.Shared.Infrastructure.Services;
 using Sos.Shared.Kernel.Results;
@@ -66,7 +67,7 @@ public class GetMyOrganizationHandler(IOrganizationRepository repo, ICurrentCont
             return Result.Failure<OrganizationDto>("Tashkilot aniqlanmadi.");
 
         var org = await repo.GetByIdAsync(context.OrganizationId.Value, ct);
-        if (org is null) return Result.Failure<OrganizationDto>("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<OrganizationDto, Organization>(context.OrganizationId.Value);
 
         return Result.Success(Mapper.ToDto(org));
     }
@@ -81,7 +82,7 @@ public class GetOrganizationByIdHandler(IOrganizationRepository repo)
     public async Task<Result<OrganizationDto>> Handle(GetOrganizationByIdQuery q, CancellationToken ct)
     {
         var org = await repo.GetByIdAsync(q.Id, ct);
-        if (org is null) return Result.Failure<OrganizationDto>("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<OrganizationDto, Organization>(q.Id);
         return Result.Success(Mapper.ToDto(org));
     }
 }
@@ -95,7 +96,7 @@ public class GetOrganizationByCodeHandler(IOrganizationRepository repo)
     public async Task<Result<OrganizationDto>> Handle(GetOrganizationByCodeQuery q, CancellationToken ct)
     {
         var org = await repo.GetByCodeAsync(q.Code, ct);
-        if (org is null) return Result.Failure<OrganizationDto>("Tashkilot topilmadi.");
+        if (org is null) return Result.NotFound<OrganizationDto, Organization>(q.Code);
         return Result.Success(Mapper.ToDto(org));
     }
 }

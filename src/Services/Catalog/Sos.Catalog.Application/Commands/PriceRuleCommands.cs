@@ -48,7 +48,7 @@ public class DeactivatePriceRuleHandler(IPriceRuleRepository repo)
     public async Task<Result> Handle(DeactivatePriceRuleCommand cmd, CancellationToken ct)
     {
         var rule = await repo.GetByIdAsync(cmd.RuleId, ct);
-        if (rule is null) return Result.Failure("Narx qoidasi topilmadi.");
+        if (rule is null) return Result.NotFound<PriceRule>(cmd.RuleId);
 
         rule.Deactivate();
         await repo.SaveChangesAsync(ct);

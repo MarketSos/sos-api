@@ -2,7 +2,10 @@ using Sos.Shared.Kernel.Domain;
 
 namespace Sos.Commerce.Domain.Entities;
 
-/// <summary>Chek satri. / Позиция в чеке.</summary>
+/// <summary>
+/// Chek satri.
+/// Позиция в чеке.
+/// </summary>
 public class SaleItem : Entity<Guid>
 {
     public Guid    SaleId         { get; private set; }

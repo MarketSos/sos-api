@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sos.Catalog.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,12 +19,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ParentId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -53,12 +47,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Code = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -78,6 +66,7 @@ namespace Sos.Catalog.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     StoreId = table.Column<Guid>(type: "uuid", nullable: true),
                     FixedPrice = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
@@ -85,8 +74,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     StartsAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     EndsAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -105,14 +92,13 @@ namespace Sos.Catalog.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     StoreId = table.Column<Guid>(type: "uuid", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     MinQuantity = table.Column<int>(type: "integer", nullable: false),
                     MaxQuantity = table.Column<int>(type: "integer", nullable: true),
                     Location = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -136,12 +122,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     BrandId = table.Column<Guid>(type: "uuid", nullable: true),
                     ImageUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -167,6 +147,7 @@ namespace Sos.Catalog.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     SerialNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     ProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     SupplierId = table.Column<Guid>(type: "uuid", nullable: true),
@@ -178,8 +159,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     ExpirationDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     LastOutcomeDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Version = table.Column<int>(type: "integer", nullable: false),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -207,18 +186,18 @@ namespace Sos.Catalog.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "MeasurementUnits",
-                columns: new[] { "Id", "Code", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Description", "IsDeleted", "NameEn", "NameRu", "NameUz", "NameUzKiril", "OrganizationId", "UpdatedAt", "UpdatedBy", "Version" },
+                columns: new[] { "Id", "Code", "DeletedAt", "DeletedBy", "Description", "IsDeleted", "NameEn", "NameRu", "NameUz", "NameUzKiril" },
                 values: new object[,]
                 {
-                    { new Guid("00000000-0000-0000-0001-000000000001"), "dona", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3919), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "Piece", "Штука", "Dona", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3933), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000002"), "kg", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3934), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "kg", "Кг", "Kilogramm", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3935), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000003"), "g", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3966), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "g", "Грамм", "Gramm", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3967), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000004"), "l", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3969), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "l", "Литр", "Litr", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3970), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000005"), "ml", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3971), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "ml", "Мл", "Millilitr", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3972), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000006"), "m", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4024), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "m", "Метр", "Metr", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4026), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000007"), "m2", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4027), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "m²", "Кв.м", "Kv. metr", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4028), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000008"), "box", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4032), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "box", "Коробка", "Quti", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4034), new TimeSpan(0, 0, 0, 0, 0)), null, 0 },
-                    { new Guid("00000000-0000-0000-0001-000000000009"), "pack", new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4035), new TimeSpan(0, 0, 0, 0, 0)), null, null, null, null, false, "pack", "Пачка", "Paket", null, new Guid("00000000-0000-0000-0000-000000000000"), new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4036), new TimeSpan(0, 0, 0, 0, 0)), null, 0 }
+                    { new Guid("00000000-0000-0000-0001-000000000001"), "dona", null, null, null, false, "Piece", "Штука", "Dona", null },
+                    { new Guid("00000000-0000-0000-0001-000000000002"), "kg", null, null, null, false, "kg", "Кг", "Kilogramm", null },
+                    { new Guid("00000000-0000-0000-0001-000000000003"), "g", null, null, null, false, "g", "Грамм", "Gramm", null },
+                    { new Guid("00000000-0000-0000-0001-000000000004"), "l", null, null, null, false, "l", "Литр", "Litr", null },
+                    { new Guid("00000000-0000-0000-0001-000000000005"), "ml", null, null, null, false, "ml", "Мл", "Millilitr", null },
+                    { new Guid("00000000-0000-0000-0001-000000000006"), "m", null, null, null, false, "m", "Метр", "Metr", null },
+                    { new Guid("00000000-0000-0000-0001-000000000007"), "m2", null, null, null, false, "m²", "Кв.м", "Kv. metr", null },
+                    { new Guid("00000000-0000-0000-0001-000000000008"), "box", null, null, null, false, "box", "Коробка", "Quti", null },
+                    { new Guid("00000000-0000-0000-0001-000000000009"), "pack", null, null, null, false, "pack", "Пачка", "Paket", null }
                 });
 
             migrationBuilder.CreateIndex(

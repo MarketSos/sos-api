@@ -1,12 +1,14 @@
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Sos.Core.Application.Commands;
+using Sos.Core.Domain.Entities.Identity;
 using Sos.Core.Infrastructure.Extensions;
 using Sos.Core.Infrastructure.Persistence;
 using Sos.Shared.Infrastructure.Extensions;
 
-if (OperatingSystem.IsWindows()) Console.Title = "Sos.Core.API";
+if (OperatingSystem.IsWindows()) Console.Title = "Core.API";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
-    p.WithOrigins("http://localhost:4200", "http://localhost:57859", "http://localhost:61454")
+    p.WithOrigins("http://localhost:4200", "http://localhost:57859", "http://localhost:5000")
      .AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
 
 builder.Services.AddMediatR(cfg =>
@@ -55,8 +57,13 @@ app.Logger.LogInformation("Sos.Core.API started in {Environment} mode", app.Envi
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<CoreDbContext>();
+    var db          = scope.ServiceProvider.GetRequiredService<CoreDbContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+    var logger      = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
     await db.Database.MigrateAsync();
+    await CoreDbContextSeed.SeedAsync(db, userManager, roleManager, logger);
 }
 
 app.Run();

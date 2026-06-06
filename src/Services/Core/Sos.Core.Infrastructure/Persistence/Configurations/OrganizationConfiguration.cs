@@ -38,10 +38,8 @@ public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
                .IsRequired(false);
 
         builder.HasMany(o => o.Members)
-               .WithOne()
+               .WithOne(m => m.Organization)
                .HasForeignKey(m => m.OrganizationId)
                .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Ignore(o => o.OrganizationId);
     }
 }

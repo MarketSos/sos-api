@@ -2,10 +2,14 @@ using Sos.Shared.Kernel.Domain;
 
 namespace Sos.Commerce.Domain.Entities;
 
-/// <summary>Do'kon mijozi. / Покупатель.</summary>
-public class Customer : AggregateRoot<Guid>
+/// <summary>
+/// Do'kon mijozi.
+/// Покупатель магазина.
+/// </summary>
+public class Customer : AggregateRoot<Guid>, IHasOrganization
 {
-    public string    FirstName   { get; private set; } = default!;
+    public Guid      OrganizationId { get; set; }
+    public string    FirstName      { get; private set; } = default!;
     public string    LastName    { get; private set; } = default!;
     public string?   PhoneNumber { get; private set; }
     public string?   Email       { get; private set; }

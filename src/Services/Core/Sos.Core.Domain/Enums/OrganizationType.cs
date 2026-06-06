@@ -1,6 +1,9 @@
 namespace Sos.Core.Domain.Enums;
 
-/// <summary>Tashkilot turi. / Тип организации.</summary>
+/// <summary>
+/// Tashkilot turi.
+/// Тип организации.
+/// </summary>
 public enum OrganizationType
 {
     Central   = 0,

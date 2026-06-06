@@ -13,7 +13,7 @@ public class GetCustomerByIdHandler(ICustomerRepository repo)
     public async Task<Result<Customer>> Handle(GetCustomerByIdQuery q, CancellationToken ct)
     {
         var c = await repo.GetByIdAsync(q.CustomerId, ct);
-        return c is null ? Result.Failure<Customer>("Mijoz topilmadi.") : Result.Success(c);
+        return c is null ? Result.NotFound<Customer, Customer>(q.CustomerId) : Result.Success(c);
     }
 }
 

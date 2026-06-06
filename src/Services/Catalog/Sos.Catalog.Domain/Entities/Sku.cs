@@ -6,12 +6,13 @@ namespace Sos.Catalog.Domain.Entities;
 /// <summary>
 /// SKU — единица складского учёта, партия товара при поступлении.
 /// </summary>
-public class Sku : AggregateRoot<Guid>
+public class Sku : AggregateRoot<Guid>, IHasOrganization
 {
     /// <summary>
     /// Серийный номер партии — номер приходного документа или лота (уникальный)
     /// </summary>
-    public string SerialNumber { get; private set; } = default!;
+    public Guid   OrganizationId { get; set; }
+    public string SerialNumber   { get; private set; } = default!;
 
     /// <summary>
     /// Идентификатор товара

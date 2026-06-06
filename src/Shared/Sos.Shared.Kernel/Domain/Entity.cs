@@ -8,7 +8,7 @@ namespace Sos.Shared.Kernel.Domain;
 public abstract class Entity<TId>
 {
     /// <summary>Уникальный идентификатор сущности</summary>
-    public TId Id { get; protected set; } = default!;
+    public TId Id { get; set; } = default!;
 
     private readonly List<IDomainEvent> _domainEvents = [];
 

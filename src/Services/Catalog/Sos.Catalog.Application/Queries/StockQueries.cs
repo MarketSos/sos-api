@@ -13,7 +13,7 @@ public class GetStockHandler(IStockRepository repo) : IRequestHandler<GetStockQu
     {
         var stock = await repo.GetAsync(q.ProductId, q.StoreId, ct);
         return stock is null
-            ? Result.Failure<StockItem>("Omborda bu mahsulot topilmadi.")
+            ? Result.NotFound<StockItem, StockItem>($"{q.ProductId}/{q.StoreId}")
             : Result.Success(stock);
     }
 }

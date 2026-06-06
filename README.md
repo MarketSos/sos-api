@@ -60,6 +60,66 @@ Client / Frontend
 
 ---
 
+## Boshlang'ich ma'lumotlar (Seed Data)
+
+`Sos.Core.API` ishga tushganda migration bajarilgach, quyidagi ma'lumotlar avtomatik qo'shiladi.
+
+### SuperAdmin hisob
+
+| Maydon | Qiymat |
+|--------|--------|
+| Email  | `admin@sos.uz` |
+| Parol  | `Admin@123456` |
+| Rol    | `SuperAdmin` |
+
+> ⚠️ **Muhim:** Ishga tushirishdan oldin parolni albatta o'zgartiring.
+
+### Asosiy tashkilot
+
+| Maydon | Qiymat |
+|--------|--------|
+| Nomi   | Asosiy tashkilot |
+| Slug   | `main` |
+| Kod    | `MAIN-001` |
+
+### Employee Ranks (Lavozimlar)
+
+| Kod | O'zbek | Rus |
+|-----|--------|-----|
+| `DIRECTOR`   | Direktor          | Директор |
+| `MANAGER`    | Menejer           | Менеджер |
+| `SENIOR`     | Katta mutaxassis  | Старший специалист |
+| `SPECIALIST` | Mutaxassis        | Специалист |
+| `JUNIOR`     | Yordamchi         | Помощник |
+
+### Specializations (Mutaxassisliklar)
+
+| Kod | O'zbek | Rus |
+|-----|--------|-----|
+| `CASHIER`       | Kassir                 | Кассир |
+| `SALESPERSON`   | Sotuvchi               | Продавец |
+| `MANAGER`       | Savdo menejeri         | Менеджер по продажам |
+| `WAREHOUSEMAN`  | Omborchi               | Кладовщик |
+| `ACCOUNTANT`    | Hisobchi               | Бухгалтер |
+| `SECURITY`      | Xavfsizlik xodimi      | Сотрудник охраны |
+| `DRIVER`        | Haydovchi              | Водитель |
+| `CLEANER`       | Farrosh                | Уборщик |
+
+### Catalog seed (Sos.Catalog.API)
+
+**O'lchov birliklari:** dona, kg, g, l, ml, m, quti, paket, juft
+
+**Kategoriyalar (ierarxik):**
+- Oziq-ovqat → Non, Go'sht, Sut, Sabzavot-meva, Ichimlik, Shirinlik, Don, Konserva, Yog'-sous
+- Maishiy tovarlar → Tozalash vositalari, Shaxsiy gigiyena
+- Elektronika
+- Kiyim-kechak
+- Maktab jihozlari
+
+**Namuna mahsulotlar (20 ta):** Non, Sut, Qatiq, Tuxum, Shakar, Un, Guruch, Yog', Choy, Kofe, Kolbasa, Tovuq, Banan, Olma, Shampun, Tish kremi, Kir yuvish kukuni, Idish yuvish, Shokolad, Pechenye
+
+---
+
 ## Ishga tushirish
 
 ### Talablar

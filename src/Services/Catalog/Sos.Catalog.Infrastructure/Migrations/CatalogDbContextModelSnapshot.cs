@@ -17,7 +17,7 @@ namespace Sos.Catalog.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -26,12 +26,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
@@ -67,22 +61,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("SortOrder")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Version")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -102,12 +84,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
@@ -139,18 +115,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
@@ -163,118 +127,82 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000001"),
                             Code = "dona",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3919), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "Piece",
                             NameRu = "Штука",
-                            NameUz = "Dona",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3933), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Dona"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000002"),
                             Code = "kg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3934), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "kg",
                             NameRu = "Кг",
-                            NameUz = "Kilogramm",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3935), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Kilogramm"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000003"),
                             Code = "g",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3966), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "g",
                             NameRu = "Грамм",
-                            NameUz = "Gramm",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3967), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Gramm"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000004"),
                             Code = "l",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3969), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "l",
                             NameRu = "Литр",
-                            NameUz = "Litr",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3970), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Litr"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000005"),
                             Code = "ml",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3971), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "ml",
                             NameRu = "Мл",
-                            NameUz = "Millilitr",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(3972), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Millilitr"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000006"),
                             Code = "m",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4024), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "m",
                             NameRu = "Метр",
-                            NameUz = "Metr",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4026), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Metr"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000007"),
                             Code = "m2",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4027), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "m²",
                             NameRu = "Кв.м",
-                            NameUz = "Kv. metr",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4028), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Kv. metr"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000008"),
                             Code = "box",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4032), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "box",
                             NameRu = "Коробка",
-                            NameUz = "Quti",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4034), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Quti"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000009"),
                             Code = "pack",
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4035), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             NameEn = "pack",
                             NameRu = "Пачка",
-                            NameUz = "Paket",
-                            OrganizationId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 6, 8, 36, 23, 485, DateTimeKind.Unspecified).AddTicks(4036), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0
+                            NameUz = "Paket"
                         });
                 });
 
@@ -331,9 +259,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId", "StoreId", "IsActive");
@@ -356,12 +281,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
@@ -400,18 +319,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     b.Property<string>("NameUzKiril")
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
-
-                    b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -487,9 +394,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
-
                     b.Property<decimal?>("Weight")
                         .HasColumnType("decimal(10,3)");
 
@@ -553,9 +457,6 @@ namespace Sos.Catalog.Infrastructure.Migrations
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
