@@ -8,6 +8,9 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IAuditable, ISoftDeletab
     /// <summary>Версия агрегата для оптимистичной блокировки</summary>
     public int Version { get; protected set; }
 
+    // --- Tenant ---
+    public Guid OrganizationId { get; set; }
+
     // --- IAuditable ---
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? UpdatedAt { get; set; }

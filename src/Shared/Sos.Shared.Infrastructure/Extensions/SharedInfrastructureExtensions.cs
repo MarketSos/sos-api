@@ -19,7 +19,7 @@ public static class SharedInfrastructureExtensions
     public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<ICurrentContext, CurrentContext>();
 
         // MediatR pipeline: har bir request-dan oldin FluentValidation ishga tushadi.
         // Agar validator topilmasa — behavior o'tkazib yuboradi (no-op).

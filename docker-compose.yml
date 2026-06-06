@@ -1,4 +1,4 @@
-﻿version: '3.9'
+version: '3.9'
 
 services:
   postgres:
@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: sos
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
     volumes:
@@ -33,36 +33,22 @@ services:
       timeout: 5s
       retries: 5
 
-  api-gateway:
+  core-service:
     build:
       context: .
-      dockerfile: src/ApiGateway/Dockerfile
-    container_name: sos-gateway
+      dockerfile: src/Services/Core/Sos.Core.API/Dockerfile
+    container_name: sos-core
     ports:
-      - "5000:8080"
+      - "5100:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-    depends_on:
-      - identity-service
-    networks:
-      - sos-network
-
-  identity-service:
-    build:
-      context: .
-      dockerfile: src/Services/Identity/Sos.Identity.API/Dockerfile
-    container_name: sos-identity
-    ports:
-      - "5001:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=SosIdentityDb;Username=postgres;Password=postgres
-      - ConnectionStrings__Redis=redis:6379
+      - ConnectionStrings__Default=Host=postgres;Database=SosCoreDb;Username=postgres;Password=postgres
       - Jwt__Secret=your-super-secret-key-change-in-production-min-32-chars
+      - Jwt__Issuer=Sos
+      - Jwt__Audience=Sos.Clients
+      - Jwt__ExpiryMinutes=60
     depends_on:
       postgres:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     networks:
       - sos-network
@@ -73,91 +59,37 @@ services:
       dockerfile: src/Services/Catalog/Sos.Catalog.API/Dockerfile
     container_name: sos-catalog
     ports:
-      - "5002:8080"
+      - "5200:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Default=Host=postgres;Database=SosCatalogDb;Username=postgres;Password=postgres
       - ConnectionStrings__Redis=redis:6379
+      - Jwt__Secret=your-super-secret-key-change-in-production-min-32-chars
+      - Jwt__Issuer=Sos
+      - Jwt__Audience=Sos.Clients
+      - Jwt__ExpiryMinutes=60
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     networks:
       - sos-network
 
-  inventory-service:
+  commerce-service:
     build:
       context: .
-      dockerfile: src/Services/Inventory/Sos.Inventory.API/Dockerfile
-    container_name: sos-inventory
+      dockerfile: src/Services/Commerce/Sos.Commerce.API/Dockerfile
+    container_name: sos-commerce
     ports:
-      - "5003:8080"
+      - "5300:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=SosInventoryDb;Username=postgres;Password=postgres
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - sos-network
-
-  pos-service:
-    build:
-      context: .
-      dockerfile: src/Services/POS/Sos.POS.API/Dockerfile
-    container_name: sos-pos
-    ports:
-      - "5004:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=SosPosDb;Username=postgres;Password=postgres
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - sos-network
-
-  pricing-service:
-    build:
-      context: .
-      dockerfile: src/Services/Pricing/Sos.Pricing.API/Dockerfile
-    container_name: sos-pricing
-    ports:
-      - "5005:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=SosPricingDb;Username=postgres;Password=postgres
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - sos-network
-
-  crm-service:
-    build:
-      context: .
-      dockerfile: src/Services/CRM/Sos.CRM.API/Dockerfile
-    container_name: sos-crm
-    ports:
-      - "5006:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=SosCrmDb;Username=postgres;Password=postgres
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - sos-network
-
-  loyalty-service:
-    build:
-      context: .
-      dockerfile: src/Services/Loyalty/Sos.Loyalty.API/Dockerfile
-    container_name: sos-loyalty
-    ports:
-      - "5007:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=postgres;Database=SosLoyaltyDb;Username=postgres;Password=postgres
+      - ConnectionStrings__Default=Host=postgres;Database=SosCommerceDb;Username=postgres;Password=postgres
+      - Jwt__Secret=your-super-secret-key-change-in-production-min-32-chars
+      - Jwt__Issuer=Sos
+      - Jwt__Audience=Sos.Clients
+      - Jwt__ExpiryMinutes=60
     depends_on:
       postgres:
         condition: service_healthy
@@ -170,13 +102,38 @@ services:
       dockerfile: src/Services/Analytics/Sos.Analytics.API/Dockerfile
     container_name: sos-analytics
     ports:
-      - "5008:8080"
+      - "5400:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Default=Host=postgres;Database=SosAnalyticsDb;Username=postgres;Password=postgres
+      - Jwt__Secret=your-super-secret-key-change-in-production-min-32-chars
+      - Jwt__Issuer=Sos
+      - Jwt__Audience=Sos.Clients
+      - Jwt__ExpiryMinutes=60
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - sos-network
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: src/ApiGateway/Dockerfile
+    container_name: sos-gateway
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ReverseProxy__Clusters__core-cluster__Destinations__d1__Address=http://core-service:8080
+      - ReverseProxy__Clusters__catalog-cluster__Destinations__d1__Address=http://catalog-service:8080
+      - ReverseProxy__Clusters__commerce-cluster__Destinations__d1__Address=http://commerce-service:8080
+      - ReverseProxy__Clusters__analytics-cluster__Destinations__d1__Address=http://analytics-service:8080
+    depends_on:
+      - core-service
+      - catalog-service
+      - commerce-service
+      - analytics-service
     networks:
       - sos-network
 

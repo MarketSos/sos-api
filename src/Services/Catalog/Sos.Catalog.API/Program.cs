@@ -15,15 +15,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
-builder.Host.UseSerilog((ctx, config) =>
-    config.ReadFrom.Configuration(ctx.Configuration));
+builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configuration));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+// MediatR — Catalog + Pricing + Inventory command/query handlers
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CreateProductCommand).Assembly));
 
@@ -50,20 +50,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-        policy.WithOrigins("http://localhost:61454")
-              .AllowAnyHeader()
-              .AllowAnyMethod());
-});
+builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
+    p.WithOrigins("http://localhost:61454")
+     .AllowAnyHeader().AllowAnyMethod()));
 
 if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddSosSwaggerGen("Sos Catalog API", "http://localhost:61916", typeof(Program).Assembly);
-}
+    builder.Services.AddSosSwaggerGen("Sos Catalog API", "http://localhost:5200", typeof(Program).Assembly);
 
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<CatalogDbContext>();
 
 var app = builder.Build();
 

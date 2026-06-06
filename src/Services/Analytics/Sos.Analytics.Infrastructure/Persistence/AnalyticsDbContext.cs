@@ -9,7 +9,7 @@ namespace Sos.Analytics.Infrastructure.Persistence;
 public class AnalyticsDbContext(
     DbContextOptions<AnalyticsDbContext> options,
     IMediator mediator,
-    ICurrentUserService currentUser)
+    ICurrentContext currentUser)
     : BaseDbContext(options, mediator, currentUser)
 {
     public DbSet<SaleSnapshot> SaleSnapshots => Set<SaleSnapshot>();

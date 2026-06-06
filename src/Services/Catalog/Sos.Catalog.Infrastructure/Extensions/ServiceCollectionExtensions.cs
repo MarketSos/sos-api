@@ -22,9 +22,16 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<CatalogDbContext>(opts =>
             opts.UseNpgsql(config.GetConnectionString("Default")));
 
+        // Catalog repositories
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ISkuRepository, SkuRepository>();
         services.AddScoped<IMeasurementUnitRepository, MeasurementUnitRepository>();
+
+        // Pricing repositories
+        services.AddScoped<IPriceRuleRepository, PriceRuleRepository>();
+
+        // Inventory repositories
+        services.AddScoped<IStockRepository, StockRepository>();
 
         return services;
     }

@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="FluentValidation" />
+    <ProjectReference Include="..\..\..\Shared\Sos.Shared.Infrastructure\Sos.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sos.Core.Domain\Sos.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Sos.Shared.Kernel\Sos.Shared.Kernel.csproj" />
+  </ItemGroup>
+</Project>

@@ -7,29 +7,34 @@ using System.Reflection;
 namespace Sos.Shared.Infrastructure.Persistence;
 
 /// <summary>
-/// Базовый DbContext с поддержкой:
-/// — автоматической публикации доменных событий
-/// — глобального фильтра мягкого удаления (IsDeleted)
-/// — автозаполнения аудит-полей (CreatedAt, UpdatedAt, CreatedBy, UpdatedBy)
-/// — глобального NoTracking для всех read-запросов
+/// Barcha mikroservislar uchun asosiy DbContext. / Базовый DbContext для всех микросервисов.
+/// Qo'llab-quvvatlaydi / Поддерживает:
+///   — avtomatik domain event publish / автоматическая публикация доменных событий
+///   — global soft-delete filter (IsDeleted) / глобальный фильтр мягкого удаления
+///   — global tenant filter (OrganizationId) — override qilib o'chirish mumkin / можно отключить через override
+///   — audit maydonlarini avtomatik to'ldirish / автоматическое заполнение аудит-полей
 /// </summary>
 public abstract class BaseDbContext(
     DbContextOptions options,
     IMediator mediator,
-    ICurrentUserService currentUser) : DbContext(options)
+    ICurrentContext context) : DbContext(options)
 {
+    /// <summary>
+    /// Tizimiy DbContextlarda (masalan Organization) false qaytaring. 
+    /// Верните false для системных DbContext (например Organization).
+    /// </summary>
+    protected virtual bool EnableTenantFilter => true;
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        // Глобальный NoTracking — все read-запросы без отслеживания.
-        // Для update/delete используйте Attach().State = EntityState.Modified явно.
         optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        ApplySoftDeleteFilter(modelBuilder);
+        ApplyGlobalFilters(modelBuilder);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -40,35 +45,42 @@ public abstract class BaseDbContext(
         return result;
     }
 
-    /// <summary>
-    /// Глобальный фильтр — автоматически исключает мягко удалённые записи из всех запросов
-    /// </summary>
-    private static void ApplySoftDeleteFilter(ModelBuilder modelBuilder)
+    private void ApplyGlobalFilters(ModelBuilder modelBuilder)
     {
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            if (!typeof(ISoftDeletable).IsAssignableFrom(entityType.ClrType)) continue;
+            var clrType = entityType.ClrType;
 
-            var method = typeof(BaseDbContext)
-                .GetMethod(nameof(SetSoftDeleteFilter),
-                    BindingFlags.NonPublic | BindingFlags.Static)!
-                .MakeGenericMethod(entityType.ClrType);
-
-            method.Invoke(null, [modelBuilder]);
+            if (typeof(AggregateRoot<Guid>).IsAssignableFrom(clrType))
+            {
+                typeof(BaseDbContext)
+                    .GetMethod(nameof(SetAggregateRootFilter), BindingFlags.NonPublic | BindingFlags.Instance)!
+                    .MakeGenericMethod(clrType)
+                    .Invoke(this, [modelBuilder]);
+            }
+            else if (typeof(ISoftDeletable).IsAssignableFrom(clrType))
+            {
+                typeof(BaseDbContext)
+                    .GetMethod(nameof(SetSoftDeleteFilter), BindingFlags.NonPublic | BindingFlags.Static)!
+                    .MakeGenericMethod(clrType)
+                    .Invoke(null, [modelBuilder]);
+            }
         }
     }
+
+    private void SetAggregateRootFilter<T>(ModelBuilder modelBuilder) where T : AggregateRoot<Guid>
+        => modelBuilder.Entity<T>().HasQueryFilter(e =>
+            !e.IsDeleted &&
+            (!EnableTenantFilter || context.OrganizationId == null || e.OrganizationId == context.OrganizationId));
 
     private static void SetSoftDeleteFilter<T>(ModelBuilder modelBuilder) where T : class, ISoftDeletable
         => modelBuilder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
 
-    /// <summary>
-    /// Автозаполнение: CreatedAt, UpdatedAt, CreatedBy, UpdatedBy
-    /// Применяется только к AggregateRoot — у Entity<Guid> этих полей нет.
-    /// </summary>
     private void ApplyAuditInfo()
     {
         var now    = DateTimeOffset.UtcNow;
-        var userId = currentUser.UserId;
+        var userId = context.UserId;
+        var orgId  = context.OrganizationId;
 
         foreach (var entry in ChangeTracker.Entries<AggregateRoot<Guid>>())
         {
@@ -76,14 +88,14 @@ public abstract class BaseDbContext(
             {
                 case EntityState.Added:
                     entry.Entity.CreatedAt = now;
-                    if (userId.HasValue)
-                        entry.Entity.CreatedBy = userId;
+                    if (userId.HasValue) entry.Entity.CreatedBy = userId;
+                    if (orgId.HasValue && entry.Entity.OrganizationId == Guid.Empty)
+                        entry.Entity.OrganizationId = orgId.Value;
                     break;
 
                 case EntityState.Modified:
                     entry.Entity.UpdatedAt = now;
-                    if (userId.HasValue)
-                        entry.Entity.UpdatedBy = userId;
+                    if (userId.HasValue) entry.Entity.UpdatedBy = userId;
                     break;
             }
         }
