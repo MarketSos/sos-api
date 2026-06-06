@@ -17,6 +17,18 @@ namespace Sos.Catalog.API.Controllers;
 public class ProductsController(IMediator mediator) : ControllerBase
 {
     /// <summary>
+    /// Mahsulotlar ro'yxati — qidiruv yoki kategoriya bo'yicha.
+    /// Список товаров — поиск или фильтр по категории.
+    /// </summary>
+    [HttpGet]
+    [ProducesResponseType<IEnumerable<Product>>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> Search([FromQuery] string? q, [FromQuery] Guid? categoryId, CancellationToken ct)
+    {
+        var result = await mediator.Send(new SearchProductsQuery(q, categoryId), ct);
+        return Ok(result.Value);
+    }
+
+    /// <summary>
     /// Barcode bo'yicha mahsulot topish — kassir uchun.
     /// Поиск товара по штрихкоду — для кассира.
     /// </summary>
