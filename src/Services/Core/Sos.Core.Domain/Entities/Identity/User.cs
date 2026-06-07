@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Identity;
+using Sos.Core.Domain.Enums;
 using Sos.Shared.Kernel.Domain;
 
 namespace Sos.Core.Domain.Entities.Identity;
 
 public class User : IdentityUser<Guid>, IHasOrganization
 {
-    public bool  IsActive       { get; private set; } = true;
-    public Guid? StoreId        { get; private set; }
-    public Guid  OrganizationId { get; set; }
+    public bool            IsActive       { get; private set; } = true;
+    public Guid?           StoreId        { get; private set; }
+    public Guid            OrganizationId { get; set; }
+    public OwnershipType?  Ownership      { get; set; }
 
     public User() { }
 

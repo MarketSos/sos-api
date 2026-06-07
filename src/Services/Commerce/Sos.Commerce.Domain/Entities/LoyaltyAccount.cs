@@ -23,7 +23,10 @@ public class LoyaltyAccount : AggregateRoot<Guid>, IHasOrganization
     public static LoyaltyAccount Create(Guid customerId)
         => new() { Id = Guid.NewGuid(), CustomerId = customerId };
 
-    /// <summary>Ball yig'ish. / Начислить баллы.</summary>
+    /// <summary>
+    /// Ball yig'ish. 
+    /// Начислить баллы.
+    /// </summary>
     public void Earn(decimal points, string description, Guid? saleId = null)
     {
         if (points <= 0) throw new DomainException($"Ball musbat bo'lishi kerak. Berilgan: {points}");
@@ -33,7 +36,10 @@ public class LoyaltyAccount : AggregateRoot<Guid>, IHasOrganization
         UpdatedAt = DateTimeOffset.UtcNow;
     }
 
-    /// <summary>Ball sarflash. / Списать баллы.</summary>
+    /// <summary>
+    /// Ball sarflash. 
+    /// Списать баллы.
+    /// </summary>
     public void Spend(decimal points, string description, Guid? saleId = null)
     {
         if (points <= 0)    throw new DomainException($"Ball musbat bo'lishi kerak. Berilgan: {points}");

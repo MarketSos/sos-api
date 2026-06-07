@@ -122,7 +122,7 @@ public class OrganizationsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateOrganizationRequest req, CancellationToken ct)
     {
         var result = await mediator.Send(
-            new UpdateOrganizationCommand(id, req.Code, req.Tin, req.Okonx, req.Oked, req.OrgType, req.IsTest), ct);
+            new UpdateOrganizationCommand(id, req.Code, req.Tin, req.Okonx, req.Oked, req.IsTest), ct);
         return result.IsSuccess ? NoContent() : BadRequest(new { error = result.Error });
     }
 
@@ -166,6 +166,19 @@ public class OrganizationsController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
+    /// Tashkilot tur (System/Customer) va darajasini (Root/Chain/Store) o'rnatish.
+    /// Установка типа и уровня организации.
+    /// </summary>
+    [HttpPatch("{id:guid}/classification")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Classify(Guid id, [FromBody] ClassifyRequest req, CancellationToken ct)
+    {
+        var result = await mediator.Send(new ClassifyOrganizationCommand(id, req.Ownership, req.Level), ct);
+        return result.IsSuccess ? NoContent() : BadRequest(new { error = result.Error });
+    }
+
+    /// <summary>
     /// Tashkilotga a'zo qo'shish.
     /// Добавление участника в организацию.
     /// </summary>
@@ -194,13 +207,13 @@ public class OrganizationsController(IMediator mediator) : ControllerBase
 
 // ── Request DTOs ──────────────────────────────────────────────────────────────
 public record UpdateNamesRequest(string NameUz, string NameRu, string? NameEn = null, string? NameUzKiril = null);
+public record ClassifyRequest(OwnershipType Ownership, OrganizationLevel Level);
 public record UpdateOrganizationRequest(
-    string?           Code    = null,
-    string?           Tin     = null,
-    string?           Okonx   = null,
-    string?           Oked    = null,
-    OrganizationType? OrgType = null,
-    bool              IsTest  = false);
+    string? Code   = null,
+    string? Tin    = null,
+    string? Okonx  = null,
+    string? Oked   = null,
+    bool    IsTest = false);
 public record SetParentRequest(Guid? ParentId);
 public record ToggleStatusRequest(bool IsActive);
 public record AddMemberRequest(Guid UserId, OrganizationRole Role = OrganizationRole.Member);

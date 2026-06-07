@@ -61,7 +61,7 @@ Har bir servis Clean Architecture bo'yicha `Domain → Application → Infrastru
 
 ### Talablar
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/9)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - `dotnet-ef` CLI: `dotnet tool install --global dotnet-ef`
 
@@ -115,17 +115,12 @@ docker-compose up --build
 
 `Sos.Core.API` birinchi marta ishga tushganda avtomatik qo'shiladi:
 
-| Maydon | Qiymat            |
-|--------|-------------------|
-| Email  | `admin@sos.uz`    |
-| Parol  | `Admin@123456`    |
-| Rol    | `SuperAdmin`      |
+| Maydon   | Qiymat            |
+|----------|-------------------|
+| UserName | `superAdmin`    |
+| Parol    | `Admin@123456`    |
+| Rol      | `SuperAdmin`      |
 
-> ⚠️ Ishlatishdan oldin parolni o'zgartiring.
-
-`Sos.Catalog.API` seed: o'lchov birliklari, mahsulot kategoriyalari va 20 ta namuna mahsulot avtomatik qo'shiladi.
-
----
 
 ## API
 
@@ -201,3 +196,12 @@ sos-api/
 | Cache           | Redis 7                          |
 | Message Broker  | RabbitMQ 3.13                    |
 | Containerization| Docker / Docker Compose          |
+
+## Comment style
+
+```
+/// <summary>
+/// Ball yig'ish. 
+/// Начислить баллы.
+/// </summary>
+```

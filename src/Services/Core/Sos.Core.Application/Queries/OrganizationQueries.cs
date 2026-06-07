@@ -9,22 +9,24 @@ namespace Sos.Core.Application.Queries;
 
 // ── DTOs ──────────────────────────────────────────────────────────────────────
 public record OrganizationDto(
-    Guid              Id,
-    string            NameUz,
-    string            NameRu,
-    string?           NameEn,
-    string?           NameUzKiril,
-    string?           Slug,
-    string?           Code,
-    string?           Tin,
-    string?           Okonx,
-    string?           Oked,
-    OrganizationType? OrgType,
-    bool              IsTest,
-    bool              IsActive,
-    Guid              OwnerUserId,
-    Guid?             ParentId,
-    Guid?             AddressId,
+    Guid               Id,
+    string             NameUz,
+    string             NameRu,
+    string?            NameEn,
+    string?            NameUzKiril,
+    string?            Slug,
+    string?            Code,
+    string?            Tin,
+    string?            Okonx,
+    string?            Oked,
+    OwnershipType?     Ownership,
+    OrganizationLevel? Level,
+    Guid?              OrgTypeId,
+    bool               IsTest,
+    bool               IsActive,
+    Guid               OwnerUserId,
+    Guid?              ParentId,
+    Guid?              AddressId,
     IEnumerable<MemberDto> Members
 );
 
@@ -47,7 +49,8 @@ file static class Mapper
         => new(
             org.Id, org.NameUz, org.NameRu, org.NameEn, org.NameUzKiril,
             org.Slug, org.Code, org.Tin, org.Okonx, org.Oked,
-            org.OrgType, org.IsTest, org.IsActive,
+            org.Ownership, org.Level, org.OrgTypeId,
+            org.IsTest, org.IsActive,
             org.OwnerUserId, org.ParentId, org.AddressId,
             org.Members.Select(m => new MemberDto(m.Id, m.UserId, m.Role, m.JoinedAt, m.IsActive)));
 

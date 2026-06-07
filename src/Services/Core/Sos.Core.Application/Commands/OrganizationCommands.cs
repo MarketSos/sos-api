@@ -1,6 +1,8 @@
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Sos.Core.Application.Interfaces;
 using Sos.Core.Domain.Entities;
+using Sos.Core.Domain.Entities.Identity;
 using Sos.Core.Domain.Enums;
 using Sos.Shared.Infrastructure.Services;
 using Sos.Shared.Kernel.Results;
@@ -9,19 +11,25 @@ namespace Sos.Core.Application.Commands;
 
 // ── CreateOrganization ────────────────────────────────────────────────────────
 public record CreateOrganizationCommand(
-    string            NameUz,
-    string            NameRu,
-    string            Slug,
+    string           NameUz,
+    string           NameRu,
+    string           Slug,
+    OwnershipType?   Ownership = null,
+    Guid?            OrgTypeId = null,
     string?           NameEn      = null,
     string?           NameUzKiril = null,
     string?           Code        = null,
     string?           Tin         = null,
     string?           Okonx       = null,
-    string?           Oked        = null,
-    OrganizationType? OrgType     = null
+    string?           Oked        = null
 ) : IRequest<Result<Guid>>;
 
-public class CreateOrganizationHandler(IOrganizationRepository repo, ICurrentContext context)
+public class CreateOrganizationHandler(
+    IOrganizationRepository repo,
+    ICurrentContext         context,
+    IUserRepository         userRepo,
+    IEmployeeRepository     empRepo,
+    UserManager<User>       userManager)
     : IRequestHandler<CreateOrganizationCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateOrganizationCommand cmd, CancellationToken ct)
@@ -35,17 +43,46 @@ public class CreateOrganizationHandler(IOrganizationRepository repo, ICurrentCon
         if (cmd.Code is not null && await repo.CodeExistsAsync(cmd.Code, ct))
             return Result.Conflict<Guid, Organization>(cmd.Code);
 
+        // Only SuperAdmin may create System organizations
+        if (cmd.Ownership == OwnershipType.System && context.Role != nameof(UserRoles.SuperAdmin))
+            return Result.Failure<Guid>("System turi tashkilotni faqat SuperAdmin yaratishi mumkin.");
+
         var org = Organization.Create(
             Guid.NewGuid(), cmd.NameUz, cmd.NameRu, cmd.Slug,
             context.UserId.Value, cmd.NameEn, cmd.NameUzKiril);
 
-        org.Code    = cmd.Code;
-        org.Tin     = cmd.Tin;
-        org.Okonx   = cmd.Okonx;
-        org.Oked    = cmd.Oked;
-        org.OrgType = cmd.OrgType;
+        org.Code      = cmd.Code;
+        org.Tin       = cmd.Tin;
+        org.Okonx     = cmd.Okonx;
+        org.Oked      = cmd.Oked;
+        if (cmd.Ownership.HasValue) org.SetType(cmd.Ownership.Value);
+        org.OrgTypeId = cmd.OrgTypeId;
 
         await repo.AddAsync(org, ct);
+
+        // Assign creating user to the new organization and ensure they have an employee record
+        var user = await userRepo.GetByIdAsync(context.UserId.Value, ct);
+        if (user is not null)
+        {
+            user.SetOrganization(org.Id);
+            await userRepo.SaveChangesAsync(ct);
+
+            // Give owner StoreAdmin role so they can manage their org
+            await userManager.AddToRoleAsync(user, UserRoles.StoreAdmin.ToString());
+
+            // Create an Employee entry for the user if missing
+            if (!await empRepo.ExistsByUserIdAsync(user.Id, ct))
+            {
+                var names = (user.UserName ?? "").Split('.', 2, StringSplitOptions.RemoveEmptyEntries);
+                var first = names.Length > 0 ? names[0] : user.UserName ?? "";
+                var last  = names.Length > 1 ? names[1] : string.Empty;
+
+                var emp = Employee.Create(user.Id, first, last);
+                emp.OrganizationId = org.Id;
+                await empRepo.AddAsync(emp, ct);
+            }
+        }
+
         return Result.Success(org.Id);
     }
 }
@@ -76,13 +113,12 @@ public class UpdateOrganizationNamesHandler(IOrganizationRepository repo, ICurre
 
 // ── UpdateOrganization ────────────────────────────────────────────────────────
 public record UpdateOrganizationCommand(
-    Guid              OrganizationId,
-    string?           Code    = null,
-    string?           Tin     = null,
-    string?           Okonx   = null,
-    string?           Oked    = null,
-    OrganizationType? OrgType = null,
-    bool              IsTest  = false
+    Guid               OrganizationId,
+    string?            Code    = null,
+    string?            Tin     = null,
+    string?            Okonx   = null,
+    string?            Oked    = null,
+    bool               IsTest  = false
 ) : IRequest<Result>;
 
 public class UpdateOrganizationHandler(IOrganizationRepository repo, ICurrentContext context)
@@ -94,12 +130,11 @@ public class UpdateOrganizationHandler(IOrganizationRepository repo, ICurrentCon
         if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi o'zgartirishi mumkin.");
 
-        org.Code    = cmd.Code;
-        org.Tin     = cmd.Tin;
-        org.Okonx   = cmd.Okonx;
-        org.Oked    = cmd.Oked;
-        org.OrgType = cmd.OrgType;
-        org.IsTest  = cmd.IsTest;
+        org.Code   = cmd.Code;
+        org.Tin    = cmd.Tin;
+        org.Okonx  = cmd.Okonx;
+        org.Oked   = cmd.Oked;
+        org.IsTest = cmd.IsTest;
 
         await repo.SaveChangesAsync(ct);
         return Result.Success();
@@ -162,6 +197,42 @@ public class DeleteOrganizationHandler(IOrganizationRepository repo, ICurrentCon
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi o'chirishi mumkin.");
 
         org.SoftDelete(context.UserId);
+        await repo.SaveChangesAsync(ct);
+        return Result.Success();
+    }
+}
+
+// ── ClassifyOrganization ──────────────────────────────────────────────────────
+/// <summary>
+/// Tashkilot tur (System/Customer) va darajasini (Root/Chain/Store) o'rnatish.
+/// Biznes qoidalar:
+///   • Store darajasidagi tashkilot ParentId ga ega bo'lishi shart.
+///   • System turi faqat Root yoki Chain darajasida bo'la oladi.
+///   • Customer turi har qanday darajada bo'lishi mumkin.
+/// </summary>
+public record ClassifyOrganizationCommand(
+    Guid              OrganizationId,
+    OwnershipType     Ownership,
+    OrganizationLevel Level
+) : IRequest<Result>;
+
+public class ClassifyOrganizationHandler(IOrganizationRepository repo, ICurrentContext context)
+    : IRequestHandler<ClassifyOrganizationCommand, Result>
+{
+    public async Task<Result> Handle(ClassifyOrganizationCommand cmd, CancellationToken ct)
+    {
+        var org = await repo.GetByIdAsync(cmd.OrganizationId, ct);
+        if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
+
+        // Biznes qoida 1: Store — parent bo'lishi shart
+        if (cmd.Level == OrganizationLevel.Store && org.ParentId is null)
+            return Result.Failure("Store darajasidagi tashkilot chain/root ga bog'liq bo'lishi shart.");
+
+        // Biznes qoida 2: System faqat Root yoki Chain bo'lishi mumkin
+        if (cmd.Ownership == OwnershipType.System && cmd.Level == OrganizationLevel.Store)
+            return Result.Failure("System turi do'kon (Store) darajasida bo'la olmaydi.");
+
+        org.Classify(cmd.Ownership, cmd.Level);
         await repo.SaveChangesAsync(ct);
         return Result.Success();
     }

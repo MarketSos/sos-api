@@ -5,17 +5,18 @@ namespace Sos.Core.Domain.Entities;
 
 public class Organization : LocalizableEntity<Guid>
 {
-    public string?            Slug        { get; private set; }
-    public string?            Code        { get; set; }
-    public string?            Tin         { get; set; }
-    public string?            Okonx       { get; set; }
-    public string?            Oked        { get; set; }
-    public OrganizationType?  OrgType     { get; set; }
-    public Guid?              OrgTypeId   { get; set; }
-    public bool               IsActive    { get; private set; } = true;
-    public bool               IsTest      { get; set; }
-    public Guid               OwnerUserId { get; private set; }
-    public Guid?              ParentId    { get; private set; }
+    public string?             Slug        { get; private set; }
+    public string?             Code        { get; set; }
+    public string?             Tin         { get; set; }
+    public string?             Okonx       { get; set; }
+    public string?             Oked        { get; set; }
+    public OwnershipType     Ownership   { get; private set; }
+    public OrganizationLevel  Level       { get; private set; }
+    public Guid?               OrgTypeId   { get; set; }
+    public bool                IsActive    { get; private set; } = true;
+    public bool                IsTest      { get; set; }
+    public Guid                OwnerUserId { get; private set; }
+    public Guid?               ParentId    { get; private set; }
 
     public virtual Organization?             Parent { get; private set; }
     public virtual ICollection<Organization> Childs { get; private set; } = [];
@@ -47,6 +48,36 @@ public class Organization : LocalizableEntity<Guid>
         org._members.Add(OrganizationMember.Create(Guid.NewGuid(), id, ownerUserId, OrganizationRole.Owner));
         return org;
     }
+
+    // ── Klassifikatsiya ───────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Tashkilot mulkchilik turini o'rnatish.
+    /// System = tizim ichki tashkiloti, Customer = mijoz tashkiloti.
+    /// </summary>
+    public void SetType(OwnershipType type) => Ownership = type;
+
+    /// <summary>
+    /// Ierarxiya darajasini o'rnatish.
+    /// Root (bosh kompaniya) → Chain (tarmoq) → Store (do'kon/filial).
+    /// </summary>
+    public void SetLevel(OrganizationLevel level)
+    {
+        Level = level;
+        // Level qoidalari: Store bo'lsa parent bo'lishi shart (Chain yoki Root)
+        // Bu yerda faqat qiymat saqlanadi; biznes qoidalar CommandHandler da tekshiriladi.
+    }
+
+    /// <summary>
+    /// Bir vaqtda tur va darajani o'rnatish.
+    /// </summary>
+    public void Classify(OwnershipType type, OrganizationLevel level)
+    {
+        Ownership = type;
+        Level     = level;
+    }
+
+    // ── Boshqa metodlar ───────────────────────────────────────────────────────
 
     public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
         => SetNames(nameUz, nameRu, nameEn, nameUzKiril);
