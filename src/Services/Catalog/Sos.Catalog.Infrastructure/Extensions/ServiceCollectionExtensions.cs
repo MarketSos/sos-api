@@ -28,6 +28,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ISkuRepository, SkuRepository>();
         services.AddScoped<IMeasurementUnitRepository, MeasurementUnitRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         // Pricing repositories
         services.AddScoped<IPriceRuleRepository, PriceRuleRepository>();

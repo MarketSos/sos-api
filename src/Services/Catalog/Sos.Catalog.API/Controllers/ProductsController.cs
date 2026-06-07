@@ -120,3 +120,24 @@ public class MeasurementUnitsController(IMediator mediator) : ControllerBase
         return result.IsSuccess ? Ok(new { id = result.Value }) : BadRequest(new { error = result.Error });
     }
 }
+
+/// <summary>
+/// Kategoriyalar ro'yxati.
+/// Список категорий товаров.
+/// </summary>
+[ApiController]
+[Route("api/categories")]
+[Authorize]
+public class CategoriesController(IMediator mediator) : ControllerBase
+{
+    /// <summary>
+    /// Barcha kategoriyalar (id, nameUz, nameRu, parentId).
+    /// </summary>
+    [HttpGet]
+    [ProducesResponseType<IEnumerable<CategoryDto>>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll(CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetCategoriesQuery(), ct);
+        return Ok(result.Value);
+    }
+}
