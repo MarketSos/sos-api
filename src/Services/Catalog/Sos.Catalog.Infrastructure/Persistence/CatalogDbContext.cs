@@ -21,6 +21,8 @@ public class CatalogDbContext(
     public DbSet<Sku>             Skus             => Set<Sku>();
     public DbSet<Category>        Categories       => Set<Category>();
     public DbSet<MeasurementUnit> MeasurementUnits => Set<MeasurementUnit>();
+    public DbSet<Manufacturer>    Manufacturers    => Set<Manufacturer>();
+    public DbSet<Brand>           Brands           => Set<Brand>();
 
     // Pricing
     public DbSet<PriceRule> PriceRules => Set<PriceRule>();

@@ -65,6 +65,20 @@ public static class CatalogDbContextSeed
     private static readonly Guid ProdShocoladId   = Guid.NewGuid();
     private static readonly Guid ProdPechenyeId   = Guid.NewGuid();
 
+    // ── Ishlab chiqaruvchi (Manufacturer) ID'lari ─────────────────────────────
+    public static readonly Guid ManufNestleId    = Guid.NewGuid();
+    public static readonly Guid ManufProcterId   = Guid.NewGuid();
+    public static readonly Guid ManufUzdonmahId  = Guid.NewGuid();
+    public static readonly Guid ManufColgateId   = Guid.NewGuid();
+    public static readonly Guid ManufNamanganId  = Guid.NewGuid();
+
+    // ── Brend ID'lari ─────────────────────────────────────────────────────────
+    public static readonly Guid BrandNescafeId = Guid.NewGuid();
+    public static readonly Guid BrandAriel     = Guid.NewGuid();
+    public static readonly Guid BrandNur       = Guid.NewGuid();
+    public static readonly Guid BrandColgateId = Guid.NewGuid();
+    public static readonly Guid BrandOlmaFoods = Guid.NewGuid();
+
     // Core servisidagi asosiy tashkilot ID si (CoreDbContextSeed.OrgId)
     private static readonly Guid MainStoreId = new("10000000-0000-0000-0000-000000000001");
 
@@ -72,8 +86,48 @@ public static class CatalogDbContextSeed
     {
         await SeedMeasurementUnitsAsync(db, logger);
         await SeedCategoriesAsync(db, logger);
+        await SeedManufacturersAsync(db, logger);
+        await SeedBrandsAsync(db, logger);
         await SeedProductsAsync(db, logger);
         await SeedStockAsync(db, logger);
+    }
+
+    // ── Ishlab chiqaruvchilar ─────────────────────────────────────────────────
+    private static async Task SeedManufacturersAsync(CatalogDbContext db, ILogger logger)
+    {
+        if (await db.Manufacturers.AnyAsync()) return;
+
+        var manufacturers = new[]
+        {
+            Manufacturer.Create(ManufNestleId,   "NESTLE",   nameUz: "Nestle",                    nameRu: "Нестле",                    nameEn: "Nestle"),
+            Manufacturer.Create(ManufProcterId,  "PG",       nameUz: "Procter & Gamble",          nameRu: "Проктер энд Гэмбл",         nameEn: "Procter & Gamble"),
+            Manufacturer.Create(ManufUzdonmahId, "UZDONMAH", nameUz: "O'zdonmahsulot",            nameRu: "Уздонмахсулот",             nameEn: "Uzdonmahsulot"),
+            Manufacturer.Create(ManufColgateId,  "COLGATE",  nameUz: "Colgate-Palmolive",         nameRu: "Колгейт-Палмолив",          nameEn: "Colgate-Palmolive"),
+            Manufacturer.Create(ManufNamanganId, "NAMFOOD",  nameUz: "Namangan oziq-ovqat zavodi",nameRu: "Наманганский пищевой завод",nameEn: "Namangan Food Plant"),
+        };
+
+        await db.Manufacturers.AddRangeAsync(manufacturers);
+        await db.SaveChangesAsync();
+        logger.LogInformation("Manufacturers seed: {Count} ta yozuv qo'shildi.", manufacturers.Length);
+    }
+
+    // ── Brendlar ──────────────────────────────────────────────────────────────
+    private static async Task SeedBrandsAsync(CatalogDbContext db, ILogger logger)
+    {
+        if (await db.Brands.AnyAsync()) return;
+
+        var brands = new[]
+        {
+            Brand.Create(BrandNescafeId, "NESCAFE",   nameUz: "Nescafe",     nameRu: "Нескафе",     nameEn: "Nescafe"),
+            Brand.Create(BrandAriel,     "ARIEL",     nameUz: "Ariel",       nameRu: "Ариэль",      nameEn: "Ariel"),
+            Brand.Create(BrandNur,       "NUR",       nameUz: "Nur",         nameRu: "Нур",         nameEn: "Nur"),
+            Brand.Create(BrandColgateId, "COLGATE",   nameUz: "Colgate",     nameRu: "Колгейт",     nameEn: "Colgate"),
+            Brand.Create(BrandOlmaFoods, "OLMAFOODS", nameUz: "Olma Foods",  nameRu: "Олма Фудс",   nameEn: "Olma Foods"),
+        };
+
+        await db.Brands.AddRangeAsync(brands);
+        await db.SaveChangesAsync();
+        logger.LogInformation("Brands seed: {Count} ta yozuv qo'shildi.", brands.Length);
     }
 
     private static async Task SeedMeasurementUnitsAsync(CatalogDbContext db, ILogger logger)

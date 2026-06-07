@@ -14,6 +14,25 @@ namespace Sos.Catalog.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Brands",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    NameUz = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameRu = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameEn = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    NameUzKiril = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Brands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -39,6 +58,27 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Manufacturers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    AddressLine = table.Column<string>(type: "text", nullable: true),
+                    Phone = table.Column<string>(type: "text", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    NameUz = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameRu = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameEn = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    NameUzKiril = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Manufacturers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,9 +241,21 @@ namespace Sos.Catalog.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Brands_Code",
+                table: "Brands",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Categories_ParentId",
                 table: "Categories",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Manufacturers_Code",
+                table: "Manufacturers",
+                column: "Code",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MeasurementUnits_Code",
@@ -253,6 +305,12 @@ namespace Sos.Catalog.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Brands");
+
+            migrationBuilder.DropTable(
+                name: "Manufacturers");
+
             migrationBuilder.DropTable(
                 name: "PriceRules");
 
