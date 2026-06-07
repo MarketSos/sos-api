@@ -58,6 +58,19 @@ public class ProductsController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
+    /// Keyingi partiya raqamini generatsiya qilish.
+    /// Генерация следующего серийного номера партии.
+    /// </summary>
+    [HttpGet("{productId}/skus/next-serial")]
+    [Authorize(Roles = "SuperAdmin,StoreAdmin")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetNextSerial(Guid productId, CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetNextSerialQuery(productId), ct);
+        return Ok(new { serialNumber = result.Value });
+    }
+
+    /// <summary>
     /// Mahsulotning SKU (kirim partiyalari) ro'yxatini ko'rish.
     /// Просмотр SKU (партий поступления) товара.
     /// </summary>
