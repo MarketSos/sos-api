@@ -24,7 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
-    p.WithOrigins("http://localhost:4200", "http://localhost:57859", "http://localhost:5000")
+    p.WithOrigins("http://localhost:4200", "http://localhost:5500", "http://localhost:57859", "http://localhost:5000")
      .AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
 
 builder.Services.AddMediatR(cfg =>
