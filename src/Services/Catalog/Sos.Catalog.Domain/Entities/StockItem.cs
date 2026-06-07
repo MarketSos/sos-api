@@ -78,6 +78,8 @@ public class StockItem : AggregateRoot<Guid>, IHasOrganization
     /// </summary>
     public void Add(int amount) { Quantity += amount; UpdatedAt = DateTimeOffset.UtcNow; }
 
+    public void SetMinQuantity(int minQty) { MinQuantity = minQty; UpdatedAt = DateTimeOffset.UtcNow; }
+
     public bool IsLow => Quantity <= MinQuantity;
 }
 

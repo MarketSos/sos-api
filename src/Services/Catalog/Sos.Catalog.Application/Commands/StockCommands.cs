@@ -33,6 +33,22 @@ public class AddStockHandler(IStockRepository repo) : IRequestHandler<AddStockCo
     }
 }
 
+// ── UpdateMinQuantity ─────────────────────────────────────────────────────────
+public record UpdateMinQuantityCommand(Guid ProductId, Guid StoreId, int MinQuantity) : IRequest<Result>;
+
+public class UpdateMinQuantityHandler(IStockRepository repo) : IRequestHandler<UpdateMinQuantityCommand, Result>
+{
+    public async Task<Result> Handle(UpdateMinQuantityCommand cmd, CancellationToken ct)
+    {
+        var stock = await repo.GetAsync(cmd.ProductId, cmd.StoreId, ct);
+        if (stock is null) return Result.NotFound<StockItem>($"{cmd.ProductId}/{cmd.StoreId}");
+
+        stock.SetMinQuantity(cmd.MinQuantity);
+        await repo.SaveChangesAsync(ct);
+        return Result.Success();
+    }
+}
+
 // ── DeductStock ───────────────────────────────────────────────────────────────
 public record DeductStockCommand(Guid ProductId, Guid StoreId, int Amount) : IRequest<Result>;
 

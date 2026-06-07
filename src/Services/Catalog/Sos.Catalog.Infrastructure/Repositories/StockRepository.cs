@@ -11,6 +11,14 @@ public class StockRepository(CatalogDbContext db) : IStockRepository
         => db.StockItems.AsTracking()
              .FirstOrDefaultAsync(s => s.ProductId == productId && s.StoreId == storeId, ct);
 
+    public async Task<IEnumerable<StockItem>> GetByStoreAsync(Guid? storeId, CancellationToken ct = default)
+    {
+        var query = db.StockItems.AsNoTracking().AsQueryable();
+        if (storeId.HasValue)
+            query = query.Where(s => s.StoreId == storeId.Value);
+        return await query.OrderBy(s => s.ProductId).ToListAsync(ct);
+    }
+
     public async Task<IEnumerable<StockItem>> GetLowStockAsync(Guid storeId, CancellationToken ct = default)
         => await db.StockItems
                    .Where(s => s.StoreId == storeId && s.Quantity <= s.MinQuantity)

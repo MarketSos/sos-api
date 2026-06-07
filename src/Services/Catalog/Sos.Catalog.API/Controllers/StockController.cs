@@ -5,6 +5,8 @@ using Sos.Catalog.Application.Commands;
 using Sos.Catalog.Application.Queries;
 using Sos.Catalog.Domain.Entities;
 
+public record UpdateMinQtyRequest(int MinQuantity);
+
 namespace Sos.Catalog.API.Controllers;
 
 /// <summary>
@@ -16,6 +18,33 @@ namespace Sos.Catalog.API.Controllers;
 [Authorize]
 public class StockController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    /// Barcha ombor qoldiqlari (mahsulot nomi bilan). storeId bo'yicha filter.
+    /// Все складские остатки с названием товара.
+    /// </summary>
+    [HttpGet]
+    [ProducesResponseType<IEnumerable<StockItemDto>>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetList([FromQuery] Guid? storeId, CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetStockListQuery(storeId), ct);
+        return Ok(result.Value);
+    }
+
+    /// <summary>
+    /// Minimal miqdorni yangilash.
+    /// Обновление минимального остатка.
+    /// </summary>
+    [HttpPatch("{productId}/{storeId}/min-quantity")]
+    [Authorize(Roles = "SuperAdmin,StoreAdmin")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateMinQuantity(
+        Guid productId, Guid storeId, [FromBody] UpdateMinQtyRequest req, CancellationToken ct)
+    {
+        var result = await mediator.Send(new UpdateMinQuantityCommand(productId, storeId, req.MinQuantity), ct);
+        return result.IsSuccess ? Ok() : BadRequest(new { error = result.Error });
+    }
+
     /// <summary>
     /// Do'kon va mahsulot bo'yicha ombor qoldiqlarini olish.
     /// Получение остатков по магазину и товару.
