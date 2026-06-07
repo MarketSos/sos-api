@@ -16,6 +16,18 @@ public static class CoreDbContextSeed
     private static readonly Guid UserId = new("10000000-0000-0000-0000-000000000002");
     private static readonly Guid EmpId  = new("10000000-0000-0000-0000-000000000003");
 
+    // ── OrgType ID'lari ────────────────────────────────────────────────────────
+    private static readonly Guid OrgTypeGroceryId    = new("50000000-0000-0000-0000-000000000001");
+    private static readonly Guid OrgTypePharmacyId   = new("50000000-0000-0000-0000-000000000002");
+    private static readonly Guid OrgTypeElectronicsId= new("50000000-0000-0000-0000-000000000003");
+    private static readonly Guid OrgTypeClothingId   = new("50000000-0000-0000-0000-000000000004");
+    private static readonly Guid OrgTypeBuildingId   = new("50000000-0000-0000-0000-000000000005");
+    private static readonly Guid OrgTypeSportsId     = new("50000000-0000-0000-0000-000000000006");
+    private static readonly Guid OrgTypeBookId       = new("50000000-0000-0000-0000-000000000007");
+    private static readonly Guid OrgTypeHouseholdId  = new("50000000-0000-0000-0000-000000000008");
+    private static readonly Guid OrgTypeCafeId       = new("50000000-0000-0000-0000-000000000009");
+    private static readonly Guid OrgTypeGeneralId    = new("50000000-0000-0000-0000-000000000010");
+
     // ── EmployeeRank ID'lari ───────────────────────────────────────────────────
     private static readonly Guid RankDirectorId   = new("20000000-0000-0000-0000-000000000001");
     private static readonly Guid RankManagerId    = new("20000000-0000-0000-0000-000000000002");
@@ -44,11 +56,36 @@ public static class CoreDbContextSeed
         RoleManager<Role> roleManager,
         ILogger           logger)
     {
+        await SeedOrgTypesAsync(db, logger);
         await SeedEmployeeRanksAsync(db, logger);
         await SeedSpecializationsAsync(db, logger);
         await SeedOrganizationAsync(db, logger);
         await SeedRolesAsync(roleManager, logger);
         await SeedSuperAdminAsync(db, userManager, logger);
+    }
+
+    // ── OrgType (Biznes turlari) ──────────────────────────────────────────────
+    private static async Task SeedOrgTypesAsync(CoreDbContext db, ILogger logger)
+    {
+        if (await db.OrgTypes.AnyAsync()) return;
+
+        var types = new[]
+        {
+            OrgType.Create(OrgTypeGroceryId,    "GROCERY",     "Oziq-ovqat do'koni",      "Продуктовый магазин",    "Grocery Store",       "pi-shopping-basket"),
+            OrgType.Create(OrgTypePharmacyId,   "PHARMACY",    "Apteka",                  "Аптека",                 "Pharmacy",            "pi-heart"),
+            OrgType.Create(OrgTypeElectronicsId,"ELECTRONICS", "Elektronika do'koni",     "Магазин электроники",    "Electronics Store",   "pi-tablet"),
+            OrgType.Create(OrgTypeClothingId,   "CLOTHING",    "Kiyim-kechak do'koni",    "Магазин одежды",         "Clothing Store",      "pi-tag"),
+            OrgType.Create(OrgTypeBuildingId,   "BUILDING",    "Qurilish materiallari",   "Стройматериалы",         "Building Materials",  "pi-hammer"),
+            OrgType.Create(OrgTypeSportsId,     "SPORTS",      "Sport do'koni",           "Спортивный магазин",     "Sports Store",        "pi-sparkles"),
+            OrgType.Create(OrgTypeBookId,       "BOOK",        "Kitob do'koni",           "Книжный магазин",        "Book Store",          "pi-book"),
+            OrgType.Create(OrgTypeHouseholdId,  "HOUSEHOLD",   "Uy-ro'zg'or buyumlari",   "Товары для дома",        "Household Goods",     "pi-home"),
+            OrgType.Create(OrgTypeCafeId,       "CAFE",        "Kafe / Restoran",         "Кафе / Ресторан",        "Cafe / Restaurant",   "pi-star"),
+            OrgType.Create(OrgTypeGeneralId,    "GENERAL",     "Umumiy do'kon",           "Общий магазин",          "General Store",       "pi-shop"),
+        };
+
+        await db.OrgTypes.AddRangeAsync(types);
+        await db.SaveChangesAsync();
+        logger.LogInformation("OrgTypes seed: {Count} ta yozuv qo'shildi.", types.Length);
     }
 
     // ── EmployeeRank ──────────────────────────────────────────────────────────
@@ -136,8 +173,9 @@ public static class CoreDbContextSeed
             ownerUserId: UserId,
             nameEn:      "Main Organization");
 
-        org.Code    = "MAIN-001";
-        org.Address = address;
+        org.Code      = "MAIN-001";
+        org.OrgTypeId = OrgTypeGroceryId;
+        org.Address   = address;
 
         await db.Organizations.AddAsync(org);
         await db.SaveChangesAsync();

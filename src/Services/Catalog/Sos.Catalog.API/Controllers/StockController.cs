@@ -5,9 +5,10 @@ using Sos.Catalog.Application.Commands;
 using Sos.Catalog.Application.Queries;
 using Sos.Catalog.Domain.Entities;
 
+namespace Sos.Catalog.API.Controllers;
+
 public record UpdateMinQtyRequest(int MinQuantity);
 
-namespace Sos.Catalog.API.Controllers;
 
 /// <summary>
 /// Ombor qoldiqlari boshqaruvi.

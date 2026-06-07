@@ -11,6 +11,7 @@ public class Organization : LocalizableEntity<Guid>
     public string?            Okonx       { get; set; }
     public string?            Oked        { get; set; }
     public OrganizationType?  OrgType     { get; set; }
+    public Guid?              OrgTypeId   { get; set; }
     public bool               IsActive    { get; private set; } = true;
     public bool               IsTest      { get; set; }
     public Guid               OwnerUserId { get; private set; }

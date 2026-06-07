@@ -65,11 +65,15 @@ public static class CatalogDbContextSeed
     private static readonly Guid ProdShocoladId   = Guid.NewGuid();
     private static readonly Guid ProdPechenyeId   = Guid.NewGuid();
 
+    // Core servisidagi asosiy tashkilot ID si (CoreDbContextSeed.OrgId)
+    private static readonly Guid MainStoreId = new("10000000-0000-0000-0000-000000000001");
+
     public static async Task SeedAsync(CatalogDbContext db, ILogger logger)
     {
         await SeedMeasurementUnitsAsync(db, logger);
         await SeedCategoriesAsync(db, logger);
         await SeedProductsAsync(db, logger);
+        await SeedStockAsync(db, logger);
     }
 
     private static async Task SeedMeasurementUnitsAsync(CatalogDbContext db, ILogger logger)
@@ -189,5 +193,42 @@ public static class CatalogDbContextSeed
         await db.Products.AddRangeAsync(products);
         await db.SaveChangesAsync();
         logger.LogInformation("Products seed: {Count} ta mahsulot qo'shildi.", products.Length);
+    }
+
+    // ── Stock (Ombor) ─────────────────────────────────────────────────────────
+    private static async Task SeedStockAsync(CatalogDbContext db, ILogger logger)
+    {
+        if (await db.StockItems.AnyAsync()) return;
+
+        var items = new[]
+        {
+            StockItem.Create(ProdNonId,        MainStoreId, qty: 50,  minQty: 10),
+            StockItem.Create(ProdSutId,        MainStoreId, qty: 80,  minQty: 15),
+            StockItem.Create(ProdQatiqId,      MainStoreId, qty: 60,  minQty: 10),
+            StockItem.Create(ProdTuxumId,      MainStoreId, qty: 200, minQty: 30),
+            StockItem.Create(ProdShakarId,     MainStoreId, qty: 100, minQty: 20),
+            StockItem.Create(ProdUnId,         MainStoreId, qty: 75,  minQty: 15),
+            StockItem.Create(ProdGuruchId,     MainStoreId, qty: 90,  minQty: 20),
+            StockItem.Create(ProdYogId,        MainStoreId, qty: 45,  minQty: 10),
+            StockItem.Create(ProdChoyId,       MainStoreId, qty: 120, minQty: 20),
+            StockItem.Create(ProdKofId,        MainStoreId, qty: 55,  minQty: 10),
+            StockItem.Create(ProdKolbasaId,    MainStoreId, qty: 30,  minQty: 5),
+            StockItem.Create(ProdTavukId,      MainStoreId, qty: 40,  minQty: 8),
+            StockItem.Create(ProdBananaId,     MainStoreId, qty: 60,  minQty: 10),
+            StockItem.Create(ProdOlmaId,       MainStoreId, qty: 70,  minQty: 10),
+            StockItem.Create(ProdShampunId,    MainStoreId, qty: 35,  minQty: 5),
+            StockItem.Create(ProdTishkremId,   MainStoreId, qty: 40,  minQty: 8),
+            StockItem.Create(ProdKirYuvishId,  MainStoreId, qty: 25,  minQty: 5),
+            StockItem.Create(ProdIdishYuvishId,MainStoreId, qty: 3,   minQty: 5),  // kam — isLow: true
+            StockItem.Create(ProdShocoladId,   MainStoreId, qty: 150, minQty: 20),
+            StockItem.Create(ProdPechenyeId,   MainStoreId, qty: 2,   minQty: 10), // kam — isLow: true
+        };
+
+        foreach (var item in items)
+            item.OrganizationId = MainStoreId;
+
+        await db.StockItems.AddRangeAsync(items);
+        await db.SaveChangesAsync();
+        logger.LogInformation("StockItems seed: {Count} ta yozuv qo'shildi.", items.Length);
     }
 }

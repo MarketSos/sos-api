@@ -19,6 +19,7 @@ public class CoreDbContext(
     public DbSet<Organization>       Organizations => Set<Organization>();
     public DbSet<OrganizationMember> Members       => Set<OrganizationMember>();
     public DbSet<Address>            Addresses     => Set<Address>();
+    public DbSet<OrgType>            OrgTypes      => Set<OrgType>();
 
     // HR
     public DbSet<Employee>       Employees       => Set<Employee>();

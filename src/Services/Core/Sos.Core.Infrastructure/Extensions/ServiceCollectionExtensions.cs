@@ -49,6 +49,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IEmployeeRepository,     EmployeeRepository>();
         services.AddScoped<ISpecializationRepository, SpecializationRepository>();
         services.AddScoped<IEmployeeRankRepository, EmployeeRankRepository>();
+        services.AddScoped<IOrgTypeRepository,      OrgTypeRepository>();
 
         // Services
         services.AddScoped<ITokenService, JwtTokenService>();
