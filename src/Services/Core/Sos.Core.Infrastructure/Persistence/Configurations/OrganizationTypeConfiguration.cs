@@ -4,9 +4,9 @@ using Sos.Core.Domain.Entities;
 
 namespace Sos.Core.Infrastructure.Persistence.Configurations;
 
-public class OrgTypeConfiguration : IEntityTypeConfiguration<OrgType>
+public class OrganizationTypeConfiguration : IEntityTypeConfiguration<OrganizationType>
 {
-    public void Configure(EntityTypeBuilder<OrgType> builder)
+    public void Configure(EntityTypeBuilder<OrganizationType> builder)
     {
         builder.HasKey(o => o.Id);
         builder.HasIndex(o => o.Code).IsUnique();

@@ -285,6 +285,9 @@ namespace Sos.Core.Infrastructure.Migrations
                     b.Property<Guid>("OrganizationId")
                         .HasColumnType("uuid");
 
+                    b.Property<int?>("Ownership")
+                        .HasColumnType("integer");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
@@ -404,43 +407,6 @@ namespace Sos.Core.Infrastructure.Migrations
                     b.ToTable("UserTokens", "Identity");
                 });
 
-            modelBuilder.Entity("Sos.Core.Domain.Entities.OrgType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("Icon")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("NameEn")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("NameRu")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("NameUz")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.ToTable("OrgTypes");
-                });
-
             modelBuilder.Entity("Sos.Core.Domain.Entities.Organization", b =>
                 {
                     b.Property<Guid>("Id")
@@ -469,6 +435,9 @@ namespace Sos.Core.Infrastructure.Migrations
                     b.Property<bool>("IsTest")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("Level")
+                        .HasColumnType("integer");
+
                     b.Property<string>("NameEn")
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
@@ -495,14 +464,14 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int?>("OrgType")
-                        .HasColumnType("integer");
-
                     b.Property<Guid?>("OrgTypeId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("OwnerUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("Ownership")
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uuid");
@@ -566,6 +535,55 @@ namespace Sos.Core.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Members");
+                });
+
+            modelBuilder.Entity("Sos.Core.Domain.Entities.OrganizationType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Icon")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("NameEn")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("NameRu")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("NameUz")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("NameUzKiril")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("OrganizationTypes");
                 });
 
             modelBuilder.Entity("Sos.Core.Domain.Entities.RefreshToken", b =>
@@ -736,7 +754,7 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasForeignKey("Sos.Core.Domain.Entities.Organization", "AddressId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Sos.Core.Domain.Entities.OrgType", null)
+                    b.HasOne("Sos.Core.Domain.Entities.OrganizationType", null)
                         .WithMany()
                         .HasForeignKey("OrgTypeId")
                         .OnDelete(DeleteBehavior.SetNull);

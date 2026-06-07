@@ -37,7 +37,7 @@ public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
                .OnDelete(DeleteBehavior.SetNull)
                .IsRequired(false);
 
-        builder.HasOne<Sos.Core.Domain.Entities.OrgType>()
+        builder.HasOne<Sos.Core.Domain.Entities.OrganizationType>()
                .WithMany()
                .HasForeignKey(o => o.OrgTypeId)
                .OnDelete(DeleteBehavior.SetNull)

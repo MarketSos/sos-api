@@ -53,6 +53,26 @@ namespace Sos.Core.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrganizationTypes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Icon = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    NameUz = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameRu = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameEn = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    NameUzKiril = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrganizationTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 schema: "Identity",
                 columns: table => new
@@ -100,6 +120,7 @@ namespace Sos.Core.Infrastructure.Migrations
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     StoreId = table.Column<Guid>(type: "uuid", nullable: true),
                     OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Ownership = table.Column<int>(type: "integer", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -130,7 +151,9 @@ namespace Sos.Core.Infrastructure.Migrations
                     Tin = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     Okonx = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     Oked = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
-                    OrgType = table.Column<int>(type: "integer", nullable: true),
+                    Ownership = table.Column<int>(type: "integer", nullable: false),
+                    Level = table.Column<int>(type: "integer", nullable: false),
+                    OrgTypeId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     IsTest = table.Column<bool>(type: "boolean", nullable: false),
                     OwnerUserId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -151,6 +174,12 @@ namespace Sos.Core.Infrastructure.Migrations
                         name: "FK_Organizations_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Organizations_OrganizationTypes_OrgTypeId",
+                        column: x => x.OrgTypeId,
+                        principalTable: "OrganizationTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
@@ -417,6 +446,11 @@ namespace Sos.Core.Infrastructure.Migrations
                 filter: "\"Code\" IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Organizations_OrgTypeId",
+                table: "Organizations",
+                column: "OrgTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Organizations_OwnerUserId",
                 table: "Organizations",
                 column: "OwnerUserId");
@@ -432,6 +466,12 @@ namespace Sos.Core.Infrastructure.Migrations
                 column: "Slug",
                 unique: true,
                 filter: "\"Slug\" IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrganizationTypes_Code",
+                table: "OrganizationTypes",
+                column: "Code",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_Token",
@@ -546,6 +586,9 @@ namespace Sos.Core.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Addresses");
+
+            migrationBuilder.DropTable(
+                name: "OrganizationTypes");
         }
     }
 }

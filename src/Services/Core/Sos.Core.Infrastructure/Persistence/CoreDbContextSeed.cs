@@ -67,23 +67,23 @@ public static class CoreDbContextSeed
     // ── OrgType (Biznes turlari) ──────────────────────────────────────────────
     private static async Task SeedOrgTypesAsync(CoreDbContext db, ILogger logger)
     {
-        if (await db.OrgTypes.AnyAsync()) return;
+        if (await db.OrganizationTypes.AnyAsync()) return;
 
         var types = new[]
         {
-            OrgType.Create(OrgTypeGroceryId,    "GROCERY",     "Oziq-ovqat do'koni",      "Продуктовый магазин",    "Grocery Store",       "pi-shopping-basket"),
-            OrgType.Create(OrgTypePharmacyId,   "PHARMACY",    "Apteka",                  "Аптека",                 "Pharmacy",            "pi-heart"),
-            OrgType.Create(OrgTypeElectronicsId,"ELECTRONICS", "Elektronika do'koni",     "Магазин электроники",    "Electronics Store",   "pi-tablet"),
-            OrgType.Create(OrgTypeClothingId,   "CLOTHING",    "Kiyim-kechak do'koni",    "Магазин одежды",         "Clothing Store",      "pi-tag"),
-            OrgType.Create(OrgTypeBuildingId,   "BUILDING",    "Qurilish materiallari",   "Стройматериалы",         "Building Materials",  "pi-hammer"),
-            OrgType.Create(OrgTypeSportsId,     "SPORTS",      "Sport do'koni",           "Спортивный магазин",     "Sports Store",        "pi-sparkles"),
-            OrgType.Create(OrgTypeBookId,       "BOOK",        "Kitob do'koni",           "Книжный магазин",        "Book Store",          "pi-book"),
-            OrgType.Create(OrgTypeHouseholdId,  "HOUSEHOLD",   "Uy-ro'zg'or buyumlari",   "Товары для дома",        "Household Goods",     "pi-home"),
-            OrgType.Create(OrgTypeCafeId,       "CAFE",        "Kafe / Restoran",         "Кафе / Ресторан",        "Cafe / Restaurant",   "pi-star"),
-            OrgType.Create(OrgTypeGeneralId,    "GENERAL",     "Umumiy do'kon",           "Общий магазин",          "General Store",       "pi-shop"),
+            OrganizationType.Create(OrgTypeGroceryId,    "GROCERY",     "Oziq-ovqat do'koni",      "Продуктовый магазин",    "Grocery Store",       "pi-shopping-basket"),
+            OrganizationType.Create(OrgTypePharmacyId,   "PHARMACY",    "Apteka",                  "Аптека",                 "Pharmacy",            "pi-heart"),
+            OrganizationType.Create(OrgTypeElectronicsId,"ELECTRONICS", "Elektronika do'koni",     "Магазин электроники",    "Electronics Store",   "pi-tablet"),
+            OrganizationType.Create(OrgTypeClothingId,   "CLOTHING",    "Kiyim-kechak do'koni",    "Магазин одежды",         "Clothing Store",      "pi-tag"),
+            OrganizationType.Create(OrgTypeBuildingId,   "BUILDING",    "Qurilish materiallari",   "Стройматериалы",         "Building Materials",  "pi-hammer"),
+            OrganizationType.Create(OrgTypeSportsId,     "SPORTS",      "Sport do'koni",           "Спортивный магазин",     "Sports Store",        "pi-sparkles"),
+            OrganizationType.Create(OrgTypeBookId,       "BOOK",        "Kitob do'koni",           "Книжный магазин",        "Book Store",          "pi-book"),
+            OrganizationType.Create(OrgTypeHouseholdId,  "HOUSEHOLD",   "Uy-ro'zg'or buyumlari",   "Товары для дома",        "Household Goods",     "pi-home"),
+            OrganizationType.Create(OrgTypeCafeId,       "CAFE",        "Kafe / Restoran",         "Кафе / Ресторан",        "Cafe / Restaurant",   "pi-star"),
+            OrganizationType.Create(OrgTypeGeneralId,    "GENERAL",     "Umumiy do'kon",           "Общий магазин",          "General Store",       "pi-shop"),
         };
 
-        await db.OrgTypes.AddRangeAsync(types);
+        await db.OrganizationTypes.AddRangeAsync(types);
         await db.SaveChangesAsync();
         logger.LogInformation("OrgTypes seed: {Count} ta yozuv qo'shildi.", types.Length);
     }
@@ -176,6 +176,7 @@ public static class CoreDbContextSeed
         org.Code      = "MAIN-001";
         org.OrgTypeId = OrgTypeGroceryId;
         org.Address   = address;
+        org.Classify(OwnershipType.System, OrganizationLevel.Root);
 
         await db.Organizations.AddAsync(org);
         await db.SaveChangesAsync();

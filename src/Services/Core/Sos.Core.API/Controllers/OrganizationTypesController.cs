@@ -7,22 +7,22 @@ using Sos.Core.Application.Queries;
 namespace Sos.Core.API.Controllers;
 
 [ApiController]
-[Route("api/org-types")]
+[Route("api/organization-types")]
 [Authorize]
-public class OrgTypesController(IMediator mediator) : ControllerBase
+public class OrganizationTypesController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType<List<OrgTypeDto>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<List<OrganizationTypeDto>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
     {
-        var result = await mediator.Send(new GetAllOrgTypesQuery(), ct);
+        var result = await mediator.Send(new GetAllOrganizationTypesQuery(), ct);
         return Ok(result.Value);
     }
 
     [HttpPost]
     [Authorize(Roles = "SuperAdmin")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<IActionResult> Create([FromBody] CreateOrgTypeCommand cmd, CancellationToken ct)
+    public async Task<IActionResult> Create([FromBody] CreateOrganizationTypeCommand cmd, CancellationToken ct)
     {
         var result = await mediator.Send(cmd, ct);
         return result.IsSuccess
@@ -33,9 +33,9 @@ public class OrgTypesController(IMediator mediator) : ControllerBase
     [HttpPut("{id:guid}")]
     [Authorize(Roles = "SuperAdmin")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateOrgTypeRequest req, CancellationToken ct)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateOrganizationTypeRequest req, CancellationToken ct)
     {
-        var result = await mediator.Send(new UpdateOrgTypeCommand(id, req.NameUz, req.NameRu, req.NameEn, req.Icon), ct);
+        var result = await mediator.Send(new UpdateOrganizationTypeCommand(id, req.NameUz, req.NameRu, req.NameEn, null, req.Icon), ct);
         return result.IsSuccess ? NoContent() : BadRequest(new { error = result.Error });
     }
 
@@ -44,9 +44,9 @@ public class OrgTypesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
-        var result = await mediator.Send(new DeleteOrgTypeCommand(id), ct);
+        var result = await mediator.Send(new DeleteOrganizationTypeCommand(id), ct);
         return result.IsSuccess ? NoContent() : BadRequest(new { error = result.Error });
     }
 }
 
-public record UpdateOrgTypeRequest(string NameUz, string NameRu, string? NameEn = null, string? Icon = null);
+public record UpdateOrganizationTypeRequest(string NameUz, string NameRu, string? NameEn = null, string? Icon = null);
