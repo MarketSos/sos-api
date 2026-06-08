@@ -29,6 +29,7 @@ public class CatalogDbContext(
 
     // Inventory
     public DbSet<StockItem> StockItems => Set<StockItem>();
+    public DbSet<Store>     Stores     => Set<Store>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

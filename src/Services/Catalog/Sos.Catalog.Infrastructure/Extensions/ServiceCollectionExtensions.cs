@@ -37,6 +37,7 @@ public static class ServiceCollectionExtensions
 
         // Inventory repositories
         services.AddScoped<IStockRepository, StockRepository>();
+        services.AddScoped<IStoreRepository, StoreRepository>();
 
         // MassTransit + RabbitMQ — SaleCompleted hodisasini eshitish
         services.AddSosMassTransit(config, x =>

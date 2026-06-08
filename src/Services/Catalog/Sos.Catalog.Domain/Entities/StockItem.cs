@@ -46,6 +46,9 @@ public class StockItem : AggregateRoot<Guid>, IHasOrganization
     /// </summary>
     public string? Location { get; private set; }
 
+    // Navigation
+    public Store? Store { get; private set; }
+
     private StockItem() { }
 
     public static StockItem Create(Guid productId, Guid storeId, int qty, int minQty = 0)
