@@ -50,10 +50,11 @@ public class Store : AggregateRoot<Guid>, IHasOrganization
         string  code,
         string  name,
         string? address = null,
-        string? phone   = null)
+        string? phone   = null,
+        Guid?   id      = null)
         => new()
         {
-            Id             = Guid.NewGuid(),
+            Id             = id ?? Guid.NewGuid(),
             OrganizationId = organizationId,
             Code           = code.Trim().ToUpperInvariant(),
             Name           = name.Trim(),

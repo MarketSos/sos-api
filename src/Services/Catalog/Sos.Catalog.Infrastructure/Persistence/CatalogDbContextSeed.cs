@@ -80,7 +80,8 @@ public static class CatalogDbContextSeed
     public static readonly Guid BrandOlmaFoods = Guid.NewGuid();
 
     // Core servisidagi asosiy tashkilot ID si (CoreDbContextSeed.OrgId)
-    private static readonly Guid MainStoreId = new("10000000-0000-0000-0000-000000000001");
+    private static readonly Guid MainOrgId   = new("10000000-0000-0000-0000-000000000001");
+    public  static readonly Guid MainStoreId = new("30000000-0000-0000-0000-000000000001");
 
     public static async Task SeedAsync(CatalogDbContext db, ILogger logger)
     {
@@ -89,6 +90,7 @@ public static class CatalogDbContextSeed
         await SeedManufacturersAsync(db, logger);
         await SeedBrandsAsync(db, logger);
         await SeedProductsAsync(db, logger);
+        await SeedStoresAsync(db, logger);
         await SeedStockAsync(db, logger);
     }
 
@@ -249,6 +251,23 @@ public static class CatalogDbContextSeed
         logger.LogInformation("Products seed: {Count} ta mahsulot qo'shildi.", products.Length);
     }
 
+    // ── Do'konlar ─────────────────────────────────────────────────────────────
+    private static async Task SeedStoresAsync(CatalogDbContext db, ILogger logger)
+    {
+        if (await db.Stores.AnyAsync()) return;
+
+        var store = Store.Create(
+            organizationId: MainOrgId,
+            code:    "MAIN",
+            name:    "Asosiy Do'kon",
+            address: "Toshkent sh.",
+            id:      MainStoreId);
+
+        await db.Stores.AddAsync(store);
+        await db.SaveChangesAsync();
+        logger.LogInformation("Stores seed: 1 ta yozuv qo'shildi. StoreId = {Id}", MainStoreId);
+    }
+
     // ── Stock (Ombor) ─────────────────────────────────────────────────────────
     private static async Task SeedStockAsync(CatalogDbContext db, ILogger logger)
     {
@@ -279,7 +298,7 @@ public static class CatalogDbContextSeed
         };
 
         foreach (var item in items)
-            item.OrganizationId = MainStoreId;
+            item.OrganizationId = MainOrgId;
 
         await db.StockItems.AddRangeAsync(items);
         await db.SaveChangesAsync();
