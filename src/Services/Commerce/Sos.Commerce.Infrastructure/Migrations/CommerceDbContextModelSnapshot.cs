@@ -208,9 +208,6 @@ namespace Sos.Commerce.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid");
-
                     b.Property<decimal>("PaidAmount")
                         .HasColumnType("decimal(18,2)");
 
