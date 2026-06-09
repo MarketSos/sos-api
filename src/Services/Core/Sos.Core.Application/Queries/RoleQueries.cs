@@ -10,18 +10,20 @@ public record RoleDto(
     Guid                  Id,
     string                Name,
     string                NameUz,
+    string                NameUzCyrl,
     string                NameRu,
     string?               NameEn,
-    string?               NameKa,
+    string?               NameKk,
     IReadOnlyList<string> Permissions);
 
 public record RoleSummaryDto(
     Guid    Id,
     string  Name,
     string  NameUz,
+    string  NameUzCyrl,
     string  NameRu,
     string? NameEn,
-    string? NameKa,
+    string? NameKk,
     int     PermissionCount);
 
 public record GetAllRolesQuery : IRequest<Result<List<RoleSummaryDto>>>;
@@ -36,7 +38,7 @@ public class GetAllRolesHandler(RoleManager<Role> roleManager)
         {
             var claims = await roleManager.GetClaimsAsync(role);
             var count  = claims.Count(c => c.Type == ClaimsType.Permission);
-            result.Add(new RoleSummaryDto(role.Id, role.Name!, role.NameUz, role.NameRu, role.NameEn, role.NameKa, count));
+            result.Add(new RoleSummaryDto(role.Id, role.Name!, role.NameUz, role.NameUzCyrl, role.NameRu, role.NameEn, role.NameKk, count));
         }
         return Result.Success(result);
     }
@@ -59,6 +61,6 @@ public class GetRoleByNameHandler(RoleManager<Role> roleManager)
             .OrderBy(p => p)
             .ToList();
 
-        return Result.Success(new RoleDto(role.Id, role.Name!, role.NameUz, role.NameRu, role.NameEn, role.NameKa, permissions));
+        return Result.Success(new RoleDto(role.Id, role.Name!, role.NameUz, role.NameUzCyrl, role.NameRu, role.NameEn, role.NameKk, permissions));
     }
 }

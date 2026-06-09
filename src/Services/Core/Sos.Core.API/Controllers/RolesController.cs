@@ -50,7 +50,7 @@ public class RolesController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateRoleRequest req, CancellationToken ct)
     {
         var result = await mediator.Send(
-            new CreateRoleCommand(req.Name, req.NameUz, req.NameRu, req.NameEn, req.NameKa), ct);
+            new CreateRoleCommand(req.Name, req.NameUz, req.NameUzCyrl, req.NameRu, req.NameEn, req.NameKk), ct);
         return result.IsSuccess
             ? CreatedAtAction(nameof(GetByName), new { name = req.Name }, new { id = result.Value })
             : BadRequest(new { error = result.Error });
@@ -66,7 +66,7 @@ public class RolesController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(string name, [FromBody] UpdateRoleRequest req, CancellationToken ct)
     {
         var result = await mediator.Send(
-            new UpdateRoleCommand(name, req.NameUz, req.NameRu, req.NameEn, req.NameKa), ct);
+            new UpdateRoleCommand(name, req.NameUz, req.NameUzCyrl, req.NameRu, req.NameEn, req.NameKk), ct);
         return result.IsSuccess ? NoContent() : BadRequest(new { error = result.Error });
     }
 
@@ -116,6 +116,6 @@ public class RolesController(IMediator mediator) : ControllerBase
     }
 }
 
-public record CreateRoleRequest(string Name, string NameUz, string NameRu, string? NameEn, string? NameKa);
-public record UpdateRoleRequest(string NameUz, string NameRu, string? NameEn, string? NameKa);
+public record CreateRoleRequest(string Name, string NameUz, string NameUzCyrl, string NameRu, string? NameEn, string? NameKk);
+public record UpdateRoleRequest(string NameUz, string NameUzCyrl, string NameRu, string? NameEn, string? NameKk);
 public record PermissionRequest(string Permission);

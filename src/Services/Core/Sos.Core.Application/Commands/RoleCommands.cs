@@ -10,9 +10,10 @@ namespace Sos.Core.Application.Commands;
 public record CreateRoleCommand(
     string  Name,
     string  NameUz,
+    string  NameUzCyrl,
     string  NameRu,
     string? NameEn,
-    string? NameKa) : IRequest<Result<Guid>>;
+    string? NameKk) : IRequest<Result<Guid>>;
 
 public class CreateRoleHandler(RoleManager<Role> roleManager)
     : IRequestHandler<CreateRoleCommand, Result<Guid>>
@@ -24,11 +25,12 @@ public class CreateRoleHandler(RoleManager<Role> roleManager)
 
         var role = new Role
         {
-            Name   = cmd.Name,
-            NameUz = cmd.NameUz,
-            NameRu = cmd.NameRu,
-            NameEn = cmd.NameEn,
-            NameKa = cmd.NameKa,
+            Name      = cmd.Name,
+            NameUz    = cmd.NameUz,
+            NameUzCyrl = cmd.NameUzCyrl,
+            NameRu    = cmd.NameRu,
+            NameEn    = cmd.NameEn,
+            NameKk    = cmd.NameKk,
         };
         var result = await roleManager.CreateAsync(role);
         return result.Succeeded
@@ -40,9 +42,10 @@ public class CreateRoleHandler(RoleManager<Role> roleManager)
 public record UpdateRoleCommand(
     string  Name,
     string  NameUz,
+    string  NameUzCyrl,
     string  NameRu,
     string? NameEn,
-    string? NameKa) : IRequest<Result>;
+    string? NameKk) : IRequest<Result>;
 
 public class UpdateRoleHandler(RoleManager<Role> roleManager)
     : IRequestHandler<UpdateRoleCommand, Result>
@@ -52,10 +55,11 @@ public class UpdateRoleHandler(RoleManager<Role> roleManager)
         var role = await roleManager.FindByNameAsync(cmd.Name);
         if (role is null) return Result.NotFound("Role", cmd.Name);
 
-        role.NameUz = cmd.NameUz;
-        role.NameRu = cmd.NameRu;
-        role.NameEn = cmd.NameEn;
-        role.NameKa = cmd.NameKa;
+        role.NameUz    = cmd.NameUz;
+        role.NameUzCyrl = cmd.NameUzCyrl;
+        role.NameRu    = cmd.NameRu;
+        role.NameEn    = cmd.NameEn;
+        role.NameKk    = cmd.NameKk;
         var result = await roleManager.UpdateAsync(role);
         return result.Succeeded
             ? Result.Success()

@@ -196,44 +196,48 @@ public static class CoreDbContextSeed
                 Id:          RoleIdSuperAdmin,
                 Name:        UserRoles.SuperAdmin.ToString(),
                 NameUz:      "Super administrator",
+                NameUzCyrl:  "Супер администратор",
                 NameRu:      "Супер администратор",
                 NameEn:      (string?)"Super Admin",
-                NameKa:      (string?)null,
+                NameKk:      (string?)null,
                 Permissions: RolePermissions.SuperAdmin
             ),
             (
                 Id:          RoleIdStoreAdmin,
                 Name:        UserRoles.StoreAdmin.ToString(),
                 NameUz:      "Do'kon administratori",
+                NameUzCyrl:  "Дўкон администратори",
                 NameRu:      "Администратор магазина",
                 NameEn:      (string?)"Store Admin",
-                NameKa:      (string?)null,
+                NameKk:      (string?)null,
                 Permissions: RolePermissions.StoreAdmin
             ),
             (
                 Id:          RoleIdCashier,
                 Name:        UserRoles.Cashier.ToString(),
                 NameUz:      "Kassir",
+                NameUzCyrl:  "Кассир",
                 NameRu:      "Кассир",
                 NameEn:      (string?)"Cashier",
-                NameKa:      (string?)null,
+                NameKk:      (string?)null,
                 Permissions: RolePermissions.Cashier
             ),
         };
 
-        foreach (var (id, name, nameUz, nameRu, nameEn, nameKa, permissions) in roles)
+        foreach (var (id, name, nameUz, nameUzCyrl, nameRu, nameEn, nameKk, permissions) in roles)
         {
             var existing = await roleManager.FindByNameAsync(name);
             if (existing is not null) continue;
 
             var role = new Role
             {
-                Id     = id,
-                Name   = name,
-                NameUz = nameUz,
-                NameRu = nameRu,
-                NameEn = nameEn,
-                NameKa = nameKa,
+                Id        = id,
+                Name      = name,
+                NameUz    = nameUz,
+                NameUzCyrl = nameUzCyrl,
+                NameRu    = nameRu,
+                NameEn    = nameEn,
+                NameKk    = nameKk,
             };
             var result = await roleManager.CreateAsync(role);
             if (!result.Succeeded)
