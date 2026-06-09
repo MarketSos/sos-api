@@ -12,13 +12,14 @@ public record EmployeeRankDto(
     string  NameUz,
     string  NameRu,
     string? NameEn,
-    string? NameUzKiril
+    string? NameUzCyrl,
+    string? NameKk
 );
 
 file static class EmployeeRankMapper
 {
     internal static EmployeeRankDto ToDto(EmployeeRank r) => new(
-        r.Id, r.Code, r.NameUz, r.NameRu, r.NameEn, r.NameUzKiril);
+        r.Id, r.Code, r.NameUz, r.NameRu, r.NameEn, r.NameUzCyrl, r.NameKk);
 }
 
 // ── GetEmployeeRankById ───────────────────────────────────────────────────────

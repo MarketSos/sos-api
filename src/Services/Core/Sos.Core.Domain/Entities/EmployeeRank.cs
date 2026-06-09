@@ -15,10 +15,11 @@ public class EmployeeRank : LocalizableEntity<Guid>, IHasOrganization
         string  nameUz,
         string  nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk      = null)
     {
         var r = new EmployeeRank { Id = id, Code = code.Trim().ToUpperInvariant() };
-        r.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        r.SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
         return r;
     }
 
@@ -27,9 +28,10 @@ public class EmployeeRank : LocalizableEntity<Guid>, IHasOrganization
         string  nameUz,
         string  nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk      = null)
     {
         Code = code.Trim().ToUpperInvariant();
-        SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
     }
 }

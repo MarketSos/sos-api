@@ -71,16 +71,16 @@ public static class CoreDbContextSeed
 
         var types = new[]
         {
-            OrganizationType.Create(OrgTypeGroceryId,    "GROCERY",     "Oziq-ovqat do'koni",      "Продуктовый магазин",    "Grocery Store",       "pi-shopping-basket"),
-            OrganizationType.Create(OrgTypePharmacyId,   "PHARMACY",    "Apteka",                  "Аптека",                 "Pharmacy",            "pi-heart"),
-            OrganizationType.Create(OrgTypeElectronicsId,"ELECTRONICS", "Elektronika do'koni",     "Магазин электроники",    "Electronics Store",   "pi-tablet"),
-            OrganizationType.Create(OrgTypeClothingId,   "CLOTHING",    "Kiyim-kechak do'koni",    "Магазин одежды",         "Clothing Store",      "pi-tag"),
-            OrganizationType.Create(OrgTypeBuildingId,   "BUILDING",    "Qurilish materiallari",   "Стройматериалы",         "Building Materials",  "pi-hammer"),
-            OrganizationType.Create(OrgTypeSportsId,     "SPORTS",      "Sport do'koni",           "Спортивный магазин",     "Sports Store",        "pi-sparkles"),
-            OrganizationType.Create(OrgTypeBookId,       "BOOK",        "Kitob do'koni",           "Книжный магазин",        "Book Store",          "pi-book"),
-            OrganizationType.Create(OrgTypeHouseholdId,  "HOUSEHOLD",   "Uy-ro'zg'or buyumlari",   "Товары для дома",        "Household Goods",     "pi-home"),
-            OrganizationType.Create(OrgTypeCafeId,       "CAFE",        "Kafe / Restoran",         "Кафе / Ресторан",        "Cafe / Restaurant",   "pi-star"),
-            OrganizationType.Create(OrgTypeGeneralId,    "GENERAL",     "Umumiy do'kon",           "Общий магазин",          "General Store",       "pi-shop"),
+            OrganizationType.Create(OrgTypeGroceryId,    "GROCERY",     "Oziq-ovqat do'koni",    "Продуктовый магазин",    nameEn: "Grocery Store",      nameUzCyrl: "Озиқ-овқат дўкони",     icon: "pi-shopping-basket"),
+            OrganizationType.Create(OrgTypePharmacyId,   "PHARMACY",    "Apteka",                "Аптека",                 nameEn: "Pharmacy",            nameUzCyrl: "Аптека",                 icon: "pi-heart"),
+            OrganizationType.Create(OrgTypeElectronicsId,"ELECTRONICS", "Elektronika do'koni",   "Магазин электроники",    nameEn: "Electronics Store",   nameUzCyrl: "Электроника дўкони",     icon: "pi-tablet"),
+            OrganizationType.Create(OrgTypeClothingId,   "CLOTHING",    "Kiyim-kechak do'koni",  "Магазин одежды",         nameEn: "Clothing Store",      nameUzCyrl: "Кийим-кечак дўкони",    icon: "pi-tag"),
+            OrganizationType.Create(OrgTypeBuildingId,   "BUILDING",    "Qurilish materiallari", "Стройматериалы",         nameEn: "Building Materials",  nameUzCyrl: "Қурилиш материаллари",  icon: "pi-hammer"),
+            OrganizationType.Create(OrgTypeSportsId,     "SPORTS",      "Sport do'koni",         "Спортивный магазин",     nameEn: "Sports Store",        nameUzCyrl: "Спорт дўкони",          icon: "pi-sparkles"),
+            OrganizationType.Create(OrgTypeBookId,       "BOOK",        "Kitob do'koni",         "Книжный магазин",        nameEn: "Book Store",          nameUzCyrl: "Китоб дўкони",          icon: "pi-book"),
+            OrganizationType.Create(OrgTypeHouseholdId,  "HOUSEHOLD",   "Uy-ro'zg'or buyumlari", "Товары для дома",        nameEn: "Household Goods",     nameUzCyrl: "Уй-рўзғор буюмлари",   icon: "pi-home"),
+            OrganizationType.Create(OrgTypeCafeId,       "CAFE",        "Kafe / Restoran",       "Кафе / Ресторан",        nameEn: "Cafe / Restaurant",   nameUzCyrl: "Кафе / Ресторан",       icon: "pi-star"),
+            OrganizationType.Create(OrgTypeGeneralId,    "GENERAL",     "Umumiy do'kon",         "Общий магазин",          nameEn: "General Store",       nameUzCyrl: "Умумий дўкон",          icon: "pi-shop"),
         };
 
         await db.OrganizationTypes.AddRangeAsync(types);
@@ -97,15 +97,15 @@ public static class CoreDbContextSeed
         var ranks = new[]
         {
             EmployeeRank.Create(RankDirectorId,   "DIRECTOR",
-                nameUz: "Direktor",        nameRu: "Директор",          nameEn: "Director"),
+                nameUz: "Direktor",         nameRu: "Директор",           nameEn: "Director",          nameUzCyrl: "Директор"),
             EmployeeRank.Create(RankManagerId,    "MANAGER",
-                nameUz: "Menejer",         nameRu: "Менеджер",          nameEn: "Manager"),
+                nameUz: "Menejer",          nameRu: "Менеджер",           nameEn: "Manager",           nameUzCyrl: "Менежер"),
             EmployeeRank.Create(RankSeniorId,     "SENIOR",
-                nameUz: "Katta mutaxassis",nameRu: "Старший специалист", nameEn: "Senior Specialist"),
+                nameUz: "Katta mutaxassis", nameRu: "Старший специалист", nameEn: "Senior Specialist", nameUzCyrl: "Катта мутахассис"),
             EmployeeRank.Create(RankSpecialistId, "SPECIALIST",
-                nameUz: "Mutaxassis",      nameRu: "Специалист",        nameEn: "Specialist"),
+                nameUz: "Mutaxassis",       nameRu: "Специалист",         nameEn: "Specialist",        nameUzCyrl: "Мутахассис"),
             EmployeeRank.Create(RankJuniorId,     "JUNIOR",
-                nameUz: "Yordamchi",       nameRu: "Помощник",          nameEn: "Junior"),
+                nameUz: "Yordamchi",        nameRu: "Помощник",           nameEn: "Junior",            nameUzCyrl: "Ёрдамчи"),
         };
 
         foreach (var r in ranks) r.OrganizationId = OrgId;
@@ -124,21 +124,21 @@ public static class CoreDbContextSeed
         var specs = new[]
         {
             Specialization.Create(SpecCashierId,      "CASHIER",
-                nameUz: "Kassir",           nameRu: "Кассир",              nameEn: "Cashier"),
+                nameUz: "Kassir",            nameRu: "Кассир",               nameEn: "Cashier",        nameUzCyrl: "Кассир"),
             Specialization.Create(SpecSalespersonId,  "SALESPERSON",
-                nameUz: "Sotuvchi",         nameRu: "Продавец",            nameEn: "Salesperson"),
+                nameUz: "Sotuvchi",          nameRu: "Продавец",             nameEn: "Salesperson",    nameUzCyrl: "Сотувчи"),
             Specialization.Create(SpecManagerId,      "MANAGER",
-                nameUz: "Savdo menejeri",   nameRu: "Менеджер по продажам",nameEn: "Sales Manager"),
+                nameUz: "Savdo menejeri",    nameRu: "Менеджер по продажам", nameEn: "Sales Manager",  nameUzCyrl: "Савдо менежери"),
             Specialization.Create(SpecWarehousemanId, "WAREHOUSEMAN",
-                nameUz: "Omborchi",         nameRu: "Кладовщик",           nameEn: "Warehouseman"),
+                nameUz: "Omborchi",          nameRu: "Кладовщик",            nameEn: "Warehouseman",   nameUzCyrl: "Омборчи"),
             Specialization.Create(SpecAccountantId,   "ACCOUNTANT",
-                nameUz: "Hisobchi",         nameRu: "Бухгалтер",           nameEn: "Accountant"),
+                nameUz: "Hisobchi",          nameRu: "Бухгалтер",            nameEn: "Accountant",     nameUzCyrl: "Ҳисобчи"),
             Specialization.Create(SpecSecurityId,     "SECURITY",
-                nameUz: "Xavfsizlik xodimi",nameRu: "Сотрудник охраны",   nameEn: "Security Guard"),
+                nameUz: "Xavfsizlik xodimi", nameRu: "Сотрудник охраны",    nameEn: "Security Guard", nameUzCyrl: "Хавфсизлик ходими"),
             Specialization.Create(SpecDriverId,       "DRIVER",
-                nameUz: "Haydovchi",        nameRu: "Водитель",            nameEn: "Driver"),
+                nameUz: "Haydovchi",         nameRu: "Водитель",             nameEn: "Driver",         nameUzCyrl: "Ҳайдовчи"),
             Specialization.Create(SpecCleanerId,      "CLEANER",
-                nameUz: "Farrosh",          nameRu: "Уборщик",             nameEn: "Cleaner"),
+                nameUz: "Farrosh",           nameRu: "Уборщик",              nameEn: "Cleaner",        nameUzCyrl: "Фаррош"),
         };
 
         foreach (var s in specs) s.OrganizationId = OrgId;
@@ -171,7 +171,8 @@ public static class CoreDbContextSeed
             nameRu:      "Главная организация",
             slug:        "main",
             ownerUserId: UserId,
-            nameEn:      "Main Organization");
+            nameEn:      "Main Organization",
+            nameUzCyrl:  "Асосий ташкилот");
 
         org.Code      = "MAIN-001";
         org.OrgTypeId = OrgTypeGroceryId;

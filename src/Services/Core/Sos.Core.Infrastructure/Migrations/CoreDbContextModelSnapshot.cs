@@ -17,7 +17,7 @@ namespace Sos.Core.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.27")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -155,6 +155,10 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("NameKk")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -165,7 +169,8 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -442,6 +447,10 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 
+                    b.Property<string>("NameKk")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -452,7 +461,8 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 
@@ -565,6 +575,9 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("NameKk")
+                        .HasColumnType("text");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -575,7 +588,8 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -640,6 +654,10 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("NameKk")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -650,7 +668,8 @@ namespace Sos.Core.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 

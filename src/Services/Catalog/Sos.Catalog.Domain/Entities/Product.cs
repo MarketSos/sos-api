@@ -44,7 +44,8 @@ public class Product : DescribedEntity<Guid>
         Guid categoryId,
         Guid? brandId      = null,
         string? nameEn     = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk     = null)
     {
         var product = new Product
         {
@@ -53,15 +54,15 @@ public class Product : DescribedEntity<Guid>
             CategoryId = categoryId,
             BrandId    = brandId
         };
-        product.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        product.SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
         product.AddDomainEvent(new ProductCreatedDomainEvent(product));
         return product;
     }
 
     public void UpdateBarcode(string barcode) => Barcode = barcode.Trim();
 
-    public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
-        => SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+    public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzCyrl = null, string? nameKk = null)
+        => SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
 
     public void SetImage(string url) => ImageUrl = url;
 

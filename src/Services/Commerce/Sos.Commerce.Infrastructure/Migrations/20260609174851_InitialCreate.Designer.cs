@@ -12,15 +12,15 @@ using Sos.Commerce.Infrastructure.Persistence;
 namespace Sos.Commerce.Infrastructure.Migrations
 {
     [DbContext(typeof(CommerceDbContext))]
-    [Migration("20260606144910_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20260609174851_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.27")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -210,9 +210,6 @@ namespace Sos.Commerce.Infrastructure.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
-
-                    b.Property<Guid>("OrganizationId")
-                        .HasColumnType("uuid");
 
                     b.Property<decimal>("PaidAmount")
                         .HasColumnType("decimal(18,2)");

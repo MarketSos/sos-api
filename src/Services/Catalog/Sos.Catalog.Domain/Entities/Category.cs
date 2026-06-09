@@ -23,14 +23,15 @@ public class Category : CatalogEntity<Guid>
         string nameUz,
         string nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null,
+        string? nameUzCyrl = null,
+        string? nameKk      = null,
         Guid? parentId      = null)
     {
         var category = new Category { Id = id, ParentId = parentId };
-        category.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        category.SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
         return category;
     }
 
-    public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
-        => SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+    public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzCyrl = null, string? nameKk = null)
+        => SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
 }

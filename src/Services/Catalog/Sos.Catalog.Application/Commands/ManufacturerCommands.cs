@@ -12,10 +12,11 @@ public record CreateManufacturerCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null,
+    string? NameUzCyrl = null,
+    string? NameKk      = null,
     string? AddressLine = null,
     string? Phone       = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result<Guid>>;
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result<Guid>>;
 
 public class CreateManufacturerHandler(IManufacturerRepository repo)
     : IRequestHandler<CreateManufacturerCommand, Result<Guid>>
@@ -27,7 +28,7 @@ public class CreateManufacturerHandler(IManufacturerRepository repo)
             return Result.Conflict<Guid, Manufacturer>(code);
 
         var manufacturer = Manufacturer.Create(
-            Guid.NewGuid(), code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril, cmd.AddressLine, cmd.Phone);
+            Guid.NewGuid(), code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk, cmd.AddressLine, cmd.Phone);
 
         await repo.AddAsync(manufacturer, ct);
         return Result.Success(manufacturer.Id);
@@ -41,10 +42,11 @@ public record UpdateManufacturerCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null,
+    string? NameUzCyrl = null,
+    string? NameKk      = null,
     string? AddressLine = null,
     string? Phone       = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result>;
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result>;
 
 public class UpdateManufacturerHandler(IManufacturerRepository repo)
     : IRequestHandler<UpdateManufacturerCommand, Result>
@@ -58,7 +60,7 @@ public class UpdateManufacturerHandler(IManufacturerRepository repo)
         if (manufacturer.Code != code && await repo.CodeExistsAsync(code, ct))
             return Result.Conflict<Manufacturer>(code);
 
-        manufacturer.Update(code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
+        manufacturer.Update(code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
         manufacturer.SetAddress(cmd.AddressLine);
         manufacturer.SetPhone(cmd.Phone);
 

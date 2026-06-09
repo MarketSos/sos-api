@@ -101,11 +101,11 @@ public static class CatalogDbContextSeed
 
         var manufacturers = new[]
         {
-            Manufacturer.Create(ManufNestleId,   "NESTLE",   nameUz: "Nestle",                    nameRu: "Нестле",                    nameEn: "Nestle"),
-            Manufacturer.Create(ManufProcterId,  "PG",       nameUz: "Procter & Gamble",          nameRu: "Проктер энд Гэмбл",         nameEn: "Procter & Gamble"),
-            Manufacturer.Create(ManufUzdonmahId, "UZDONMAH", nameUz: "O'zdonmahsulot",            nameRu: "Уздонмахсулот",             nameEn: "Uzdonmahsulot"),
-            Manufacturer.Create(ManufColgateId,  "COLGATE",  nameUz: "Colgate-Palmolive",         nameRu: "Колгейт-Палмолив",          nameEn: "Colgate-Palmolive"),
-            Manufacturer.Create(ManufNamanganId, "NAMFOOD",  nameUz: "Namangan oziq-ovqat zavodi",nameRu: "Наманганский пищевой завод",nameEn: "Namangan Food Plant"),
+            Manufacturer.Create(ManufNestleId,   "NESTLE",   nameUz: "Nestle",                     nameRu: "Нестле",                    nameEn: "Nestle",              nameUzCyrl: "Нестле"),
+            Manufacturer.Create(ManufProcterId,  "PG",       nameUz: "Procter & Gamble",           nameRu: "Проктер энд Гэмбл",         nameEn: "Procter & Gamble",    nameUzCyrl: "Проктер энд Гэмбл"),
+            Manufacturer.Create(ManufUzdonmahId, "UZDONMAH", nameUz: "O'zdonmahsulot",             nameRu: "Уздонмахсулот",             nameEn: "Uzdonmahsulot",       nameUzCyrl: "Ўздонмаҳсулот"),
+            Manufacturer.Create(ManufColgateId,  "COLGATE",  nameUz: "Colgate-Palmolive",          nameRu: "Колгейт-Палмолив",          nameEn: "Colgate-Palmolive",   nameUzCyrl: "Колгейт-Палмолив"),
+            Manufacturer.Create(ManufNamanganId, "NAMFOOD",  nameUz: "Namangan oziq-ovqat zavodi", nameRu: "Наманганский пищевой завод", nameEn: "Namangan Food Plant", nameUzCyrl: "Наманган озиқ-овқат заводи"),
         };
 
         await db.Manufacturers.AddRangeAsync(manufacturers);
@@ -120,11 +120,11 @@ public static class CatalogDbContextSeed
 
         var brands = new[]
         {
-            Brand.Create(BrandNescafeId, "NESCAFE",   nameUz: "Nescafe",     nameRu: "Нескафе",     nameEn: "Nescafe"),
-            Brand.Create(BrandAriel,     "ARIEL",     nameUz: "Ariel",       nameRu: "Ариэль",      nameEn: "Ariel"),
-            Brand.Create(BrandNur,       "NUR",       nameUz: "Nur",         nameRu: "Нур",         nameEn: "Nur"),
-            Brand.Create(BrandColgateId, "COLGATE",   nameUz: "Colgate",     nameRu: "Колгейт",     nameEn: "Colgate"),
-            Brand.Create(BrandOlmaFoods, "OLMAFOODS", nameUz: "Olma Foods",  nameRu: "Олма Фудс",   nameEn: "Olma Foods"),
+            Brand.Create(BrandNescafeId, "NESCAFE",   nameUz: "Nescafe",    nameRu: "Нескафе",   nameEn: "Nescafe",    nameUzCyrl: "Нескафе"),
+            Brand.Create(BrandAriel,     "ARIEL",     nameUz: "Ariel",      nameRu: "Ариэль",    nameEn: "Ariel",      nameUzCyrl: "Ариэль"),
+            Brand.Create(BrandNur,       "NUR",       nameUz: "Nur",        nameRu: "Нур",       nameEn: "Nur",        nameUzCyrl: "Нур"),
+            Brand.Create(BrandColgateId, "COLGATE",   nameUz: "Colgate",    nameRu: "Колгейт",   nameEn: "Colgate",    nameUzCyrl: "Колгейт"),
+            Brand.Create(BrandOlmaFoods, "OLMAFOODS", nameUz: "Olma Foods", nameRu: "Олма Фудс", nameEn: "Olma Foods", nameUzCyrl: "Олма Фудс"),
         };
 
         await db.Brands.AddRangeAsync(brands);
@@ -161,11 +161,11 @@ public static class CatalogDbContextSeed
         // Root kategoriyalar
         var roots = new[]
         {
-            Category.Create(CatFoodId,        nameUz: "Oziq-ovqat",         nameRu: "Продукты питания",   nameEn: "Food"),
-            Category.Create(CatHouseholdId,   nameUz: "Maishiy tovarlar",   nameRu: "Товары для дома",    nameEn: "Household"),
-            Category.Create(CatElectronicsId, nameUz: "Elektronika",        nameRu: "Электроника",        nameEn: "Electronics"),
-            Category.Create(CatClothingId,    nameUz: "Kiyim-kechak",      nameRu: "Одежда",             nameEn: "Clothing"),
-            Category.Create(CatStationaryId,  nameUz: "Maktab jihozlari",  nameRu: "Канцтовары",         nameEn: "Stationary"),
+            Category.Create(CatFoodId,        nameUz: "Oziq-ovqat",        nameRu: "Продукты питания", nameEn: "Food",        nameUzCyrl: "Озиқ-овқат"),
+            Category.Create(CatHouseholdId,   nameUz: "Maishiy tovarlar",  nameRu: "Товары для дома",  nameEn: "Household",   nameUzCyrl: "Маиший товарлар"),
+            Category.Create(CatElectronicsId, nameUz: "Elektronika",       nameRu: "Электроника",      nameEn: "Electronics", nameUzCyrl: "Электроника"),
+            Category.Create(CatClothingId,    nameUz: "Kiyim-kechak",     nameRu: "Одежда",           nameEn: "Clothing",    nameUzCyrl: "Кийим-кечак"),
+            Category.Create(CatStationaryId,  nameUz: "Maktab jihozlari", nameRu: "Канцтовары",       nameEn: "Stationary",  nameUzCyrl: "Мактаб жиҳозлари"),
         };
 
         await db.Categories.AddRangeAsync(roots);
@@ -174,22 +174,22 @@ public static class CatalogDbContextSeed
         // Oziq-ovqat ichidagi kichik kategoriyalar
         var foodSubs = new[]
         {
-            Category.Create(CatBakeryId,     nameUz: "Non mahsulotlari",   nameRu: "Хлебобулочные",      nameEn: "Bakery",           parentId: CatFoodId),
-            Category.Create(CatMeatId,       nameUz: "Go'sht mahsulotlari",nameRu: "Мясные продукты",    nameEn: "Meat",             parentId: CatFoodId),
-            Category.Create(CatDairyId,      nameUz: "Sut mahsulotlari",   nameRu: "Молочные продукты",  nameEn: "Dairy",            parentId: CatFoodId),
-            Category.Create(CatFruitsVegsId, nameUz: "Sabzavot va mevalar",nameRu: "Овощи и фрукты",     nameEn: "Fruits & Vegetables", parentId: CatFoodId),
-            Category.Create(CatDrinksId,     nameUz: "Ichimliklar",        nameRu: "Напитки",            nameEn: "Drinks",           parentId: CatFoodId),
-            Category.Create(CatSweetsId,     nameUz: "Shirinliklar",       nameRu: "Сладости",           nameEn: "Sweets",           parentId: CatFoodId),
-            Category.Create(CatCerealsId,    nameUz: "Don mahsulotlari",   nameRu: "Крупы и зерновые",   nameEn: "Cereals",          parentId: CatFoodId),
-            Category.Create(CatCannedId,     nameUz: "Konservalar",        nameRu: "Консервы",           nameEn: "Canned Goods",     parentId: CatFoodId),
-            Category.Create(CatOilsId,       nameUz: "Yog' va sous",       nameRu: "Масла и соусы",      nameEn: "Oils & Sauces",    parentId: CatFoodId),
+            Category.Create(CatBakeryId,     nameUz: "Non mahsulotlari",    nameRu: "Хлебобулочные",     nameEn: "Bakery",              nameUzCyrl: "Нон маҳсулотлари",    parentId: CatFoodId),
+            Category.Create(CatMeatId,       nameUz: "Go'sht mahsulotlari", nameRu: "Мясные продукты",   nameEn: "Meat",                nameUzCyrl: "Гўшт маҳсулотлари",   parentId: CatFoodId),
+            Category.Create(CatDairyId,      nameUz: "Sut mahsulotlari",    nameRu: "Молочные продукты", nameEn: "Dairy",               nameUzCyrl: "Сут маҳсулотлари",    parentId: CatFoodId),
+            Category.Create(CatFruitsVegsId, nameUz: "Sabzavot va mevalar", nameRu: "Овощи и фрукты",    nameEn: "Fruits & Vegetables", nameUzCyrl: "Сабзавот ва мевалар", parentId: CatFoodId),
+            Category.Create(CatDrinksId,     nameUz: "Ichimliklar",         nameRu: "Напитки",           nameEn: "Drinks",              nameUzCyrl: "Ичимликлар",          parentId: CatFoodId),
+            Category.Create(CatSweetsId,     nameUz: "Shirinliklar",        nameRu: "Сладости",          nameEn: "Sweets",              nameUzCyrl: "Ширинликлар",         parentId: CatFoodId),
+            Category.Create(CatCerealsId,    nameUz: "Don mahsulotlari",    nameRu: "Крупы и зерновые",  nameEn: "Cereals",             nameUzCyrl: "Дон маҳсулотлари",    parentId: CatFoodId),
+            Category.Create(CatCannedId,     nameUz: "Konservalar",         nameRu: "Консервы",          nameEn: "Canned Goods",        nameUzCyrl: "Консервалар",         parentId: CatFoodId),
+            Category.Create(CatOilsId,       nameUz: "Yog' va sous",        nameRu: "Масла и соусы",     nameEn: "Oils & Sauces",       nameUzCyrl: "Ёғ ва соус",          parentId: CatFoodId),
         };
 
         // Maishiy tovarlar ichidagi kichik kategoriyalar
         var householdSubs = new[]
         {
-            Category.Create(CatCleaningId, nameUz: "Tozalash vositalari", nameRu: "Чистящие средства", nameEn: "Cleaning", parentId: CatHouseholdId),
-            Category.Create(CatHygieneId,  nameUz: "Shaxsiy gigiyena",   nameRu: "Личная гигиена",    nameEn: "Hygiene",  parentId: CatHouseholdId),
+            Category.Create(CatCleaningId, nameUz: "Tozalash vositalari", nameRu: "Чистящие средства", nameEn: "Cleaning", nameUzCyrl: "Тозалаш воситалари", parentId: CatHouseholdId),
+            Category.Create(CatHygieneId,  nameUz: "Shaxsiy gigiyena",   nameRu: "Личная гигиена",    nameEn: "Hygiene",  nameUzCyrl: "Шахсий гигиена",     parentId: CatHouseholdId),
         };
 
         await db.Categories.AddRangeAsync(foodSubs.Concat(householdSubs));
@@ -206,44 +206,44 @@ public static class CatalogDbContextSeed
         var products = new[]
         {
             // ── Non mahsulotlari ──────────────────────────────────────────────
-            Product.Create(ProdNonId,   nameUz: "Oq non",         nameRu: "Белый хлеб",       barcode: "4600001000001", categoryId: CatBakeryId),
+            Product.Create(ProdNonId,   nameUz: "Oq non",              nameRu: "Белый хлеб",            nameUzCyrl: "Оқ нон",               barcode: "4600001000001", categoryId: CatBakeryId),
 
             // ── Sut mahsulotlari ──────────────────────────────────────────────
-            Product.Create(ProdSutId,   nameUz: "Sut 1L",         nameRu: "Молоко 1Л",        barcode: "4600001000002", categoryId: CatDairyId),
-            Product.Create(ProdQatiqId, nameUz: "Qatiq 500g",     nameRu: "Кефир 500г",       barcode: "4600001000003", categoryId: CatDairyId),
-            Product.Create(ProdTuxumId, nameUz: "Tuxum 10 dona",  nameRu: "Яйца 10 шт",       barcode: "4600001000004", categoryId: CatDairyId),
+            Product.Create(ProdSutId,   nameUz: "Sut 1L",              nameRu: "Молоко 1Л",             nameUzCyrl: "Сут 1Л",               barcode: "4600001000002", categoryId: CatDairyId),
+            Product.Create(ProdQatiqId, nameUz: "Qatiq 500g",          nameRu: "Кефир 500г",            nameUzCyrl: "Қатиқ 500г",           barcode: "4600001000003", categoryId: CatDairyId),
+            Product.Create(ProdTuxumId, nameUz: "Tuxum 10 dona",       nameRu: "Яйца 10 шт",            nameUzCyrl: "Тухум 10 дона",        barcode: "4600001000004", categoryId: CatDairyId),
 
             // ── Don mahsulotlari ──────────────────────────────────────────────
-            Product.Create(ProdShakarId, nameUz: "Shakar 1kg",   nameRu: "Сахар 1кг",         barcode: "4600001000005", categoryId: CatCerealsId),
-            Product.Create(ProdUnId,     nameUz: "Un 2kg",        nameRu: "Мука 2кг",          barcode: "4600001000006", categoryId: CatCerealsId),
-            Product.Create(ProdGuruchId, nameUz: "Guruch 1kg",    nameRu: "Рис 1кг",           barcode: "4600001000007", categoryId: CatCerealsId),
+            Product.Create(ProdShakarId, nameUz: "Shakar 1kg",         nameRu: "Сахар 1кг",             nameUzCyrl: "Шакар 1кг",            barcode: "4600001000005", categoryId: CatCerealsId),
+            Product.Create(ProdUnId,     nameUz: "Un 2kg",             nameRu: "Мука 2кг",              nameUzCyrl: "Ун 2кг",               barcode: "4600001000006", categoryId: CatCerealsId),
+            Product.Create(ProdGuruchId, nameUz: "Guruch 1kg",         nameRu: "Рис 1кг",               nameUzCyrl: "Гуруч 1кг",            barcode: "4600001000007", categoryId: CatCerealsId),
 
             // ── Yog' va sous ──────────────────────────────────────────────────
-            Product.Create(ProdYogId,   nameUz: "O'simlik yog'i 1L", nameRu: "Растительное масло 1Л", barcode: "4600001000008", categoryId: CatOilsId),
+            Product.Create(ProdYogId,   nameUz: "O'simlik yog'i 1L",   nameRu: "Растительное масло 1Л", nameUzCyrl: "Ўсимлик ёғи 1Л",       barcode: "4600001000008", categoryId: CatOilsId),
 
             // ── Ichimliklar ───────────────────────────────────────────────────
-            Product.Create(ProdChoyId,  nameUz: "Qora choy 100g",   nameRu: "Чёрный чай 100г",   barcode: "4600001000009", categoryId: CatDrinksId),
-            Product.Create(ProdKofId,   nameUz: "Kofe 200g",         nameRu: "Кофе 200г",         barcode: "4600001000010", categoryId: CatDrinksId),
+            Product.Create(ProdChoyId,  nameUz: "Qora choy 100g",      nameRu: "Чёрный чай 100г",       nameUzCyrl: "Қора чой 100г",        barcode: "4600001000009", categoryId: CatDrinksId),
+            Product.Create(ProdKofId,   nameUz: "Kofe 200g",           nameRu: "Кофе 200г",             nameUzCyrl: "Кофе 200г",            barcode: "4600001000010", categoryId: CatDrinksId),
 
             // ── Go'sht ────────────────────────────────────────────────────────
-            Product.Create(ProdKolbasaId, nameUz: "Kolbasa 500g",   nameRu: "Колбаса 500г",      barcode: "4600001000011", categoryId: CatMeatId),
-            Product.Create(ProdTavukId,   nameUz: "Tovuq go'shti 1kg", nameRu: "Куриное мясо 1кг", barcode: "4600001000012", categoryId: CatMeatId),
+            Product.Create(ProdKolbasaId, nameUz: "Kolbasa 500g",      nameRu: "Колбаса 500г",          nameUzCyrl: "Колбаса 500г",         barcode: "4600001000011", categoryId: CatMeatId),
+            Product.Create(ProdTavukId,   nameUz: "Tovuq go'shti 1kg", nameRu: "Куриное мясо 1кг",      nameUzCyrl: "Товуқ гўшти 1кг",      barcode: "4600001000012", categoryId: CatMeatId),
 
             // ── Sabzavot va mevalar ───────────────────────────────────────────
-            Product.Create(ProdBananaId, nameUz: "Banan 1kg",      nameRu: "Бананы 1кг",        barcode: "4600001000013", categoryId: CatFruitsVegsId),
-            Product.Create(ProdOlmaId,   nameUz: "Olma 1kg",       nameRu: "Яблоки 1кг",        barcode: "4600001000014", categoryId: CatFruitsVegsId),
+            Product.Create(ProdBananaId, nameUz: "Banan 1kg",          nameRu: "Бананы 1кг",            nameUzCyrl: "Банан 1кг",            barcode: "4600001000013", categoryId: CatFruitsVegsId),
+            Product.Create(ProdOlmaId,   nameUz: "Olma 1kg",           nameRu: "Яблоки 1кг",            nameUzCyrl: "Олма 1кг",             barcode: "4600001000014", categoryId: CatFruitsVegsId),
 
             // ── Shaxsiy gigiyena ──────────────────────────────────────────────
-            Product.Create(ProdShampunId,  nameUz: "Shampun 400ml",   nameRu: "Шампунь 400мл",   barcode: "4600001000015", categoryId: CatHygieneId),
-            Product.Create(ProdTishkremId, nameUz: "Tish kremi 100g", nameRu: "Зубная паста 100г", barcode: "4600001000016", categoryId: CatHygieneId),
+            Product.Create(ProdShampunId,  nameUz: "Shampun 400ml",    nameRu: "Шампунь 400мл",         nameUzCyrl: "Шампун 400мл",         barcode: "4600001000015", categoryId: CatHygieneId),
+            Product.Create(ProdTishkremId, nameUz: "Tish kremi 100g",  nameRu: "Зубная паста 100г",     nameUzCyrl: "Тиш креми 100г",       barcode: "4600001000016", categoryId: CatHygieneId),
 
             // ── Tozalash vositalari ───────────────────────────────────────────
-            Product.Create(ProdKirYuvishId,   nameUz: "Kir yuvish kukuni 1kg", nameRu: "Стиральный порошок 1кг", barcode: "4600001000017", categoryId: CatCleaningId),
-            Product.Create(ProdIdishYuvishId, nameUz: "Idish yuvish vositasi 500ml", nameRu: "Средство для посуды 500мл", barcode: "4600001000018", categoryId: CatCleaningId),
+            Product.Create(ProdKirYuvishId,   nameUz: "Kir yuvish kukuni 1kg",      nameRu: "Стиральный порошок 1кг",    nameUzCyrl: "Кир ювиш кукуни 1кг",        barcode: "4600001000017", categoryId: CatCleaningId),
+            Product.Create(ProdIdishYuvishId, nameUz: "Idish yuvish vositasi 500ml", nameRu: "Средство для посуды 500мл", nameUzCyrl: "Идиш ювиш воситаси 500мл",   barcode: "4600001000018", categoryId: CatCleaningId),
 
             // ── Shirinliklar ──────────────────────────────────────────────────
-            Product.Create(ProdShocoladId, nameUz: "Shokolad 100g",  nameRu: "Шоколад 100г",    barcode: "4600001000019", categoryId: CatSweetsId),
-            Product.Create(ProdPechenyeId, nameUz: "Pechenye 200g",  nameRu: "Печенье 200г",    barcode: "4600001000020", categoryId: CatSweetsId),
+            Product.Create(ProdShocoladId, nameUz: "Shokolad 100g",    nameRu: "Шоколад 100г",          nameUzCyrl: "Шоколад 100г",         barcode: "4600001000019", categoryId: CatSweetsId),
+            Product.Create(ProdPechenyeId, nameUz: "Pechenye 200g",    nameRu: "Печенье 200г",          nameUzCyrl: "Печенье 200г",         barcode: "4600001000020", categoryId: CatSweetsId),
         };
 
         await db.Products.AddRangeAsync(products);

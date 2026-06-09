@@ -12,13 +12,14 @@ public record SpecializationDto(
     string  NameUz,
     string  NameRu,
     string? NameEn,
-    string? NameUzKiril
+    string? NameUzCyrl,
+    string? NameKk
 );
 
 file static class SpecializationMapper
 {
     internal static SpecializationDto ToDto(Specialization s) => new(
-        s.Id, s.Code, s.NameUz, s.NameRu, s.NameEn, s.NameUzKiril);
+        s.Id, s.Code, s.NameUz, s.NameRu, s.NameEn, s.NameUzCyrl, s.NameKk);
 }
 
 // ── GetSpecializationById ─────────────────────────────────────────────────────

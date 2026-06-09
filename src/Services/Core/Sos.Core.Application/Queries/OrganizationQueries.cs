@@ -13,7 +13,8 @@ public record OrganizationDto(
     string             NameUz,
     string             NameRu,
     string?            NameEn,
-    string?            NameUzKiril,
+    string?            NameUzCyrl,
+    string?            NameKk,
     string?            Slug,
     string?            Code,
     string?            Tin,
@@ -47,7 +48,7 @@ file static class Mapper
 {
     internal static OrganizationDto ToDto(Domain.Entities.Organization org)
         => new(
-            org.Id, org.NameUz, org.NameRu, org.NameEn, org.NameUzKiril,
+            org.Id, org.NameUz, org.NameRu, org.NameEn, org.NameUzCyrl, org.NameKk,
             org.Slug, org.Code, org.Tin, org.Okonx, org.Oked,
             org.Ownership, org.Level, org.OrgTypeId,
             org.IsTest, org.IsActive,

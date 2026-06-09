@@ -16,6 +16,7 @@ public class ManufacturerConfiguration : IEntityTypeConfiguration<Manufacturer>
         builder.Property(m => m.NameUz).HasMaxLength(200).IsRequired();
         builder.Property(m => m.NameRu).HasMaxLength(200).IsRequired();
         builder.Property(m => m.NameEn).HasMaxLength(200);
-        builder.Property(m => m.NameUzKiril).HasMaxLength(200);
+        builder.Property(m => m.NameUzCyrl).HasMaxLength(200);
+        builder.Property(m => m.NameKk).HasMaxLength(200);
     }
 }

@@ -13,7 +13,8 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.Property(c => c.NameUz).HasMaxLength(200).IsRequired();
         builder.Property(c => c.NameRu).HasMaxLength(200).IsRequired();
         builder.Property(c => c.NameEn).HasMaxLength(200);
-        builder.Property(c => c.NameUzKiril).HasMaxLength(200);
+        builder.Property(c => c.NameUzCyrl).HasMaxLength(200);
+        builder.Property(c => c.NameKk).HasMaxLength(200);
 
         builder.HasMany(c => c.Children)
                .WithOne(c => c.Parent)

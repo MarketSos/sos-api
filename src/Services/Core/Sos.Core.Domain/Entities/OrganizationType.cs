@@ -13,7 +13,7 @@ public class OrganizationType : LocalizableEntity<Guid>
     private OrganizationType() { }
 
     public static OrganizationType Create(Guid id, string code, string nameUz, string nameRu,
-        string? nameEn = null, string? nameUzKiril = null, string? icon = null)
+        string? nameEn = null, string? nameUzCyrl = null, string? nameKk = null, string? icon = null)
         => new()
         {
             Id          = id,
@@ -21,16 +21,18 @@ public class OrganizationType : LocalizableEntity<Guid>
             NameUz      = nameUz,
             NameRu      = nameRu,
             NameEn      = nameEn,
-            NameUzKiril = nameUzKiril,
+            NameUzCyrl  = nameUzCyrl,
+            NameKk      = nameKk,
             Icon        = icon
         };
 
-    public void Update(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null, string? icon = null)
+    public void Update(string nameUz, string nameRu, string? nameEn = null, string? nameUzCyrl = null, string? nameKk = null, string? icon = null)
     {
-        NameUz      = nameUz;
-        NameRu      = nameRu;
-        NameEn      = nameEn;
-        NameUzKiril = nameUzKiril;
-        Icon        = icon;
+        NameUz     = nameUz;
+        NameRu     = nameRu;
+        NameEn     = nameEn;
+        NameUzCyrl = nameUzCyrl;
+        NameKk     = nameKk;
+        Icon       = icon;
     }
 }

@@ -12,8 +12,9 @@ public record CreateBrandCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result<Guid>>;
+    string? NameUzCyrl = null,
+    string? NameKk      = null
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result<Guid>>;
 
 public class CreateBrandHandler(IBrandRepository repo)
     : IRequestHandler<CreateBrandCommand, Result<Guid>>
@@ -24,7 +25,7 @@ public class CreateBrandHandler(IBrandRepository repo)
         if (await repo.CodeExistsAsync(code, ct))
             return Result.Conflict<Guid, Brand>(code);
 
-        var brand = Brand.Create(Guid.NewGuid(), code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
+        var brand = Brand.Create(Guid.NewGuid(), code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
 
         await repo.AddAsync(brand, ct);
         return Result.Success(brand.Id);
@@ -38,8 +39,9 @@ public record UpdateBrandCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result>;
+    string? NameUzCyrl = null,
+    string? NameKk      = null
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result>;
 
 public class UpdateBrandHandler(IBrandRepository repo)
     : IRequestHandler<UpdateBrandCommand, Result>
@@ -53,7 +55,7 @@ public class UpdateBrandHandler(IBrandRepository repo)
         if (brand.Code != code && await repo.CodeExistsAsync(code, ct))
             return Result.Conflict<Brand>(code);
 
-        brand.Update(code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
+        brand.Update(code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
 
         await repo.SaveChangesAsync(ct);
         return Result.Success();

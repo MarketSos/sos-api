@@ -11,11 +11,12 @@ public record CreateProductCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn,
-    string? NameUzKiril,
+    string? NameUzCyrl,
+    string? NameKk,
     string  Barcode,
     Guid    CategoryId,
     Guid?   BrandId = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result<Guid>>;
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result<Guid>>;
 
 public class CreateProductHandler(IProductRepository repo)
     : IRequestHandler<CreateProductCommand, Result<Guid>>
@@ -34,7 +35,8 @@ public class CreateProductHandler(IProductRepository repo)
             categoryId:   cmd.CategoryId,
             brandId:      cmd.BrandId,
             nameEn:       cmd.NameEn,
-            nameUzKiril:  cmd.NameUzKiril);
+            nameUzCyrl:  cmd.NameUzCyrl,
+            nameKk:      cmd.NameKk);
 
         await repo.AddAsync(product, ct);
         return Result.Success(product.Id);

@@ -36,7 +36,8 @@ public class Organization : LocalizableEntity<Guid>
         string  slug,
         Guid    ownerUserId,
         string? nameEn      = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk      = null)
     {
         var org = new Organization
         {
@@ -44,7 +45,7 @@ public class Organization : LocalizableEntity<Guid>
             Slug        = slug.Trim().ToLowerInvariant(),
             OwnerUserId = ownerUserId
         };
-        org.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        org.SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
         org._members.Add(OrganizationMember.Create(Guid.NewGuid(), id, ownerUserId, OrganizationRole.Owner));
         return org;
     }
@@ -79,8 +80,8 @@ public class Organization : LocalizableEntity<Guid>
 
     // ── Boshqa metodlar ───────────────────────────────────────────────────────
 
-    public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzKiril = null)
-        => SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+    public void UpdateNames(string nameUz, string nameRu, string? nameEn = null, string? nameUzCyrl = null, string? nameKk = null)
+        => SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
 
     public void SetParent(Guid parentId)  => ParentId  = parentId;
     public void RemoveParent()            => ParentId  = null;

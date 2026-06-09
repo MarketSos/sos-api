@@ -30,7 +30,8 @@ public class Manufacturer : LocalizableEntity<Guid>
         string  nameUz,
         string  nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null,
+        string? nameUzCyrl  = null,
+        string? nameKk      = null,
         string? addressLine = null,
         string? phone       = null)
     {
@@ -41,7 +42,7 @@ public class Manufacturer : LocalizableEntity<Guid>
             AddressLine = addressLine,
             Phone = phone
         };
-        manufacturer.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        manufacturer.SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
         return manufacturer;
     }
 
@@ -50,10 +51,11 @@ public class Manufacturer : LocalizableEntity<Guid>
         string  nameUz,
         string  nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk      = null)
     {
         Code = code.Trim().ToUpperInvariant();
-        SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
     }
 
     public void SetAddress(string? addressLine)

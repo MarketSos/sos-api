@@ -16,7 +16,7 @@ public class MeasurementUnitConfiguration : IEntityTypeConfiguration<Measurement
         builder.Property(u => u.NameUz).HasMaxLength(100).IsRequired();
         builder.Property(u => u.NameRu).HasMaxLength(100).IsRequired();
         builder.Property(u => u.NameEn).HasMaxLength(100);
-        builder.Property(u => u.NameUzKiril).HasMaxLength(100);
+        builder.Property(u => u.NameUzCyrl).HasMaxLength(100);
 
         builder.HasData(
             MeasurementUnit.Create(new Guid("00000000-0000-0000-0001-000000000001"), "dona",  "Dona",      "Штука",   "Piece", false),

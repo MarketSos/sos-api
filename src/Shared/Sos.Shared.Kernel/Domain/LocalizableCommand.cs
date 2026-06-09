@@ -5,7 +5,8 @@ namespace Sos.Shared.Kernel.Domain;
 /// </summary>
 public abstract record LocalizableCommand(
     string NameUz,
+    string NameUzCyrl,
     string NameRu,
     string? NameEn,
-    string? NameUzKiril
+    string? NameKk
 );

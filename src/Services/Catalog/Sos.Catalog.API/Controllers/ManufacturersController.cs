@@ -67,7 +67,7 @@ public class ManufacturersController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateManufacturerRequest req, CancellationToken ct)
     {
         var result = await mediator.Send(
-            new UpdateManufacturerCommand(id, req.Code, req.NameUz, req.NameRu, req.NameEn, req.NameUzKiril, req.AddressLine, req.Phone), ct);
+            new UpdateManufacturerCommand(id, req.Code, req.NameUz, req.NameRu, req.NameEn, req.NameUzCyrl, req.NameKk, req.AddressLine, req.Phone), ct);
         return result.IsSuccess ? NoContent() : BadRequest(new { error = result.Error });
     }
 
@@ -91,6 +91,7 @@ public record UpdateManufacturerRequest(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null,
+    string? NameUzCyrl = null,
+    string? NameKk      = null,
     string? AddressLine = null,
     string? Phone       = null);

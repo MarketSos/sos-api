@@ -12,7 +12,8 @@ public record ManufacturerDto(
     string  NameUz,
     string  NameRu,
     string? NameEn,
-    string? NameUzKiril,
+    string? NameUzCyrl,
+    string? NameKk,
     string? AddressLine,
     string? Phone
 );
@@ -20,7 +21,7 @@ public record ManufacturerDto(
 file static class ManufacturerMapper
 {
     internal static ManufacturerDto ToDto(Manufacturer m) => new(
-        m.Id, m.Code, m.NameUz, m.NameRu, m.NameEn, m.NameUzKiril, m.AddressLine, m.Phone);
+        m.Id, m.Code, m.NameUz, m.NameRu, m.NameEn, m.NameUzCyrl, m.NameKk, m.AddressLine, m.Phone);
 }
 
 // ── GetManufacturerById ───────────────────────────────────────────────────────

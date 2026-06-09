@@ -148,11 +148,11 @@ Gateway: `http://localhost:5000` (Docker) / `http://localhost:61454` (local)
 ## Migratsiyalar
 
 ```bash
-# Yangi migration
-dotnet ef migrations add <Name> --project src/Services/Core/Sos.Core.Infrastructure
-dotnet ef migrations add <Name> --project src/Services/Catalog/Sos.Catalog.Infrastructure
-dotnet ef migrations add <Name> --project src/Services/Commerce/Sos.Commerce.Infrastructure
-dotnet ef migrations add <Name> --project src/Services/Analytics/Sos.Analytics.Infrastructure
+#Yangi migration
+dotnet ef migrations add InitialCreate --project src/Services/Core/Sos.Core.Infrastructure
+dotnet ef migrations add InitialCreate --project src/Services/Catalog/Sos.Catalog.Infrastructure
+dotnet ef migrations add InitialCreate --project src/Services/Commerce/Sos.Commerce.Infrastructure
+dotnet ef migrations add InitialCreate --project src/Services/Analytics/Sos.Analytics.Infrastructure
 ```
 
 Har bir Infrastructure loyihasida `IDesignTimeDbContextFactory` mavjud — `--startup-project` talab qilinmaydi.

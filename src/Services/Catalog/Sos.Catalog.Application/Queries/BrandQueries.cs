@@ -12,13 +12,14 @@ public record BrandDto(
     string  NameUz,
     string  NameRu,
     string? NameEn,
-    string? NameUzKiril
+    string? NameUzCyrl,
+    string? NameKk
 );
 
 file static class BrandMapper
 {
     internal static BrandDto ToDto(Brand b) => new(
-        b.Id, b.Code, b.NameUz, b.NameRu, b.NameEn, b.NameUzKiril);
+        b.Id, b.Code, b.NameUz, b.NameRu, b.NameEn, b.NameUzCyrl, b.NameKk);
 }
 
 // ── GetBrandById ──────────────────────────────────────────────────────────────

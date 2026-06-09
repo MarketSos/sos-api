@@ -16,6 +16,7 @@ public class SpecializationConfiguration : IEntityTypeConfiguration<Specializati
         builder.Property(s => s.NameUz).HasMaxLength(200).IsRequired();
         builder.Property(s => s.NameRu).HasMaxLength(200).IsRequired();
         builder.Property(s => s.NameEn).HasMaxLength(200);
-        builder.Property(s => s.NameUzKiril).HasMaxLength(200);
+        builder.Property(s => s.NameUzCyrl).HasMaxLength(200);
+        builder.Property(s => s.NameKk).HasMaxLength(200);
     }
 }

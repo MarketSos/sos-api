@@ -17,7 +17,8 @@ public record CreateOrganizationCommand(
     OwnershipType?   Ownership = null,
     Guid?            OrgTypeId = null,
     string?           NameEn      = null,
-    string?           NameUzKiril = null,
+    string?           NameUzCyrl = null,
+    string?           NameKk      = null,
     string?           Code        = null,
     string?           Tin         = null,
     string?           Okonx       = null,
@@ -49,7 +50,7 @@ public class CreateOrganizationHandler(
 
         var org = Organization.Create(
             Guid.NewGuid(), cmd.NameUz, cmd.NameRu, cmd.Slug,
-            context.UserId.Value, cmd.NameEn, cmd.NameUzKiril);
+            context.UserId.Value, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
 
         org.Code      = cmd.Code;
         org.Tin       = cmd.Tin;
@@ -93,7 +94,8 @@ public record UpdateOrganizationNamesCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null
+    string? NameUzCyrl = null,
+    string? NameKk     = null
 ) : IRequest<Result>;
 
 public class UpdateOrganizationNamesHandler(IOrganizationRepository repo, ICurrentContext context)
@@ -105,7 +107,7 @@ public class UpdateOrganizationNamesHandler(IOrganizationRepository repo, ICurre
         if (org is null) return Result.NotFound<Organization>(cmd.OrganizationId);
         if (org.OwnerUserId != context.UserId) return Result.Failure("Faqat egasi o'zgartirishi mumkin.");
 
-        org.UpdateNames(cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
+        org.UpdateNames(cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
         await repo.SaveChangesAsync(ct);
         return Result.Success();
     }

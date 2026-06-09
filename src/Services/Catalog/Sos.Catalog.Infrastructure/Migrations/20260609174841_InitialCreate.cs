@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sos.Catalog.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,9 +23,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     NameUz = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameUzCyrl = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     NameRu = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     NameEn = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    NameUzKiril = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
+                    NameKk = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,9 +43,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     NameUz = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameUzCyrl = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     NameRu = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     NameEn = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    NameUzKiril = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    NameKk = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     SortOrder = table.Column<int>(type: "integer", nullable: false)
@@ -72,9 +74,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     NameUz = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    NameUzCyrl = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     NameRu = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     NameEn = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    NameUzKiril = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
+                    NameKk = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,9 +94,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     NameUz = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    NameUzCyrl = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     NameRu = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     NameEn = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    NameUzKiril = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    NameKk = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -165,9 +169,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     NameUz = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
+                    NameUzCyrl = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     NameRu = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     NameEn = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
-                    NameUzKiril = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
+                    NameKk = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -256,18 +261,18 @@ namespace Sos.Catalog.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "MeasurementUnits",
-                columns: new[] { "Id", "Code", "DeletedAt", "DeletedBy", "Description", "IsDeleted", "NameEn", "NameRu", "NameUz", "NameUzKiril" },
+                columns: new[] { "Id", "Code", "DeletedAt", "DeletedBy", "Description", "IsDeleted", "NameEn", "NameKk", "NameRu", "NameUz", "NameUzCyrl" },
                 values: new object[,]
                 {
-                    { new Guid("00000000-0000-0000-0001-000000000001"), "dona", null, null, null, false, "Piece", "Штука", "Dona", null },
-                    { new Guid("00000000-0000-0000-0001-000000000002"), "kg", null, null, null, false, "kg", "Кг", "Kilogramm", null },
-                    { new Guid("00000000-0000-0000-0001-000000000003"), "g", null, null, null, false, "g", "Грамм", "Gramm", null },
-                    { new Guid("00000000-0000-0000-0001-000000000004"), "l", null, null, null, false, "l", "Литр", "Litr", null },
-                    { new Guid("00000000-0000-0000-0001-000000000005"), "ml", null, null, null, false, "ml", "Мл", "Millilitr", null },
-                    { new Guid("00000000-0000-0000-0001-000000000006"), "m", null, null, null, false, "m", "Метр", "Metr", null },
-                    { new Guid("00000000-0000-0000-0001-000000000007"), "m2", null, null, null, false, "m²", "Кв.м", "Kv. metr", null },
-                    { new Guid("00000000-0000-0000-0001-000000000008"), "box", null, null, null, false, "box", "Коробка", "Quti", null },
-                    { new Guid("00000000-0000-0000-0001-000000000009"), "pack", null, null, null, false, "pack", "Пачка", "Paket", null }
+                    { new Guid("00000000-0000-0000-0001-000000000001"), "dona", null, null, null, false, null, null, "Piece", "Dona", "Штука" },
+                    { new Guid("00000000-0000-0000-0001-000000000002"), "kg", null, null, null, false, null, null, "kg", "Kilogramm", "Кг" },
+                    { new Guid("00000000-0000-0000-0001-000000000003"), "g", null, null, null, false, null, null, "g", "Gramm", "Грамм" },
+                    { new Guid("00000000-0000-0000-0001-000000000004"), "l", null, null, null, false, null, null, "l", "Litr", "Литр" },
+                    { new Guid("00000000-0000-0000-0001-000000000005"), "ml", null, null, null, false, null, null, "ml", "Millilitr", "Мл" },
+                    { new Guid("00000000-0000-0000-0001-000000000006"), "m", null, null, null, false, null, null, "m", "Metr", "Метр" },
+                    { new Guid("00000000-0000-0000-0001-000000000007"), "m2", null, null, null, false, null, null, "m²", "Kv. metr", "Кв.м" },
+                    { new Guid("00000000-0000-0000-0001-000000000008"), "box", null, null, null, false, null, null, "box", "Quti", "Коробка" },
+                    { new Guid("00000000-0000-0000-0001-000000000009"), "pack", null, null, null, false, null, null, "pack", "Paket", "Пачка" }
                 });
 
             migrationBuilder.CreateIndex(

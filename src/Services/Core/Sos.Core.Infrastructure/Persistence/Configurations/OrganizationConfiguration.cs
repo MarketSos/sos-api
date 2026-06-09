@@ -18,7 +18,8 @@ public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
         builder.Property(o => o.NameUz).HasMaxLength(300).IsRequired();
         builder.Property(o => o.NameRu).HasMaxLength(300).IsRequired();
         builder.Property(o => o.NameEn).HasMaxLength(300);
-        builder.Property(o => o.NameUzKiril).HasMaxLength(300);
+        builder.Property(o => o.NameUzCyrl).HasMaxLength(300);
+        builder.Property(o => o.NameKk).HasMaxLength(300);
         builder.Property(o => o.Slug).HasMaxLength(100);
         builder.Property(o => o.Code).HasMaxLength(50);
         builder.Property(o => o.Tin).HasMaxLength(20);

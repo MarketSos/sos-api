@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sos.Commerce.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -76,7 +76,6 @@ namespace Sos.Commerce.Infrastructure.Migrations
                     PaidAmount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     ChangeAmount = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     ReceiptNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    OrganizationId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),

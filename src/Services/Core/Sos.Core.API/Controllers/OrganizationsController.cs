@@ -108,7 +108,7 @@ public class OrganizationsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> UpdateNames(Guid id, [FromBody] UpdateNamesRequest req, CancellationToken ct)
     {
         var result = await mediator.Send(
-            new UpdateOrganizationNamesCommand(id, req.NameUz, req.NameRu, req.NameEn, req.NameUzKiril), ct);
+            new UpdateOrganizationNamesCommand(id, req.NameUz, req.NameRu, req.NameEn, req.NameUzCyrl, req.NameKk), ct);
         return result.IsSuccess ? NoContent() : BadRequest(new { error = result.Error });
     }
 
@@ -206,7 +206,7 @@ public class OrganizationsController(IMediator mediator) : ControllerBase
 }
 
 // ── Request DTOs ──────────────────────────────────────────────────────────────
-public record UpdateNamesRequest(string NameUz, string NameRu, string? NameEn = null, string? NameUzKiril = null);
+public record UpdateNamesRequest(string NameUz, string NameRu, string? NameEn = null, string? NameUzCyrl = null, string? NameKk = null);
 public record ClassifyRequest(OwnershipType Ownership, OrganizationLevel Level);
 public record UpdateOrganizationRequest(
     string? Code   = null,

@@ -15,10 +15,11 @@ public class Specialization : LocalizableEntity<Guid>, IHasOrganization
         string  nameUz,
         string  nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk      = null)
     {
         var s = new Specialization { Id = id, Code = code.Trim().ToUpperInvariant() };
-        s.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        s.SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
         return s;
     }
 
@@ -27,9 +28,10 @@ public class Specialization : LocalizableEntity<Guid>, IHasOrganization
         string  nameUz,
         string  nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk      = null)
     {
         Code = code.Trim().ToUpperInvariant();
-        SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
     }
 }

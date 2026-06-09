@@ -12,15 +12,15 @@ using Sos.Analytics.Infrastructure.Persistence;
 namespace Sos.Analytics.Infrastructure.Migrations
 {
     [DbContext(typeof(AnalyticsDbContext))]
-    [Migration("20260606144820_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20260609174909_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.27")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);

@@ -13,8 +13,9 @@ public record CreateSpecializationCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result<Guid>>;
+    string? NameUzCyrl = null,
+    string? NameKk      = null
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result<Guid>>;
 
 public class CreateSpecializationHandler(ISpecializationRepository repo)
     : IRequestHandler<CreateSpecializationCommand, Result<Guid>>
@@ -25,7 +26,7 @@ public class CreateSpecializationHandler(ISpecializationRepository repo)
         if (await repo.CodeExistsAsync(code, ct))
             return Result.Conflict<Guid, Specialization>(code);
 
-        var spec = Specialization.Create(Guid.NewGuid(), code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
+        var spec = Specialization.Create(Guid.NewGuid(), code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
         await repo.AddAsync(spec, ct);
         return Result.Success(spec.Id);
     }
@@ -38,8 +39,9 @@ public record UpdateSpecializationCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result>;
+    string? NameUzCyrl = null,
+    string? NameKk      = null
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result>;
 
 public class UpdateSpecializationHandler(ISpecializationRepository repo)
     : IRequestHandler<UpdateSpecializationCommand, Result>
@@ -53,7 +55,7 @@ public class UpdateSpecializationHandler(ISpecializationRepository repo)
         if (spec.Code != code && await repo.CodeExistsAsync(code, ct))
             return Result.Conflict<Specialization>(code);
 
-        spec.Update(code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
+        spec.Update(code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
         await repo.SaveChangesAsync(ct);
         return Result.Success();
     }

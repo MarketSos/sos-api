@@ -16,6 +16,7 @@ public class BrandConfiguration : IEntityTypeConfiguration<Brand>
         builder.Property(b => b.NameUz).HasMaxLength(200).IsRequired();
         builder.Property(b => b.NameRu).HasMaxLength(200).IsRequired();
         builder.Property(b => b.NameEn).HasMaxLength(200);
-        builder.Property(b => b.NameUzKiril).HasMaxLength(200);
+        builder.Property(b => b.NameUzCyrl).HasMaxLength(200);
+        builder.Property(b => b.NameKk).HasMaxLength(200);
     }
 }

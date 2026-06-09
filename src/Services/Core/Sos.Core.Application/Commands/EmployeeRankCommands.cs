@@ -13,8 +13,9 @@ public record CreateEmployeeRankCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result<Guid>>;
+    string? NameUzCyrl = null,
+    string? NameKk      = null
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result<Guid>>;
 
 public class CreateEmployeeRankHandler(IEmployeeRankRepository repo)
     : IRequestHandler<CreateEmployeeRankCommand, Result<Guid>>
@@ -25,7 +26,7 @@ public class CreateEmployeeRankHandler(IEmployeeRankRepository repo)
         if (await repo.CodeExistsAsync(code, ct))
             return Result.Conflict<Guid, EmployeeRank>(code);
 
-        var rank = EmployeeRank.Create(Guid.NewGuid(), code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
+        var rank = EmployeeRank.Create(Guid.NewGuid(), code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
         await repo.AddAsync(rank, ct);
         return Result.Success(rank.Id);
     }
@@ -38,8 +39,9 @@ public record UpdateEmployeeRankCommand(
     string  NameUz,
     string  NameRu,
     string? NameEn      = null,
-    string? NameUzKiril = null
-) : LocalizableCommand(NameUz, NameRu, NameEn, NameUzKiril), IRequest<Result>;
+    string? NameUzCyrl = null,
+    string? NameKk      = null
+) : LocalizableCommand(NameUz, NameUzCyrl, NameRu, NameEn, NameKk), IRequest<Result>;
 
 public class UpdateEmployeeRankHandler(IEmployeeRankRepository repo)
     : IRequestHandler<UpdateEmployeeRankCommand, Result>
@@ -53,7 +55,7 @@ public class UpdateEmployeeRankHandler(IEmployeeRankRepository repo)
         if (rank.Code != code && await repo.CodeExistsAsync(code, ct))
             return Result.Conflict<EmployeeRank>(code);
 
-        rank.Update(code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzKiril);
+        rank.Update(code, cmd.NameUz, cmd.NameRu, cmd.NameEn, cmd.NameUzCyrl, cmd.NameKk);
         await repo.SaveChangesAsync(ct);
         return Result.Success();
     }

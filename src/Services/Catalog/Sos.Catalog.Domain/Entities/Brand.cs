@@ -22,14 +22,15 @@ public class Brand : LocalizableEntity<Guid>
         string  nameUz,
         string  nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk      = null)
     {
         var brand = new Brand
         {
             Id   = id,
             Code = code.Trim().ToUpperInvariant()
         };
-        brand.SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        brand.SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
         return brand;
     }
 
@@ -38,9 +39,10 @@ public class Brand : LocalizableEntity<Guid>
         string  nameUz,
         string  nameRu,
         string? nameEn      = null,
-        string? nameUzKiril = null)
+        string? nameUzCyrl = null,
+        string? nameKk      = null)
     {
         Code = code.Trim().ToUpperInvariant();
-        SetNames(nameUz, nameRu, nameEn, nameUzKiril);
+        SetNames(nameUz, nameUzCyrl, nameRu, nameEn, nameKk);
     }
 }

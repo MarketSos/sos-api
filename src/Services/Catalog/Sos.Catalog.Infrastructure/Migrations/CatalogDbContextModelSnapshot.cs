@@ -46,6 +46,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("NameKk")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -56,7 +60,8 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -93,6 +98,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("NameKk")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -103,7 +112,8 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -147,6 +157,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("NameKk")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -157,7 +171,8 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -199,6 +214,9 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("NameKk")
+                        .HasColumnType("text");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -209,7 +227,8 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
@@ -226,81 +245,81 @@ namespace Sos.Catalog.Infrastructure.Migrations
                             Id = new Guid("00000000-0000-0000-0001-000000000001"),
                             Code = "dona",
                             IsDeleted = false,
-                            NameEn = "Piece",
-                            NameRu = "Штука",
-                            NameUz = "Dona"
+                            NameRu = "Piece",
+                            NameUz = "Dona",
+                            NameUzCyrl = "Штука"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000002"),
                             Code = "kg",
                             IsDeleted = false,
-                            NameEn = "kg",
-                            NameRu = "Кг",
-                            NameUz = "Kilogramm"
+                            NameRu = "kg",
+                            NameUz = "Kilogramm",
+                            NameUzCyrl = "Кг"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000003"),
                             Code = "g",
                             IsDeleted = false,
-                            NameEn = "g",
-                            NameRu = "Грамм",
-                            NameUz = "Gramm"
+                            NameRu = "g",
+                            NameUz = "Gramm",
+                            NameUzCyrl = "Грамм"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000004"),
                             Code = "l",
                             IsDeleted = false,
-                            NameEn = "l",
-                            NameRu = "Литр",
-                            NameUz = "Litr"
+                            NameRu = "l",
+                            NameUz = "Litr",
+                            NameUzCyrl = "Литр"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000005"),
                             Code = "ml",
                             IsDeleted = false,
-                            NameEn = "ml",
-                            NameRu = "Мл",
-                            NameUz = "Millilitr"
+                            NameRu = "ml",
+                            NameUz = "Millilitr",
+                            NameUzCyrl = "Мл"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000006"),
                             Code = "m",
                             IsDeleted = false,
-                            NameEn = "m",
-                            NameRu = "Метр",
-                            NameUz = "Metr"
+                            NameRu = "m",
+                            NameUz = "Metr",
+                            NameUzCyrl = "Метр"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000007"),
                             Code = "m2",
                             IsDeleted = false,
-                            NameEn = "m²",
-                            NameRu = "Кв.м",
-                            NameUz = "Kv. metr"
+                            NameRu = "m²",
+                            NameUz = "Kv. metr",
+                            NameUzCyrl = "Кв.м"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000008"),
                             Code = "box",
                             IsDeleted = false,
-                            NameEn = "box",
-                            NameRu = "Коробка",
-                            NameUz = "Quti"
+                            NameRu = "box",
+                            NameUz = "Quti",
+                            NameUzCyrl = "Коробка"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0001-000000000009"),
                             Code = "pack",
                             IsDeleted = false,
-                            NameEn = "pack",
-                            NameRu = "Пачка",
-                            NameUz = "Paket"
+                            NameRu = "pack",
+                            NameUz = "Paket",
+                            NameUzCyrl = "Пачка"
                         });
                 });
 
@@ -404,6 +423,10 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 
+                    b.Property<string>("NameKk")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
                     b.Property<string>("NameRu")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -414,7 +437,8 @@ namespace Sos.Catalog.Infrastructure.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 
-                    b.Property<string>("NameUzKiril")
+                    b.Property<string>("NameUzCyrl")
+                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)");
 

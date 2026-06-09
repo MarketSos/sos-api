@@ -16,6 +16,7 @@ public class EmployeeRankConfiguration : IEntityTypeConfiguration<EmployeeRank>
         builder.Property(r => r.NameUz).HasMaxLength(200).IsRequired();
         builder.Property(r => r.NameRu).HasMaxLength(200).IsRequired();
         builder.Property(r => r.NameEn).HasMaxLength(200);
-        builder.Property(r => r.NameUzKiril).HasMaxLength(200);
+        builder.Property(r => r.NameUzCyrl).HasMaxLength(200);
+        builder.Property(r => r.NameKk).HasMaxLength(200);
     }
 }
